@@ -39,6 +39,12 @@ namespace Travelopedia.Models
             return new ApplicationDbContext();
         }
     }
+    public class UserModel
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; }
+
+    }
 }
 
 #region Helpers
