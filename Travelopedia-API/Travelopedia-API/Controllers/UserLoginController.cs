@@ -29,5 +29,13 @@ namespace Travelopedia_API.Controllers
             }
             return Ok(validUser);
         }
+
+        [HttpGet]
+        [ActionName("Login")]
+
+        public IHttpActionResult GetAllLogin()
+        {
+            return Ok(usercredentials);
+        }
     }
 }
