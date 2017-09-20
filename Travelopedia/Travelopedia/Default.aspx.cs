@@ -14,7 +14,7 @@ namespace Travelopedia
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            GetSomething();
+           // GetSomething();
         }
 
         static void GetSomething()
@@ -24,7 +24,7 @@ namespace Travelopedia
                 client.BaseAddress = new Uri("http://localhost:63699/api/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/html"));
-                var response = client.GetAsync("UserLogin/Login?username=yash").Result;
+                var response = client.GetAsync("UserLogin/Login/").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string responseString = response.Content.ReadAsStringAsync().Result;
