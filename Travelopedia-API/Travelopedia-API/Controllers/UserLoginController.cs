@@ -53,7 +53,7 @@ namespace Travelopedia_API.Controllers
 
         public IHttpActionResult GetAllLogin()
         {
-            return Ok(usercredentials);
+            return Ok(userCredentials);
         }
     }
 }
