@@ -23,6 +23,8 @@ namespace Travelopedia
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+
+
             if (IsPostBack)
             {
                 string username = txtUsername.Text;
@@ -30,7 +32,7 @@ namespace Travelopedia
 
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("http://localhost:63699/api/");
+                    client.BaseAddress = new Uri("http://localhost/Travelopedia-api/api/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -42,7 +44,23 @@ namespace Travelopedia
                     if (response.IsSuccessStatusCode)
                     {
                         string responseString = response.Content.ReadAsStringAsync().Result;
-                        Response.Redirect("Home.aspx");
+                        FormsAuthentication.SetAuthCookie(
+                                         txtUsername.Text.Trim(), false);
+
+                        FormsAuthenticationTicket ticket1 =
+                        new FormsAuthenticationTicket(
+                             1,                                   // version
+                             txtUsername.Text.Trim(),   // get username  from the form
+                             DateTime.Now,                        // issue time is now
+                             DateTime.Now.AddMinutes(10),         // expires in 10 minutes
+                             false,      // cookie is not persistent
+                             ""
+                             );
+                        HttpCookie cookie1 = new HttpCookie(
+                          FormsAuthentication.FormsCookieName,
+                          FormsAuthentication.Encrypt(ticket1));
+                        Response.Cookies.Add(cookie1);
+                        Response.Redirect("Home.aspx",true);
                     }
                 }
 

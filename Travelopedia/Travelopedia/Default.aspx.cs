@@ -31,5 +31,21 @@ namespace Travelopedia
                 }
             }
         }
+
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+            {
+                string[] source = txtSource.Text.Split('-');
+                string[] destination = txtDestination.Text.Split('-');
+                destination.Le
+                string startDate = txtStartDate.Text;
+                string endDate = txtEndDate.Text;
+
+                string numberOfPassengers = dropdownNumberOfPassengers.SelectedValue;
+            }
+
+        }
     }
 }

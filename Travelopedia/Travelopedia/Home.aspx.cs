@@ -11,8 +11,14 @@ namespace Travelopedia
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var fullName = Session["name"].ToString();
+            Session.RemoveAll();
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                string username = System.Web.HttpContext.Current.User.Identity.Name;
+            }
             Label1.Text = "Welcome " + User.Identity.Name;
-            string username = Request.ServerVariables["LOGON_USER"];
+            
         }
     }
 }

@@ -10,7 +10,7 @@
     <meta name="author" content="Tsoy">
     <meta name="google-signin-client_id" content="924571411494-k8eksd5qm5g4g4s5dje34seu47jir66l.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title><%: Page.Title %> Travelopedia- Travel, Tour Booking HTML5 Template</title>
-
+    
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
@@ -21,6 +21,8 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600' rel='stylesheet' type='text/css'>
 
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    
 <%--    <!-- Theme Styles -->
     <link rel="stylesheet" href="Content/bootstrap.min.css">--%>
     <!-- GOOGLE FONTS -->
@@ -39,12 +41,14 @@
     
     <!-- Responsive Styles -->
     <link rel="stylesheet" href="Content/responsive.css">--%>
-    
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
     <link rel="stylesheet" href="Content/bootstrap.css">
     <link rel="stylesheet" href="Content/font-awesome.css">
     <link rel="stylesheet" href="Content/icomoon.css">
     <link rel="stylesheet" href="Content/styles.css">
     <link rel="stylesheet" href="Content/mystyles.css">
+    
+
     <!-- CSS for IE -->
     <!--[if lte IE 9]>
         <link rel="stylesheet" type="text/css" href="Content/ie.css" />
@@ -549,6 +553,8 @@
         <script src="Scripts/gridrotator.js"></script>
         <script src="Scripts/custom.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+              <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
         
 

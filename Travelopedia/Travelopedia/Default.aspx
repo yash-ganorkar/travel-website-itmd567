@@ -1,7 +1,8 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Travelopedia._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" EnableEventValidation="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Travelopedia._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+    <asp:UpdatePanel runat="server" EnableViewState="true">
+        <ContentTemplate>
         <div class="top-area show-onload">
             <div class="bg-holder full">
                 <div class="bg-front full-height bg-front-mob-rel">
@@ -39,7 +40,7 @@
                                     <div class="tab-content">
                                         <div class="tab-pane fade in active" id="tab-1">
                                             <h2>Search and Save on Hotels</h2>
-                                            <form>
+                                            
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
@@ -129,11 +130,9 @@
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-primary btn-lg" type="submit">Search for Hotels</button>
-                                            </form>
                                         </div>
                                         <div class="tab-pane fade" id="tab-2">
                                             <h2>Search for Cheap Flights</h2>
-                                            <form>
                                                 <div class="tabbable">
                                                     <ul class="nav nav-pills nav-sm nav-no-br mb10" id="flightChooseTab">
                                                         <li class="active"><a href="#flight-search-1" data-toggle="tab">Round Trip</a>
@@ -149,66 +148,60 @@
                                                                         <div class="col-md-6">
                                                                             <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>From</label>
-                                                                                <input class="typeahead form-control" placeholder="City, Airport, U.S. Zip" type="text" />
+<%--                                                                                <input class="typeahead form-control" id="myText" placeholder="City, Airport, U.S. Zip" type="text" />--%>
+                                                                                <asp:TextBox ID="txtSource" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
+                                                                        </div>
+                                                                    <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>To</label>
-                                                                                <input class="typeahead form-control" placeholder="City, Airport, U.S. Zip" type="text" />
+                                                                                <asp:TextBox ID="txtDestination" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="input-daterange" data-date-format="M d, D">
+                                                                    <div class="input-daterange">
                                                                         <div class="row">
-                                                                            <div class="col-md-4">
+                                                                            <div class="col-md-6">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Departing</label>
-                                                                                    <input class="form-control" name="start" type="text" />
+                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtStartDate" />
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-4">
+                                                                            </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Returning</label>
-                                                                                    <input class="form-control" name="end" type="text" />
+                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtEndDate" />
                                                                                 </div>
+                                                                            </div>
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
-                                                                                    <label>Passngers</label>
+                                                                                    <label>Passengers</label>
                                                                                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                                        <label class="btn btn-primary active">
-                                                                                            <input type="radio" name="options" />1</label>
-                                                                                        <label class="btn btn-primary">
-                                                                                            <input type="radio" name="options" />2</label>
-                                                                                        <label class="btn btn-primary">
-                                                                                            <input type="radio" name="options" />3</label>
-                                                                                        <label class="btn btn-primary">
-                                                                                            <input type="radio" name="options" />3+</label>
+                                                                                            <asp:DropDownList runat="server" ID="dropdownNumberOfPassengers">
+                                                                                                <asp:ListItem Enabled="true" Text="Select Number of Passengers" Value="-1"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="1" Value="1"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="2" Value="2"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="3" Value="3"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="4" Value="4"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="5" Value="5"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="6" Value="6"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="7" Value="7"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="8" Value="8"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="9" Value="9"></asp:ListItem>
+                                                                                                <asp:ListItem  Text="10" Value="10"></asp:ListItem>
+                                                                                            </asp:DropDownList>
                                                                                     </div>
-                                                                                    <select class="form-control hidden">
-                                                                                        <option>1</option>
-                                                                                        <option>2</option>
-                                                                                        <option>3</option>
-                                                                                        <option selected="selected">4</option>
-                                                                                        <option>5</option>
-                                                                                        <option>6</option>
-                                                                                        <option>7</option>
-                                                                                        <option>8</option>
-                                                                                        <option>9</option>
-                                                                                        <option>10</option>
-                                                                                        <option>11</option>
-                                                                                        <option>12</option>
-                                                                                        <option>13</option>
-                                                                                        <option>14</option>
-                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="tab-pane fade" id="flight-search-2">
@@ -276,12 +269,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-primary btn-lg" type="submit">Search for Flights</button>
-                                            </form>
+                                            <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click" Text="Search for Flights" CausesValidation="false"/>
                                         </div>
                                         <div class="tab-pane fade" id="tab-3">
                                             <h2>Find Your Perfect Home</h2>
-                                            <form>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
@@ -371,11 +362,9 @@
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-primary btn-lg" type="submit">Search for Vacation Rentals</button>
-                                            </form>
                                         </div>
                                         <div class="tab-pane fade" id="tab-4">
                                             <h2>Search for Cheap Rental Cars</h2>
-                                            <form>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="row">
@@ -413,11 +402,9 @@
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-primary btn-lg" type="submit">Search for Rental Cars</button>
-                                            </form>
                                         </div>
                                         <div class="tab-pane fade" id="tab-5">
                                             <h2>Search for Activities</h2>
-                                            <form>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
@@ -620,8 +607,13 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
+            <script type="text/javascript">
+                $(function () {
+                    $("#<%= txtStartDate.ClientID %>").datepicker({ dateFormat: 'DD, M dd' });
+                    $("#<%= txtEndDate.ClientID %>").datepicker({ dateFormat: 'DD, M dd' });
+                }); 
+            </script>
+            </ContentTemplate>
+        </asp:UpdatePanel>
 </asp:Content>
