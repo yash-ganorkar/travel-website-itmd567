@@ -56,15 +56,15 @@ $('.typeahead').typeahead({
 }, {
     source: function(q, cb) {
         return $.ajax({
-            dataType: 'json',
+            dataType: 'jsonp',
             type: 'get',
-            url: 'http://gd.geobytes.com/AutoCompleteCity?callback=?&q=' + q,
+            url: 'http://iatacodes.org/api/v4/autocomplete.jsonp?api_key=46e6f196-cdd3-4734-8fc1-c72f8dba3637&callback=?&query=' + q,
             chache: false,
             success: function(data) {
                 var result = [];
-                $.each(data, function(index, val) {
+                $.each(data.response.airports, function(index, val) {
                     result.push({
-                        value: val
+                        value: val.name + " - " + val.code
                     });
                 });
                 cb(result);

@@ -5,11 +5,15 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using Travelopedia.Models;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Travelopedia.Account
 {
     public partial class RegisterExternalLogin : System.Web.UI.Page
     {
+        public string userName = "";
+        public string firstName = "", lastName="";
         protected string ProviderName
         {
             get { return (string)ViewState["ProviderName"] ?? String.Empty; }
@@ -29,6 +33,7 @@ namespace Travelopedia.Account
 
         protected void Page_Load()
         {
+            
             // Process the result from an auth provider in the request
             ProviderName = IdentityHelper.GetProviderNameFromRequest(Request);
             if (String.IsNullOrEmpty(ProviderName))
@@ -46,9 +51,18 @@ namespace Travelopedia.Account
                     RedirectOnFail();
                     return;
                 }
+
                 var user = manager.Find(loginInfo.Login);
+
+                var verifiedloginInfox = Context.GetOwinContext().Authentication.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
+                var nameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
+                var emailClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                var surNameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
+                var fullNameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+
                 if (user != null)
                 {
+                    Session["name"] = fullNameClaim.ToString();
                     signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                 }
@@ -56,6 +70,8 @@ namespace Travelopedia.Account
                 {
                     // Apply Xsrf check when linking
                     var verifiedloginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo(IdentityHelper.XsrfKey, User.Identity.GetUserId());
+
+
                     if (verifiedloginInfo == null)
                     {
                         RedirectOnFail();
@@ -75,7 +91,11 @@ namespace Travelopedia.Account
                 }
                 else
                 {
-                    email.Text = loginInfo.Email;
+                    email.Text = emailClaim.Value.ToString();
+                    userName = nameClaim.Value.ToString();
+                    lastName = surNameClaim.Value.ToString();
+                    firstName = fullNameClaim.Value.ToString();
+                    CreateAndLoginUser();
                 }
             }
         }        
@@ -87,13 +107,9 @@ namespace Travelopedia.Account
 
         private void CreateAndLoginUser()
         {
-            if (!IsValid)
-            {
-                return;
-            }
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var signInManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
-            var user = new ApplicationUser() { UserName = email.Text, Email = email.Text };
+            var user = new ApplicationUser() { UserName = userName, Email = email.Text, FirstName = firstName, LastName = lastName };
             IdentityResult result = manager.Create(user);
             if (result.Succeeded)
             {

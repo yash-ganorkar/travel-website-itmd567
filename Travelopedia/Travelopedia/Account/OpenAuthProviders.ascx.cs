@@ -19,6 +19,7 @@ namespace Travelopedia.Account
                 {
                     return;
                 }
+                ReturnUrl = "~/Home.aspx";
                 // Request a redirect to the external login provider
                 string redirectUrl = ResolveUrl(String.Format(CultureInfo.InvariantCulture, "~/Account/RegisterExternalLogin?{0}={1}&returnUrl={2}", IdentityHelper.ProviderNameKey, provider, ReturnUrl));
                 var properties = new AuthenticationProperties() { RedirectUri = redirectUrl };

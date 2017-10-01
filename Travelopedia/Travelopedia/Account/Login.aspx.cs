@@ -23,6 +23,11 @@ namespace Travelopedia.Account
             }
         }
 
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+//            Session.Abandon();
+        }
+
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)

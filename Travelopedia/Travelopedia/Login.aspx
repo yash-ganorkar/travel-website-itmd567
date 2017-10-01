@@ -1,4 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" MasterPageFile="~/Site.Master" CodeBehind="Login.aspx.cs" Inherits="Travelopedia.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" EnableEventValidation="false" MasterPageFile="~/Site.Master" CodeBehind="Login.aspx.cs" Inherits="Travelopedia.Login" %>
+
+
+<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ID="LoginContent" ContentPlaceHolderID="MainContent" runat="server">
     <asp:UpdatePanel runat="server" EnableViewState="true">
@@ -30,7 +33,9 @@
                             </div>
                     </form>
                     <h3>Sign In Options</h3>
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+             <section id="socialLoginForm">
+                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+            </section>
                 </div>
                 <div class="col-md-4"> 
                     <h3>New To Traveler?</h3>
@@ -40,7 +45,7 @@
                             <input class="form-control" placeholder="e.g. John Doe" type="text" />
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
-                            <label>Emai</label>
+                            <label>Email</label>
                             <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text" />
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-lock input-icon input-icon-show"></i>
