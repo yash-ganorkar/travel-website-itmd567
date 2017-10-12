@@ -23,8 +23,8 @@
 
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     
-<%--    <!-- Theme Styles -->
-    <link rel="stylesheet" href="Content/bootstrap.min.css">--%>
+    <!-- Theme Styles -->
+    <link rel="stylesheet" href="Content/bootstrap.min.css">
     <!-- GOOGLE FONTS -->
     <link rel="stylesheet" href="Content/font-awesome.min.css">
     <link rel="stylesheet" href="Content/animate.min.css">
@@ -41,8 +41,8 @@
     
     <!-- Responsive Styles -->
     <link rel="stylesheet" href="Content/responsive.css">--%>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
-    <link rel="stylesheet" href="Content/bootstrap.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <%--<link rel="stylesheet" href="Content/bootstrap.min.css">--%>
     <link rel="stylesheet" href="Content/font-awesome.css">
     <link rel="stylesheet" href="Content/icomoon.css">
     <link rel="stylesheet" href="Content/styles.css">

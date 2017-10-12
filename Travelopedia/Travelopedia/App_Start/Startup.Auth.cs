@@ -7,7 +7,10 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
+
 using Travelopedia.Models;
+using Google.Apis.Services;
+using Google.Apis.QPXExpress.v1;
 
 namespace Travelopedia
 {
@@ -75,6 +78,7 @@ namespace Travelopedia
                 ClientSecret = "ckxZl55lbYy04GlAzeg9tP7p",
                 CallbackPath = new PathString("/signin-google")
             });
+
         }
     }
 }

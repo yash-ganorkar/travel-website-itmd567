@@ -6,6 +6,10 @@ using System.Web.UI;
 using System.Net;
 using System.Web.UI.WebControls;
 using System.Net.Http;
+using Google.Apis.QPXExpress.v1;
+using Google.Apis.QPXExpress.v1.Data;
+using Google.Apis.Services;
+using Newtonsoft.Json;
 
 namespace Travelopedia
 {
@@ -39,13 +43,14 @@ namespace Travelopedia
             {
                 string[] source = txtSource.Text.Split('-');
                 string[] destination = txtDestination.Text.Split('-');
-                destination.Le
+                
                 string startDate = txtStartDate.Text;
                 string endDate = txtEndDate.Text;
 
                 string numberOfPassengers = dropdownNumberOfPassengers.SelectedValue;
+                
+                Response.Redirect("Results.Aspx?" + "source=" + Server.UrlEncode(source[1]) +"&destination=" + Server.UrlEncode(destination[1]) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate));
             }
-
         }
     }
 }
