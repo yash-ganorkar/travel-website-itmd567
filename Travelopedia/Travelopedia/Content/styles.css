@@ -2518,6 +2518,8 @@ header#main-header {
   padding: 5px 10px;
   font-size: 13px;
 }
+
+
 .nav-no-br > li > a {
   -webkit-border-radius: 0;
   border-radius: 0;
@@ -10952,4 +10954,15 @@ img.mfp-img {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: auto;
+    border-radius: 5px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
