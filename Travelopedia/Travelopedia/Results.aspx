@@ -1,159 +1,761 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Results.aspx.cs" Inherits="Travelopedia.Results" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" ClientIDMode="Static" runat="server">
     <asp:UpdatePanel runat="server" EnableViewState="true">
         <ContentTemplate>
 
             <div class="container">
+                
+                    <h2 class="entry-title">Search Results</h2>
+               
               <div class="row">
+                 
+                   
                 <div class="col-md-12">
-                    <div id="flightCards" class="card-columns">
+                    <ul id="flightCards" class="card-columns booking-list">
 
-                    </div>
+                    </ul>
                     </div>
                   </div>
             </div>
+            <asp:HiddenField ID="hiddenField1" ClientIDMode="Static" runat="server"/>
+
+            <asp:HiddenField ID="hiddenField2" ClientIDMode="Static" runat="server" />
             <script type="text/javascript">
-                var jsonResponse = <%=this.responseString%>;
-                //{ "kind":"qpxExpress#tripsSearch", "trips":{ "data":{ 
-                //"aircraft":[{ "code": "320", "kind": "qpxexpress#aircraftData", "name": "Airbus A320", "ETag": null }, { "code": "E90", "kind": "qpxexpress#aircraftData", "name": "Embraer RJ-190", "ETag": null }], 
-                //"airport":[{ "city": "BOS", "code": "BOS", "kind": "qpxexpress#airportData", "name": "Boston Edward L. Logan International", "ETag": null }, { "city": "WAS", "code": "IAD", "kind": "qpxexpress#airportData", "name": "Washington Dulles International", "ETag": null }, { "city": "NYC", "code": "JFK", "kind": "qpxexpress#airportData", "name": "New York John F Kennedy International", "ETag": null }, { "city": "LAX", "code": "LAX", "kind": "qpxexpress#airportData", "name": "Los Angeles International", "ETag": null }, { "city": "CHI", "code": "ORD", "kind": "qpxexpress#airportData", "name": "Chicago O'Hare", "ETag": null }, { "city": "SFO", "code": "SFO", "kind": "qpxexpress#airportData", "name": "San Francisco International", "ETag": null }], 
-                //"carrier":[{ "code": "AS", "kind": "qpxexpress#carrierData", "name": "Alaska Airlines Inc.", "ETag": null }, { "code": "B6", "kind": "qpxexpress#carrierData", "name": "Jetblue Airways Corporation", "ETag": null }, { "code": "VX", "kind": "qpxexpress#carrierData", "name": "Virgin America Inc.", "ETag": null }], "city":[{ "code": "BOS", "country": null, "kind": "qpxexpress#cityData", "name": "Boston", "ETag": null }, { "code": "CHI", "country": null, "kind": "qpxexpress#cityData", "name": "Chicago", "ETag": null }, { "code": "LAX", "country": null, "kind": "qpxexpress#cityData", "name": "Los Angeles", "ETag": null }, { "code": "NYC", "country": null, "kind": "qpxexpress#cityData", "name": "New York", "ETag": null }, { "code": "SFO", "country": null, "kind": "qpxexpress#cityData", "name": "San Francisco", "ETag": null }, { "code": "WAS", "country": null, "kind": "qpxexpress#cityData", "name": "Washington", "ETag": null }], "kind":"qpxexpress#data", 
-                //"tax":[{ "id": "ZP", "kind": "qpxexpress#taxData", "name": "US Flight Segment Tax", "ETag": null }, { "id": "AY_001", "kind": "qpxexpress#taxData", "name": "US September 11th Security Fee", "ETag": null }, { "id": "US_001", "kind": "qpxexpress#taxData", "name": "US Transportation Tax", "ETag": null }, { "id": "XF", "kind": "qpxexpress#taxData", "name": "US Passenger Facility Charge", "ETag": null }], "ETag":null },"kind":"qpxexpress#tripOptions", "requestId":"IhuRhVnDlqHrePw9h0RRe5", 
-                //"tripOption":[{ "id": "7bkew0UPTbNOh2xOEkTBMS002", "kind": "qpxexpress#tripOption", 
-                //"pricing": [{ "baseFareTotal": "USD87.44", "fare": [{ "basisCode": "UL0QBEN", "carrier": "B6", "destination": "NYC", "id": "AAGb/MjwmM8T4RPy9nmzIp5eQ3pot57QafKQPX8gUb+Y", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }], "fareCalculation": "CHI B6 JFK 87.44UL0QBEN USD 87.44 END ZP ORD XT 6.56US 4.10ZP 5.60AY 4.50XF ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T12:26-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD87.44", "saleTaxTotal": "USD20.76", "saleTotal": "USD108.20", "segmentPricing": [{ "fareId": "AAGb/MjwmM8T4RPy9nmzIp5eQ3pot57QafKQPX8gUb+Y", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GD2ufualN0al8oKf", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD6.56", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD4.10", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD4.50", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD216.40", "slice": [{ "duration": 135, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "U", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": null, "duration": 135, "flight": { "carrier": "B6", "number": "906", "ETag": null }, "id": "GD2ufualN0al8oKf", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-11T14:42-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T11:27-05:00", "destination": "JFK", "destinationTerminal": "5", "duration": 135, "id": "LMpP2H0B3C6xpq6O", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 737, "onTimePerformance": 60, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS001", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD87.44", "fare": [{ "basisCode": "UL0QBEN", "carrier": "B6", "destination": "NYC", "id": "AAGb/MjwmM8T4RPy9nmzIp5eQ3pot57QafKQPX8gUb+Y", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }], "fareCalculation": "CHI B6 JFK 87.44UL0QBEN USD 87.44 END ZP ORD XT 6.56US 4.10ZP 5.60AY 4.50XF ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T14:40-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD87.44", "saleTaxTotal": "USD20.76", "saleTotal": "USD108.20", "segmentPricing": [{ "fareId": "AAGb/MjwmM8T4RPy9nmzIp5eQ3pot57QafKQPX8gUb+Y", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GxuKuB7PMjCMC8t+", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD6.56", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD4.10", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD4.50", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD216.40", "slice": [{ "duration": 135, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "U", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": null, "duration": 135, "flight": { "carrier": "B6", "number": "1106", "ETag": null }, "id": "GxuKuB7PMjCMC8t+", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-11T23:55-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T20:40-05:00", "destination": "JFK", "destinationTerminal": "5", "duration": 135, "id": "LZnNNT16PLVHbJL0", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 737, "onTimePerformance": 40, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS005", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD298.61", "fare": [{ "basisCode": "OI0ABEN", "carrier": "B6", "destination": "BOS", "id": "AGzq+9SER1IhTsqbnh73xDyFFFkCbJKfvckQkU3EcttU", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "VH0JUEN", "carrier": "B6", "destination": "NYC", "id": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "kind": "qpxexpress#fareInfo", "origin": "BOS", "private": null, "ETag": null }], "fareCalculation": "CHI B6 X/BOS 108.84OI0ABEN B6 JFK 189.77VH0JUEN USD 298.61 END ZP BOS ORD XT 22.39US 8.20ZP 5.60AY 9.00XF BOS4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T11:04-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD298.61", "saleTaxTotal": "USD45.19", "saleTotal": "USD343.80", "segmentPricing": [{ "fareId": "AGzq+9SER1IhTsqbnh73xDyFFFkCbJKfvckQkU3EcttU", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GyIFijBnO3w+0FjB", "ETag": null }, { "fareId": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GwFLa4-ptLYq0cZn", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD22.39", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD687.60", "slice": [{ "duration": 432, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "O", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": 209, "duration": 137, "flight": { "carrier": "B6", "number": "1012", "ETag": null }, "id": "GyIFijBnO3w+0FjB", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T13:35-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T10:18-05:00", "destination": "BOS", "destinationTerminal": "C", "duration": 137, "id": "L6KDw0ZT2l28hXFw", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 864, "onTimePerformance": 90, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "V", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": null, "duration": 86, "flight": { "carrier": "B6", "number": "1317", "ETag": null }, "id": "GwFLa4-ptLYq0cZn", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T18:30-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T17:04-04:00", "destination": "JFK", "destinationTerminal": "5", "duration": 86, "id": "Lsn1pyWPpNTxsLFA", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 186, "onTimePerformance": 20, "operatingDisclosure": null, "origin": "BOS", "originTerminal": "C", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS003", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD298.61", "fare": [{ "basisCode": "OI0ABEN", "carrier": "B6", "destination": "BOS", "id": "AGzq+9SER1IhTsqbnh73xDyFFFkCbJKfvckQkU3EcttU", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "VH0JUEN", "carrier": "B6", "destination": "NYC", "id": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "kind": "qpxexpress#fareInfo", "origin": "BOS", "private": null, "ETag": null }], "fareCalculation": "CHI B6 X/BOS 108.84OI0ABEN B6 JFK 189.77VH0JUEN USD 298.61 END ZP BOS ORD XT 22.39US 8.20ZP 5.60AY 9.00XF BOS4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T11:17-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD298.61", "saleTaxTotal": "USD45.19", "saleTotal": "USD343.80", "segmentPricing": [{ "fareId": "AGzq+9SER1IhTsqbnh73xDyFFFkCbJKfvckQkU3EcttU", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GyIFijBnO3w+0FjB", "ETag": null }, { "fareId": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "G-MBwtR8bY3tfmwk", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD22.39", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD687.60", "slice": [{ "duration": 297, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "O", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": 80, "duration": 137, "flight": { "carrier": "B6", "number": "1012", "ETag": null }, "id": "GyIFijBnO3w+0FjB", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T13:35-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T10:18-05:00", "destination": "BOS", "destinationTerminal": "C", "duration": 137, "id": "L6KDw0ZT2l28hXFw", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 864, "onTimePerformance": 90, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "V", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": null, "duration": 80, "flight": { "carrier": "B6", "number": "417", "ETag": null }, "id": "G-MBwtR8bY3tfmwk", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T16:15-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T14:55-04:00", "destination": "JFK", "destinationTerminal": "5", "duration": 80, "id": "LljyuU1Y1B8HH2Kd", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 186, "onTimePerformance": 50, "operatingDisclosure": null, "origin": "BOS", "originTerminal": "C", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS004", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD320.00", "fare": [{ "basisCode": "MI0ABEN", "carrier": "B6", "destination": "BOS", "id": "A1qhsD0KE3cnVHcr9beeN1ZmvPGE6spSu5cmW2X3oKtE", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "VH0JUEN", "carrier": "B6", "destination": "NYC", "id": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "kind": "qpxexpress#fareInfo", "origin": "BOS", "private": null, "ETag": null }], "fareCalculation": "CHI B6 X/BOS 130.23MI0ABEN B6 JFK 189.77VH0JUEN USD 320.00 END ZP BOS ORD XT 24.00US 8.20ZP 5.60AY 9.00XF BOS4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T11:04-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD320.00", "saleTaxTotal": "USD46.80", "saleTotal": "USD366.80", "segmentPricing": [{ "fareId": "A1qhsD0KE3cnVHcr9beeN1ZmvPGE6spSu5cmW2X3oKtE", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GfbgxvBIkRgNG5+N", "ETag": null }, { "fareId": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GwFLa4-ptLYq0cZn", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD24.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD733.60", "slice": [{ "duration": 298, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "M", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": 72, "duration": 140, "flight": { "carrier": "B6", "number": "312", "ETag": null }, "id": "GfbgxvBIkRgNG5+N", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T15:52-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T12:32-05:00", "destination": "BOS", "destinationTerminal": "C", "duration": 140, "id": "LQpN4u51cb-i8Hk7", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 864, "onTimePerformance": 70, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "V", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": null, "duration": 86, "flight": { "carrier": "B6", "number": "1317", "ETag": null }, "id": "GwFLa4-ptLYq0cZn", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T18:30-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T17:04-04:00", "destination": "JFK", "destinationTerminal": "5", "duration": 86, "id": "Lsn1pyWPpNTxsLFA", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 186, "onTimePerformance": 20, "operatingDisclosure": null, "origin": "BOS", "originTerminal": "C", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS006", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD320.00", "fare": [{ "basisCode": "MI0ABEN", "carrier": "B6", "destination": "BOS", "id": "A1qhsD0KE3cnVHcr9beeN1ZmvPGE6spSu5cmW2X3oKtE", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "VH0JUEN", "carrier": "B6", "destination": "NYC", "id": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "kind": "qpxexpress#fareInfo", "origin": "BOS", "private": null, "ETag": null }], "fareCalculation": "CHI B6 X/BOS 130.23MI0ABEN B6 JFK 189.77VH0JUEN USD 320.00 END ZP BOS ORD XT 24.00US 8.20ZP 5.60AY 9.00XF BOS4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T13:31-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD320.00", "saleTaxTotal": "USD46.80", "saleTotal": "USD366.80", "segmentPricing": [{ "fareId": "A1qhsD0KE3cnVHcr9beeN1ZmvPGE6spSu5cmW2X3oKtE", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GfbgxvBIkRgNG5+N", "ETag": null }, { "fareId": "A7KJjFxknRpMQoaYqL3G5PEeXHHTq5IiZC/uWobxz5cI", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GumjK+7ZVssw2YMc", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD24.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD733.60", "slice": [{ "duration": 454, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "M", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": 229, "duration": 140, "flight": { "carrier": "B6", "number": "312", "ETag": null }, "id": "GfbgxvBIkRgNG5+N", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T15:52-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T12:32-05:00", "destination": "BOS", "destinationTerminal": "C", "duration": 140, "id": "LQpN4u51cb-i8Hk7", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 864, "onTimePerformance": 70, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "V", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": null, "duration": 85, "flight": { "carrier": "B6", "number": "317", "ETag": null }, "id": "GumjK+7ZVssw2YMc", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T21:06-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T19:41-04:00", "destination": "JFK", "destinationTerminal": "5", "duration": 85, "id": "LwoNiGTJlWBESb30", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 186, "onTimePerformance": 20, "operatingDisclosure": null, "origin": "BOS", "originTerminal": "C", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS008", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD574.89", "fare": [{ "basisCode": "OI0ABEN", "carrier": "B6", "destination": "BOS", "id": "AGzq+9SER1IhTsqbnh73xDyFFFkCbJKfvckQkU3EcttU", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "QH0KUEN", "carrier": "B6", "destination": "WAS", "id": "AgDajqZZycBh8em1He71g9+yLqMrjWvS8koGDbwujpqc", "kind": "qpxexpress#fareInfo", "origin": "BOS", "private": null, "ETag": null }, { "basisCode": "VH0JUEN", "carrier": "B6", "destination": "NYC", "id": "AwVMKma4t1WwJtFus8ed8TjCe+2d1/HckPWo0s2n5TI2TBo", "kind": "qpxexpress#fareInfo", "origin": "WAS", "private": null, "ETag": null }], "fareCalculation": "CHI B6 X/BOS 108.84OI0ABEN B6 X/IAD 278.14QH0KUEN B6 NYC 187.91VH0JUEN USD 574.89 END ZP IAD BOS ORD XT 43.11US 12.30ZP 5.60AY 9.00XF BOS4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T11:12-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD574.89", "saleTaxTotal": "USD70.01", "saleTotal": "USD644.90", "segmentPricing": [{ "fareId": "AGzq+9SER1IhTsqbnh73xDyFFFkCbJKfvckQkU3EcttU", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GyIFijBnO3w+0FjB", "ETag": null }, { "fareId": "AwVMKma4t1WwJtFus8ed8TjCe+2d1/HckPWo0s2n5TI2TBo", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GqaC3Fnsiaur4kHi", "ETag": null }, { "fareId": "AgDajqZZycBh8em1He71g9+yLqMrjWvS8koGDbwujpqc", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GkSJcizQd1k7Halo", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD43.11", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD12.30", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD1289.80", "slice": [{ "duration": 646, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "O", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": 217, "duration": 137, "flight": { "carrier": "B6", "number": "1012", "ETag": null }, "id": "GyIFijBnO3w+0FjB", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T13:35-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T10:18-05:00", "destination": "BOS", "destinationTerminal": "C", "duration": 137, "id": "L6KDw0ZT2l28hXFw", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 864, "onTimePerformance": 90, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "Q", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": 92, "duration": 102, "flight": { "carrier": "B6", "number": "357", "ETag": null }, "id": "GkSJcizQd1k7Halo", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T18:54-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T17:12-04:00", "destination": "IAD", "destinationTerminal": null, "duration": 102, "id": "LtmMUfH9GkD+IHSG", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 412, "onTimePerformance": null, "operatingDisclosure": null, "origin": "BOS", "originTerminal": "C", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "V", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": null, "duration": 98, "flight": { "carrier": "B6", "number": "1808", "ETag": null }, "id": "GqaC3Fnsiaur4kHi", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T22:04-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T20:26-04:00", "destination": "JFK", "destinationTerminal": "5", "duration": 98, "id": "LFQA599b8Qcb8CSZ", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 227, "onTimePerformance": 50, "operatingDisclosure": null, "origin": "IAD", "originTerminal": null, "secure": true, "ETag": null }], "marriedSegmentGroup": "2", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS007", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD596.28", "fare": [{ "basisCode": "MI0ABEN", "carrier": "B6", "destination": "BOS", "id": "A1qhsD0KE3cnVHcr9beeN1ZmvPGE6spSu5cmW2X3oKtE", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "QH0KUEN", "carrier": "B6", "destination": "WAS", "id": "AgDajqZZycBh8em1He71g9+yLqMrjWvS8koGDbwujpqc", "kind": "qpxexpress#fareInfo", "origin": "BOS", "private": null, "ETag": null }, { "basisCode": "VH0JUEN", "carrier": "B6", "destination": "NYC", "id": "AwVMKma4t1WwJtFus8ed8TjCe+2d1/HckPWo0s2n5TI2TBo", "kind": "qpxexpress#fareInfo", "origin": "WAS", "private": null, "ETag": null }], "fareCalculation": "CHI B6 X/BOS 130.23MI0ABEN B6 X/IAD 278.14QH0KUEN B6 NYC 187.91VH0JUEN USD 596.28 END ZP IAD BOS ORD XT 44.72US 12.30ZP 5.60AY 9.00XF BOS4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T11:12-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD596.28", "saleTaxTotal": "USD71.62", "saleTotal": "USD667.90", "segmentPricing": [{ "fareId": "A1qhsD0KE3cnVHcr9beeN1ZmvPGE6spSu5cmW2X3oKtE", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GfbgxvBIkRgNG5+N", "ETag": null }, { "fareId": "AwVMKma4t1WwJtFus8ed8TjCe+2d1/HckPWo0s2n5TI2TBo", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GqaC3Fnsiaur4kHi", "ETag": null }, { "fareId": "AgDajqZZycBh8em1He71g9+yLqMrjWvS8koGDbwujpqc", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GkSJcizQd1k7Halo", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD44.72", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD12.30", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD1335.80", "slice": [{ "duration": 512, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "M", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": 80, "duration": 140, "flight": { "carrier": "B6", "number": "312", "ETag": null }, "id": "GfbgxvBIkRgNG5+N", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T15:52-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T12:32-05:00", "destination": "BOS", "destinationTerminal": "C", "duration": 140, "id": "LQpN4u51cb-i8Hk7", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 864, "onTimePerformance": 70, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "Q", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": 92, "duration": 102, "flight": { "carrier": "B6", "number": "357", "ETag": null }, "id": "GkSJcizQd1k7Halo", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T18:54-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T17:12-04:00", "destination": "IAD", "destinationTerminal": null, "duration": 102, "id": "LtmMUfH9GkD+IHSG", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 412, "onTimePerformance": null, "operatingDisclosure": null, "origin": "BOS", "originTerminal": "C", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "V", "bookingCodeCount": 7, "cabin": "COACH", "connectionDuration": null, "duration": 98, "flight": { "carrier": "B6", "number": "1808", "ETag": null }, "id": "GqaC3Fnsiaur4kHi", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "E90", "arrivalTime": "2017-10-11T22:04-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T20:26-04:00", "destination": "JFK", "destinationTerminal": "5", "duration": 98, "id": "LFQA599b8Qcb8CSZ", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 227, "onTimePerformance": 50, "operatingDisclosure": null, "origin": "IAD", "originTerminal": null, "secure": true, "ETag": null }], "marriedSegmentGroup": "2", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS009", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD711.63", "fare": [{ "basisCode": "HVXVN5", "carrier": "AS", "destination": "SFO", "id": "AyQ2JtYeXMvu8lRVpom9h66MiGR69NM8jxFHRXT2Ujn2", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "MVXVN5", "carrier": "AS", "destination": "NYC", "id": "AzJ5dGNXMrKb70uJdJ8hFl7tyWwaQSSztjmH8Iq14zDI", "kind": "qpxexpress#fareInfo", "origin": "SFO", "private": null, "ETag": null }], "fareCalculation": "ORD AS X/SFO 291.16HVXVN5 AS JFK 420.47MVXVN5 USD 711.63 END ZP SFO ORD XT 53.37US 8.20ZP 5.60AY 9.00XF SFO4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T19:54-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD711.63", "saleTaxTotal": "USD76.17", "saleTotal": "USD787.80", "segmentPricing": [{ "fareId": "AzJ5dGNXMrKb70uJdJ8hFl7tyWwaQSSztjmH8Iq14zDI", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "Gl85-0-QCWIrKTnc", "ETag": null }, { "fareId": "AyQ2JtYeXMvu8lRVpom9h66MiGR69NM8jxFHRXT2Ujn2", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "G5uzDy5T8BhLOt63", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD53.37", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD1575.60", "slice": [{ "duration": 713, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "H", "bookingCodeCount": 4, "cabin": "COACH", "connectionDuration": 104, "duration": 286, "flight": { "carrier": "AS", "number": "1211", "ETag": null }, "id": "G5uzDy5T8BhLOt63", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-11T21:41-07:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T18:55-05:00", "destination": "SFO", "destinationTerminal": "2", "duration": 286, "id": "LN2kEnzSNY0ZJuPG", "kind": "qpxexpress#legInfo", "meal": "Food for Purchase", "mileage": 1841, "onTimePerformance": 64, "operatingDisclosure": "OPERATED BY VIRGIN AMERICA", "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "M", "bookingCodeCount": 5, "cabin": "COACH", "connectionDuration": null, "duration": 323, "flight": { "carrier": "AS", "number": "1034", "ETag": null }, "id": "Gl85-0-QCWIrKTnc", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-12T07:48-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T23:25-07:00", "destination": "JFK", "destinationTerminal": "7", "duration": 323, "id": "LCEOb7j5Yex+51Km", "kind": "qpxexpress#legInfo", "meal": "Food for Purchase", "mileage": 2579, "onTimePerformance": 81, "operatingDisclosure": "OPERATED BY VIRGIN AMERICA", "origin": "SFO", "originTerminal": "2", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS00A", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD839.07", "fare": [{ "basisCode": "VVXVN5", "carrier": "VX", "destination": "SFO", "id": "AFjBJPjMAL8Sha+XsWiowWbkZuosve0vOOAQcU6ovQfU", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "BVXVN5", "carrier": "VX", "destination": "NYC", "id": "ARaHbHxQowBTD+WyJpcXNIkR6oYJx4iffbMdWR9Mvjn/", "kind": "qpxexpress#fareInfo", "origin": "SFO", "private": null, "ETag": null }], "fareCalculation": "ORD VX X/SFO 418.60VVXVN5 VX JFK 420.47BVXVN5 USD 839.07 END ZP SFO ORD XT 62.93US 8.20ZP 5.60AY 9.00XF SFO4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T19:54-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": null, "saleFareTotal": "USD839.07", "saleTaxTotal": "USD85.73", "saleTotal": "USD924.80", "segmentPricing": [{ "fareId": "AFjBJPjMAL8Sha+XsWiowWbkZuosve0vOOAQcU6ovQfU", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "G4BUMKJhDvfZtTsl", "ETag": null }, { "fareId": "ARaHbHxQowBTD+WyJpcXNIkR6oYJx4iffbMdWR9Mvjn/", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "Gzly1isexBbmC30k", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD62.93", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD1849.60", "slice": [{ "duration": 713, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "V", "bookingCodeCount": 5, "cabin": "COACH", "connectionDuration": 104, "duration": 286, "flight": { "carrier": "VX", "number": "1211", "ETag": null }, "id": "G4BUMKJhDvfZtTsl", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-11T21:41-07:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T18:55-05:00", "destination": "SFO", "destinationTerminal": "2", "duration": 286, "id": "LF6WfedgQU-QB87r", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 1841, "onTimePerformance": 92, "operatingDisclosure": null, "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "B", "bookingCodeCount": 5, "cabin": "COACH", "connectionDuration": null, "duration": 323, "flight": { "carrier": "VX", "number": "1034", "ETag": null }, "id": "Gzly1isexBbmC30k", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-12T07:48-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T23:25-07:00", "destination": "JFK", "destinationTerminal": "7", "duration": 323, "id": "Lf+Smbnm5XlWo3Q2", "kind": "qpxexpress#legInfo", "meal": null, "mileage": 2579, "onTimePerformance": 81, "operatingDisclosure": null, "origin": "SFO", "originTerminal": "2", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }, { "id": "7bkew0UPTbNOh2xOEkTBMS00B", "kind": "qpxexpress#tripOption", "pricing": [{ "baseFareTotal": "USD1680.00", "fare": [{ "basisCode": "FVXR", "carrier": "AS", "destination": "LAX", "id": "AD8Bsir9THdYW1SYJlP3n+oKFcRp2JqbfJAAIaAI", "kind": "qpxexpress#fareInfo", "origin": "CHI", "private": null, "ETag": null }, { "basisCode": "BVXN3", "carrier": "AS", "destination": "NYC", "id": "ACW3IrdPmTxz1RKfAAXBJaWx8gZjGmQ+egfPoIxjIW//", "kind": "qpxexpress#fareInfo", "origin": "LAX", "private": null, "ETag": null }], "fareCalculation": "ORD AS X/LAX 1194.42FVXR AS JFK 485.58BVXN3 USD 1680.00 END ZP LAX ORD XT 126.00US 8.20ZP 5.60AY 9.00XF LAX4.50 ORD4.50", "kind": "qpxexpress#pricingInfo", "latestTicketingTime": "2017-10-11T18:29-04:00", "passengers": { "adultCount": 2, "childCount": null, "infantInLapCount": null, "infantInSeatCount": null, "kind": "qpxexpress#passengerCounts", "seniorCount": null, "ETag": null }, "ptc": "ADT", "refundable": true, "saleFareTotal": "USD1680.00", "saleTaxTotal": "USD148.80", "saleTotal": "USD1828.80", "segmentPricing": [{ "fareId": "ACW3IrdPmTxz1RKfAAXBJaWx8gZjGmQ+egfPoIxjIW//", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GsSI05PcIxlHPQSC", "ETag": null }, { "fareId": "AD8Bsir9THdYW1SYJlP3n+oKFcRp2JqbfJAAIaAI", "freeBaggageOption": null, "kind": "qpxexpress#segmentPricing", "segmentId": "GlEXy4QB0d14qEPx", "ETag": null }], "tax": [{ "chargeType": "GOVERNMENT", "code": "US", "country": "US", "id": "US_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD126.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "ZP", "country": "US", "id": "ZP", "kind": "qpxexpress#taxInfo", "salePrice": "USD8.20", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "XF", "country": "US", "id": "XF", "kind": "qpxexpress#taxInfo", "salePrice": "USD9.00", "ETag": null }, { "chargeType": "GOVERNMENT", "code": "AY", "country": "US", "id": "AY_001", "kind": "qpxexpress#taxInfo", "salePrice": "USD5.60", "ETag": null }], "ETag": null }], "saleTotal": "USD3657.60", "slice": [{ "duration": 795, "kind": "qpxexpress#sliceInfo", "segment": [{ "bookingCode": "F", "bookingCodeCount": 2, "cabin": "FIRST", "connectionDuration": 209, "duration": 266, "flight": { "carrier": "AS", "number": "1241", "ETag": null }, "id": "GlEXy4QB0d14qEPx", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-11T19:56-07:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T17:30-05:00", "destination": "LAX", "destinationTerminal": "6", "duration": 266, "id": "LHOrocYRhIajdF-R", "kind": "qpxexpress#legInfo", "meal": "Dinner", "mileage": 1740, "onTimePerformance": 77, "operatingDisclosure": "OPERATED BY VIRGIN AMERICA", "origin": "ORD", "originTerminal": "3", "secure": true, "ETag": null }], "marriedSegmentGroup": "0", "subjectToGovernmentApproval": null, "ETag": null }, { "bookingCode": "B", "bookingCodeCount": 2, "cabin": "COACH", "connectionDuration": null, "duration": 320, "flight": { "carrier": "AS", "number": "1420", "ETag": null }, "id": "GsSI05PcIxlHPQSC", "kind": "qpxexpress#segmentInfo", "leg": [{ "aircraft": "320", "arrivalTime": "2017-10-12T07:45-04:00", "changePlane": null, "connectionDuration": null, "departureTime": "2017-10-11T23:25-07:00", "destination": "JFK", "destinationTerminal": "7", "duration": 320, "id": "LXKmLh0WzJai5Pwl", "kind": "qpxexpress#legInfo", "meal": "Food for Purchase", "mileage": 2468, "onTimePerformance": 94, "operatingDisclosure": "OPERATED BY VIRGIN AMERICA", "origin": "LAX", "originTerminal": "6", "secure": true, "ETag": null }], "marriedSegmentGroup": "1", "subjectToGovernmentApproval": null, "ETag": null }], "ETag": null }], "ETag": null }], "ETag":null },"ETag":"\"1syu42EjUdK2xe3y0r4xzvGJtSA/AMBwAMBFjVZnhM_qJ-5qBGId794\"" }//]]>
+                var type = document.getElementById('hiddenField1').value;
+                var neighborhoodData = new Array();
 
-                var flightCards = document.getElementById('flightCards');
+                if (type == "hotel") {
+                    $.ajax({
+                        url: "http://localhost/Travelopedia-API/api/hotels/allhotels?",
+                        type: "get", //send it through get method
+                        data: {
+                            destination: getParameterByName("dest"),
+                            rooms: getParameterByName("rooms"),
+                            adults: getParameterByName("adults"),
+                            children: getParameterByName("children"),
+                            startdate: getParameterByName("startdate"),
+                            enddate: getParameterByName("enddate")
+                        },
+                        cache: false,
+                        success: function (response) {
+                            //alert(response.hotelRoomDetails[0].city);
 
-                console.log(getParameterByName("source") + " - " + getParameterByName("destination"));
+                            var res = response.hotelRoomDetails;
+                            var flightCards = document.getElementById('flightCards');
 
-                console.log("Trip Options Length" + jsonResponse.trips.tripOption.length);
-                console.log("Origin : " + getParameterByName("source") + ", Destination : " + getParameterByName("destination") + ", Journey Start Date : " + getParameterByName("startdate") + ", Return Date : " + getParameterByName("enddate"));
+                            for (var i = 0; i < response.hotelRoomDetails.length; i++) {
+                                //alert(response.hotelRoomDetails[0].state);
+                                var litag = document.createElement("li");
+                                var bookingitem = document.createElement("a");
+                                bookingitem.setAttribute("href", "#");
+                                bookingitem.setAttribute("class", "booking-item");
+                                var rowdiv = document.createElement("div");
+                                rowdiv.setAttribute("class", "row");
 
-                var tripOptions = jsonResponse.trips.tripOption;
-                console.clear();
-                for (var i = 0; i < tripOptions.length; i++) {
-                    var cardBlockDiv = document.createElement("div");
-                    cardBlockDiv.setAttribute("class", "card card-block");
+                                var coldiv1 = document.createElement("div");
+                                coldiv1.setAttribute("class", "col-md-3");
+                                var imagediv = document.createElement("div");
+                                imagediv.setAttribute("class", "booking-item-img-wrap");
+                                var img = document.createElement("img");
+                                img.setAttribute("src", "images/800x600.png");
+                                imagediv.appendChild(img);
+                                coldiv1.appendChild(imagediv);
 
-                    var cardTitle = document.createElement("h5");
-                    cardTitle.setAttribute("class", "card-title");
-                    var cardTitleText = document.createTextNode("Flight Details");
-                    cardTitle.appendChild(cardTitleText);
-                    cardBlockDiv.appendChild(cardTitle);
+                                var coldiv2 = document.createElement("div");
+                                coldiv2.setAttribute("class", "col-md-6");
+                                var ratingdiv = document.createElement("div");
+                                ratingdiv.setAttribute("class", "booking-item-rating")
+                                var rating = document.createElement("span");
+                                rating.setAttribute("class", "booking-item-rating-number");
+                                var brating = document.createElement("b");
+                                var bratingtext = document.createTextNode("***");
+                                //var offive = document.createTextNode("of 5");
 
-                    var cardTextDiv = document.createElement("div");
-                    cardTextDiv.setAttribute("class", "card-text");
+                                var hotel = document.createElement("h5");
+                                hotel.setAttribute("class", "booking-item-title");
+                                var link = document.createElement("a");
+                                link.setAttribute("href", res[i].deeplink);
+                                var hoteltext = document.createTextNode("link");
 
-                    var cardRowDiv = document.createElement("div");
-                    cardRowDiv.setAttribute("class", "row");
+                                var bookingadd = document.createElement("p");
+                                bookingadd.setAttribute("class", "booking-item-address");
+                                var map = document.createElement("i");
+                                map.setAttribute("class", "fa fa-map-marker");
+                                bookingadd.appendChild(map);
+                                var bookingcity = document.createTextNode(res[i].city + ", " + res[i].state);
+                                bookingadd.appendChild(bookingcity);
 
-                    var startDate = document.createElement("div");
-                    startDate.setAttribute("style", "text-align: center; width:100%;");
-                    var startDateText = document.createTextNode(getParameterByName("startdate"));
-                    startDate.appendChild(startDateText);
+                                brating.appendChild(bratingtext);
 
-                    var source = document.createElement("div");
-                    source.setAttribute("style", " float:left; text-align: left; width:40%;");
-                    var sourceText = document.createTextNode(getParameterByName("source"));
-                    source.appendChild(sourceText);
+                                rating.appendChild(brating);
+                                //  rating.appendChild(offive);
+                                ratingdiv.appendChild(rating);
+                                coldiv2.appendChild(ratingdiv);
+                                link.appendChild(hoteltext);
+                                hotel.appendChild(link);
 
-                    var dash = document.createElement("div");
-                    dash.setAttribute("style", " float:left; text-align: center; width:20%;");
-                    var dashText = document.createTextNode("--------->");
-                    dash.appendChild(dashText);
+                                coldiv2.appendChild(hotel);
+                                coldiv2.appendChild(bookingadd);
+                                var coldiv3 = document.createElement("div");
+                                var from = document.createElement("span");
+                                from.setAttribute("class", "booking-item-price-from");
+                                var fromtext = document.createTextNode("from");
+                                from.appendChild(fromtext);
 
-                    var destination = document.createElement("div");
-                    destination.setAttribute("style", " float:left; text-align: right; width:40%;");
-                    var destinationText = document.createTextNode(getParameterByName("destination"));
-                    destination.appendChild(destinationText);
+                                var price = document.createElement("span");
+                                price.setAttribute("class", "booking-item-price");
+                                var pricetext = document.createTextNode("$" + res[i].subtotal);
+                                price.appendChild(pricetext);
+                                // var night = document.createElement("span");
+                                // var nighttext = document.createTextNode("/night");
+                                // night.appendChild(nighttext);
+                                var booknow = document.createElement("a");
+                                booknow.setAttribute("class", "btn btn-primary");
+                                booknow.setAttribute("href", res[i].deeplink);
+                                var booknowtext = document.createTextNode("Book Now");
+                                booknow.appendChild(booknowtext);
+                                coldiv3.appendChild(from);
+                                coldiv3.appendChild(price);
+                                //coldiv3.appendChild(night);
+                                coldiv3.appendChild(booknow);
+                                coldiv3.setAttribute("class", "col-md-3");
 
-                    var depart = document.createElement("div");
-                    depart.setAttribute("style", "float:left; text-align: left; width:30%;");
-                    var departText = document.createTextNode("Depart @ " + splitTime(tripOptions[i].slice[0].segment[0].leg[0].departureTime));
-                    depart.appendChild(departText);
+                                rowdiv.appendChild(coldiv1);
+                                rowdiv.appendChild(coldiv2);
+                                rowdiv.appendChild(coldiv3);
+                                bookingitem.appendChild(rowdiv);
+                                litag.appendChild(bookingitem);
+                                flightCards.appendChild(litag);
+                            }
 
-                    var duration = document.createElement("div");
-                    duration.setAttribute("style", "float:left; text-align: center; width:40%;");
-                    var durationText = document.createTextNode(tripOptions[i].slice[0].duration + " mins");
-                    duration.appendChild(durationText);
+                        },
+                        error: function (xhr) {
+                            alert(xhr.error);
+                        }
+                    });
 
-                    var arrive = document.createElement("div");
-                    arrive.setAttribute("style", "float:left; text-align: right; width:30%;");
-                    var arriveText = document.createTextNode("Arrive @ " + splitTime(tripOptions[i].slice[0].segment[0].leg[0].arrivalTime));
-                    arrive.appendChild(arriveText);
+                    //var jsonResponse = document.getElementById('hiddenField2').value;
+                    //jsonResponse = JSON.parse(jsonResponse);
+                    // alert(jsonResponse);
+                    // console.log(jsonResponse.Hotwire.MetaData.HotelMetaData.Neighborhoods.Neighborhood[2].Name);
+                    // console.log(jsonResponse.Hotwire.Result.HotelResult[0].CheckInDate);
+                    // var x = jsonResponse.Hotwire.Result.HotelResult;
+                    //var y = jsonResponse.Hotwire.MetaData.HotelMetaData.Neighborhoods.Neighborhood;
+                    //console.log(x.Name);
+                    // console.log(x.City);
+                    // console.log(x.State);
+                    // console.log(x.Country);
 
-                    cardRowDiv.appendChild(startDate);
-                    cardRowDiv.appendChild(source);
-                    cardRowDiv.appendChild(dash);
-                    cardRowDiv.appendChild(destination);
-                    cardRowDiv.appendChild(depart);
-                    cardRowDiv.appendChild(duration);
-                    cardRowDiv.appendChild(arrive);
 
-                    cardTextDiv.appendChild(cardRowDiv);
 
-                    var horizontalLine = document.createElement("hr");
-                    cardTextDiv.appendChild(horizontalLine);
-                        
-                    var cardRowDiv = document.createElement("div");
-                    cardRowDiv.setAttribute("class", "row");
 
-                    var startDate = document.createElement("div");
-                    startDate.setAttribute("style", "text-align: center; width:100%;");
-                    var startDateText = document.createTextNode(getParameterByName("enddate"));
-                    startDate.appendChild(startDateText);
 
-                    var source = document.createElement("div");
-                    source.setAttribute("style", "float:left; text-align: left; width:40%;");
-                    var sourceText = document.createTextNode(getParameterByName("destination"));
-                    source.appendChild(sourceText);
-
-                    var dash = document.createElement("div");
-                    dash.setAttribute("style", "float:left; text-align: center; width:20%;");
-                    var dashText = document.createTextNode("--------->");
-                    dash.appendChild(dashText);
-
-                    var destination = document.createElement("div");
-                    destination.setAttribute("style", "float:left; text-align: right; width:40%;");
-                    var destinationText = document.createTextNode(getParameterByName("source"));
-                    destination.appendChild(destinationText);
-
-                    var depart = document.createElement("div");
-                    depart.setAttribute("style", "float:left; text-align: left; width:30%;");
-                    var departText = document.createTextNode("Depart @ " + splitTime(tripOptions[i].slice[1].segment[0].leg[0].departureTime));
-                    depart.appendChild(departText);
-
-                    var duration = document.createElement("div");
-                    duration.setAttribute("style", "float:left; text-align: center; width:40%;");
-                    var durationText = document.createTextNode(tripOptions[i].slice[1].duration + " mins");
-                    duration.appendChild(durationText);
-
-                    var arrive = document.createElement("div");
-                    arrive.setAttribute("style", "float:left; text-align: right; width:30%;");
-                    var arriveText = document.createTextNode("Arrive @ " + splitTime(tripOptions[i].slice[1].segment[0].leg[0].arrivalTime));
-                    arrive.appendChild(arriveText);
-
-                    cardRowDiv.appendChild(startDate);
-                    cardRowDiv.appendChild(source);
-                    cardRowDiv.appendChild(dash);
-                    cardRowDiv.appendChild(destination);
-                    cardRowDiv.appendChild(depart);
-                    cardRowDiv.appendChild(duration);
-                    cardRowDiv.appendChild(arrive);
-
-                    cardTextDiv.appendChild(cardRowDiv);
-                    cardBlockDiv.appendChild(cardTextDiv);
-
-                    flightCards.appendChild(cardBlockDiv);
-                    //console.log("Fare Per Person : " + tripOptions[i].pricing[0].saleFareTotal + ", Tax Per Person: " + tripOptions[i].pricing[0].saleTaxTotal + ", Total Fare:" + tripOptions[i].saleTotal);
-
-                    //var slice = tripOptions[i].slice;
-                    //for (var j = 0; j < slice.length; j++) {
-                    //    console.log("Duration : " + slice[j].duration + ", Cabin: " + slice[j].segment[0].cabin + ", Arrival Time:" + slice[j].segment[0].leg[0].arrivalTime + ", Departure Time:" + slice[j].segment[0].leg[0].departureTime);
-                    //}
                 }
+                else if (type == "car") {
 
+                    $.ajax({
+                        url: "http://localhost/Travelopedia-API/api/car/allcars",
+                        type: "get", //send it through get method
+                        data: {
+                            location: getParameterByName("dest"),
+                            startdate: getParameterByName("startdate"),
+                            enddate: getParameterByName("enddate"),
+                            pickuptime: getParameterByName("pickuptime"),
+                            dropofftime: getParameterByName("dropofftime")
+                        },
+                        cache: false,
+                        success: function (response) {
+                            // console.log(response.carResults);
+
+                            var flightCards = document.getElementById('flightCards');
+                            var carresult = response.carResults;
+                            for (var i = 0; i < response.carResults.length; i++) {
+                                var litag = document.createElement("li");
+                                var bookingitem = document.createElement("a");
+                                bookingitem.setAttribute("class", "booking-item");
+
+                                var rowd = document.createElement("div");
+                                rowd.setAttribute("class", "row");
+
+                                var coldiv1 = document.createElement("div");
+                                coldiv1.setAttribute("class", "col-md-3");
+                                var imgdiv = document.createElement("div");
+                                imgdiv.setAttribute("class", "booking-item-car-img");
+                                if (carresult[i].PossibleModels.includes("ford")) {
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", "images/Honda-Civic.png");
+                                }
+                                else if (carresult[i].PossibleModels.includes("Nissan")) {
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", "images/Nissan-GT-R.png");
+                                }
+                                else if (carresult[i].PossibleModels.includes("Toyota")) {
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", "images/Toyota-Prius-Plus.png");
+                                }
+                                else if (carresult[i].PossibleModels.includes("kia")) {
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", "images/Mercedes-Benz-Clasa-G-facelift.png");
+                                }
+                                else {
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", "images/Volkswagen-Touareg-Edition-X.png");
+                                }
+                                var carname = document.createElement("p");
+                                carname.setAttribute("class", "booking-item-car-title");
+                                var carnametext = document.createTextNode(carresult[i].PossibleModels); //possibleModels
+                                carname.appendChild(carnametext);
+
+
+                                imgdiv.appendChild(img);
+                                coldiv1.appendChild(imgdiv);
+                                coldiv1.appendChild(carname);
+
+
+                                var coldiv2 = document.createElement("div");
+                                coldiv2.setAttribute("class", "col-md-6");
+                                var agency = document.createElement("h5");
+                                agency.setAttribute("class", "booking-item-title");
+                                var agencyname = document.createTextNode("Agency Name: " + carresult[i].RentalAgency); //RentalAgency
+                                agency.appendChild(agencyname);
+                                var address = document.createElement("p");
+                                address.setAttribute("class", "booking-item-address");
+                                var maplogo = document.createElement("i");
+                                maplogo.setAttribute("class", "fa fa-map-marker");
+                                address.appendChild(maplogo);
+                                addresstext = document.createTextNode(carresult[i].VendorLocation); //VendorLocation
+                                address.appendChild(addresstext);
+                                var iconul = document.createElement("ul");
+                                iconul.setAttribute("class", "booking-item-features booking-item-features-sign clearfix");
+
+                                var iconli = document.createElement("li");
+                                iconli.setAttribute("rel", "tooltip");
+                                iconli.setAttribute("data-placement", "top");
+                                iconli.setAttribute("data-original-title", "Passengers");
+                                var maleicon = document.createElement("i");
+                                maleicon.setAttribute("class", "fa fa-male");
+                                iconli.appendChild(maleicon);
+                                var numpas = document.createElement("span");
+                                numpas.setAttribute("class", "booking-item-feature-sign");
+                                numpas.setAttribute("style", "bottom:-8px");
+                                var numpastext = document.createTextNode(carresult[i].TypicalSeating); //TypicalSeating
+                                numpas.appendChild(numpastext);
+                                iconli.appendChild(numpas);
+
+                                var iconli2 = document.createElement("li");
+                                iconli2.setAttribute("rel", "tooltip");
+                                iconli2.setAttribute("data-placement", "top");
+                                iconli2.setAttribute("data-original-title", "Mileage");
+                                var caricon = document.createElement("i");
+                                caricon.setAttribute("class", "im im-car-doors");
+                                iconli2.appendChild(caricon);
+                                var mileage = document.createElement("span");
+                                mileage.setAttribute("class", "booking-item-feature-sign");
+                                mileage.setAttribute("style", "bottom:-8px");
+                                var mileagetext = document.createTextNode(carresult[i].MileageDescription); //MileageDescription
+                                mileage.appendChild(mileagetext);
+                                iconli2.appendChild(mileage);
+
+                                var iconli3 = document.createElement("li");
+                                iconli3.setAttribute("rel", "tooltip");
+                                iconli3.setAttribute("data-placement", "top");
+                                iconli3.setAttribute("data-original-title", "Air Conditioning");
+                                var ac = document.createElement("i");
+                                ac.setAttribute("class", "im im-air");
+                                iconli3.appendChild(ac);
+                                var air = document.createElement("span");
+                                air.setAttribute("class", "booking-item-feature-sign");
+                                air.setAttribute("style", "bottom:-8px");
+                                var airtext = document.createTextNode("AC"); //airconditioningDescription
+                                air.appendChild(airtext);
+                                iconli3.appendChild(air);
+
+                                var iconli4 = document.createElement("li");
+                                iconli4.setAttribute("rel", "tooltip");
+                                iconli4.setAttribute("data-placement", "top");
+                                iconli4.setAttribute("data-original-title", "Power Steering");
+                                var steeringicon = document.createElement("i");
+                                steeringicon.setAttribute("class", "im im-car-wheel");
+                                iconli4.appendChild(steeringicon);
+                                var steering = document.createElement("span");
+                                steering.setAttribute("class", "booking-item-feature-sign");
+                                steering.setAttribute("style", "bottom:-8px");
+                                var steeringtext = document.createTextNode("Power Steering"); //power steering
+                                steering.appendChild(steeringtext);
+                                iconli4.appendChild(steering);
+
+                                var iconli5 = document.createElement("li");
+                                iconli5.setAttribute("rel", "tooltip");
+                                iconli5.setAttribute("data-placement", "top");
+                                iconli5.setAttribute("data-original-title", "Automic Transmission");
+                                var autominicon = document.createElement("i");
+                                autominicon.setAttribute("class", "im im-shift-auto");
+                                iconli5.appendChild(autominicon);
+                                var automic = document.createElement("span");
+                                automic.setAttribute("class", "booking-item-feature-sign");
+                                automic.setAttribute("style", "bottom:-8px");
+                                var automictext = document.createTextNode("Automic Transmission"); //Automic Transmission
+                                automic.appendChild(automictext);
+                                iconli5.appendChild(automic);
+
+                                var iconli6 = document.createElement("li");
+                                iconli6.setAttribute("rel", "tooltip");
+                                iconli6.setAttribute("data-placement", "top");
+                                iconli6.setAttribute("data-original-title", "FM Radio");
+                                var fmicon = document.createElement("i");
+                                fmicon.setAttribute("class", "im im-fm");
+                                iconli6.appendChild(fmicon);
+                                var FM = document.createElement("span");
+                                FM.setAttribute("class", "booking-item-feature-sign");
+                                FM.setAttribute("style", "bottom:-8px");
+                                var FMtext = document.createTextNode("FM Radio"); //FM Radio
+                                FM.appendChild(FMtext);
+                                iconli6.appendChild(FM);
+
+
+                                iconul.appendChild(iconli);
+                                iconul.appendChild(iconli2);
+                                iconul.appendChild(iconli3);
+                                iconul.appendChild(iconli4);
+                                iconul.appendChild(iconli6);
+                                iconul.appendChild(iconli5);
+
+                                /* var feature=document.createElement("p");
+                                 feature.setAttribute("class","booking-item-address");
+                                 var featuretext=document.createTextNode("Automatic Transmission, Power Steering, Air Conditioning, Air Bags, Cruise Control, Anti-Lock Brakes, AM/FM Stereo");
+                                 feature.appendChild(featuretext);*/
+
+
+
+                                coldiv2.appendChild(agency);
+                                coldiv2.appendChild(address);
+                                coldiv2.appendChild(iconul);
+                                //coldiv2.appendChild(feature);
+
+                                var coldiv3 = document.createElement("div");
+                                coldiv3.setAttribute("class", "col-md-3");
+                                var price = document.createElement("span");
+                                price.setAttribute("class", "booking-item-price");
+                                var pricetext = document.createTextNode("$"+carresult[i].DailyRate); //DailyRate
+                                price.appendChild(pricetext);
+                                var perday = document.createElement("span");
+                                var perdaytext = document.createTextNode("/day");
+                                perday.appendChild(perdaytext);
+                                var cartype = document.createElement("p");
+                                cartype.setAttribute("class", "booking-item-flight-class");
+                                var cartypename = document.createTextNode(carresult[i].CarTypeName); //CarTypeName
+                                cartype.appendChild(cartypename);
+                                var selectbtn = document.createElement("a");
+                                selectbtn.setAttribute("class", "btn btn-primary");
+                                selectbtn.setAttribute("href", carresult[i].DeepLink); // DeepLink
+                                var selecttext = document.createTextNode("Select");
+                                selectbtn.appendChild(selecttext);
+                                coldiv3.appendChild(price);
+                                coldiv3.appendChild(perday);
+                                coldiv3.appendChild(cartype);
+                                coldiv3.appendChild(selectbtn);
+
+                                rowd.appendChild(coldiv1);
+                                rowd.appendChild(coldiv2);
+                                rowd.appendChild(coldiv3);
+                                bookingitem.appendChild(rowd);
+                                litag.appendChild(bookingitem);
+                                flightCards.appendChild(litag);
+                            }
+
+
+                        },
+                        error: function (xhr) {
+                            alert(xhr.error);
+                        }
+                    });
+
+
+                }
+                else if (type == "flightround") {
+
+                    var jsonResponse = document.getElementById('hiddenField2').value;
+
+                    jsonResponse = JSON.parse(jsonResponse);
+                    console.log(type);
+                    console.log(jsonResponse.trips.tripOption.length);
+                    var flightCards = document.getElementById('flightCards');
+
+                    console.log(getParameterByName("source") + " - " + getParameterByName("destination"));
+
+                    console.log("Trip Options Length" + jsonResponse.trips.tripOption.length);
+                    console.log("Origin : " + getParameterByName("source") + ", Destination : " + getParameterByName("destination") + ", Journey Start Date : " + getParameterByName("startdate") + ", Return Date : " + getParameterByName("enddate"));
+
+                    var tripOptions = jsonResponse.trips.tripOption;
+                    console.log(tripOptions);
+                    for (var j = 0; j < tripOptions.length; j++) {
+
+                        var litag = document.createElement("li");
+                        var bookingcontainer = document.createElement("div");
+                        bookingcontainer.setAttribute("class", "booking-item-container");
+                        var bookingitem = document.createElement("div");
+                        bookingitem.setAttribute("class", "booking-item");
+
+
+                        var cardBlockDiv = document.createElement("div");
+                        cardBlockDiv.setAttribute("class", "row");
+
+                       
+                        var coldiv1 = document.createElement("div");
+                        coldiv1.setAttribute("class", "col-md-2");
+                        var airlinelogo = document.createElement("div");
+                        airlinelogo.setAttribute("class", "booking-item-airline-logo");
+                        var image = document.createElement("img");
+                        image.setAttribute("src", "images/american-airlines.jpg");
+                        var p = document.createElement("p");
+                        var airlinename = document.createTextNode("American");
+                        p.appendChild(airlinename);
+                        airlinelogo.appendChild(p);
+                        airlinelogo.appendChild(image);
+                        coldiv1.appendChild(airlinelogo);
+
+
+                        var coldiv2 = document.createElement("div");
+                        coldiv2.setAttribute("class", "col-md-5");
+                        var airlinedet = document.createElement("div");
+                        airlinedet.setAttribute("class", "booking-item-flight-details");
+                        var dept = document.createElement("div");
+                        dept.setAttribute("class", "booking-item-departure");
+                        var arrival = document.createElement("div");
+                        arrival.setAttribute("class", "booking-item-arrival");
+                        airlinedet.appendChild(dept);
+                        airlinedet.appendChild(arrival);
+
+                        var i = document.createElement("i");
+                        i.setAttribute("class", "fa fa-plane");
+
+                        var depart = document.createElement("h5");
+                        var departText = document.createTextNode("Depart @ " + splitTime(tripOptions[j].slice[0].segment[0].leg[0].departureTime));
+                        depart.appendChild(departText);
+                        var startDate = document.createElement("p");
+                        startDate.setAttribute("class", "booking-item-date");
+                        var startDateText = document.createTextNode(getParameterByName("startdate"));
+                        startDate.appendChild(startDateText);
+                        var source = document.createElement("p");
+                        source.setAttribute("class", " booking-item-destination");
+                        var sourceText = document.createTextNode(getParameterByName("source"));
+                        source.appendChild(sourceText);
+                        dept.appendChild(i);
+                        dept.appendChild(depart);
+                        dept.appendChild(startDate);
+                        dept.appendChild(source);
+
+                        
+                        var i = document.createElement("i");
+                        i.setAttribute("class", "fa fa-plane fa-flip-vertical");
+                        var arrive = document.createElement("h5");
+                        var arriveText = document.createTextNode("Arrive @ " + splitTime(tripOptions[j].slice[0].segment[0].leg[0].arrivalTime));
+                        arrive.appendChild(arriveText);
+                        var startDate = document.createElement("p");
+                        startDate.setAttribute("class", "booking-item-date");
+                        var startDateText = document.createTextNode(getParameterByName("startdate"));
+                        startDate.appendChild(startDateText);
+                        var destination = document.createElement("p");
+                        destination.setAttribute("class", " booking-item-destination");
+                        var destinationText = document.createTextNode(getParameterByName("destination"));
+                        destination.appendChild(destinationText);
+                        arrival.appendChild(i);
+                        arrival.appendChild(arrive);
+                        arrival.appendChild(startDate);
+                        arrival.appendChild(destination);
+                        coldiv2.appendChild(airlinedet);
+
+                        var coldiv3 = document.createElement("div");
+                        coldiv3.setAttribute("class", "col-md-2");
+                        var duration = document.createElement("h5");
+                        var durationText = document.createTextNode(tripOptions[j].slice[0].duration + " mins");
+                        duration.appendChild(durationText);
+                        coldiv3.appendChild(duration);
+
+                        var coldiv4 = document.createElement("div");
+                        coldiv4.setAttribute("class", "col-md-3");
+                        var price = document.createElement("span");
+                        var pricetext = document.createTextNode("$445");
+                        price.appendChild(pricetext);
+                        var person = document.createElement("span");
+                        var persontext = document.createTextNode("/person");
+                        person.appendChild(persontext);
+
+                        
+                        coldiv4.appendChild(price);
+                        coldiv4.appendChild(person);
+                      
+
+                        
+                       
+                        
+
+                        
+                        cardBlockDiv.appendChild(coldiv1);
+                        cardBlockDiv.appendChild(coldiv2);
+                        cardBlockDiv.appendChild(coldiv3);
+                        cardBlockDiv.appendChild(coldiv4);
+
+
+                        bookingitem.appendChild(cardBlockDiv);
+                        bookingcontainer.appendChild(bookingitem);
+                        litag.appendChild(bookingcontainer);
+                        flightCards.appendChild(litag);
+
+                        var cardBlockDiv = document.createElement("div");
+                        cardBlockDiv.setAttribute("class", "row");
+
+                        var coldiv1 = document.createElement("div");
+                        coldiv1.setAttribute("class", "col-md-2");
+                        var airlinelogo = document.createElement("div");
+                        airlinelogo.setAttribute("class", "booking-item-airline-logo");
+                        var image = document.createElement("img");
+                        image.setAttribute("src", "images/american-airlines.jpg");
+                        var p = document.createElement("p");
+                        var airlinename = document.createTextNode("American");
+                        p.appendChild(airlinename);
+                        airlinelogo.appendChild(p);
+                        airlinelogo.appendChild(image);
+                        coldiv1.appendChild(airlinelogo);
+
+                        var coldiv2 = document.createElement("div");
+                        coldiv2.setAttribute("class", "col-md-5");
+                        
+                        var airlinedet = document.createElement("div");
+                        airlinedet.setAttribute("class", "booking-item-flight-details");
+                        var dept = document.createElement("div");
+                        dept.setAttribute("class", "booking-item-departure");
+                        var arrival = document.createElement("div");
+                        arrival.setAttribute("class", "booking-item-arrival");
+                        airlinedet.appendChild(dept);
+                        airlinedet.appendChild(arrival);
+
+                        var i = document.createElement("i");
+                        i.setAttribute("class", "fa fa-plane");
+                        var depart = document.createElement("h5");
+                        var departText = document.createTextNode("Depart @ " + splitTime(tripOptions[j].slice[1].segment[0].leg[0].departureTime));
+                        depart.appendChild(departText);
+                        var startDate = document.createElement("p");
+                        startDate.setAttribute("class", "booking-item-date");
+                        var startDateText = document.createTextNode(getParameterByName("enddate"));
+                        startDate.appendChild(startDateText);
+                        var source = document.createElement("p");
+                        source.setAttribute("class", " booking-item-destination");
+                        var sourceText = document.createTextNode(getParameterByName("destination"));
+                        source.appendChild(sourceText);
+                        dept.appendChild(i);
+                        dept.appendChild(depart);
+                        dept.appendChild(startDate);
+                        dept.appendChild(source);
+
+                        var i = document.createElement("i");
+                        i.setAttribute("class", "fa fa-plane fa-flip-vertical");
+                        var arrive = document.createElement("h5");
+                        var arriveText = document.createTextNode("Arrive @ " + splitTime(tripOptions[j].slice[1].segment[0].leg[0].arrivalTime));
+                        arrive.appendChild(arriveText);
+                        var startDate = document.createElement("p");
+                        startDate.setAttribute("class", "booking-item-date");
+                        var startDateText = document.createTextNode(getParameterByName("enddate"));
+                        startDate.appendChild(startDateText);
+                        var destination = document.createElement("p");
+                        destination.setAttribute("class", " booking-item-destination");
+                        var destinationText = document.createTextNode(getParameterByName("source"));
+                        destination.appendChild(destinationText);
+
+
+                        arrival.appendChild(i);
+                        arrival.appendChild(arrive);
+                        arrival.appendChild(startDate);
+                        arrival.appendChild(destination);
+                        coldiv2.appendChild(airlinedet);
+                        
+
+                        var coldiv3 = document.createElement("div");
+                        coldiv3.setAttribute("class", "col-md-2");
+                        
+                        var duration = document.createElement("h5");
+                        var durationText = document.createTextNode(tripOptions[j].slice[1].duration + " mins");
+                        duration.appendChild(durationText);
+                        coldiv3.appendChild(duration);
+                        
+
+                        var coldiv4 = document.createElement("div");
+                        coldiv4.setAttribute("class", "col-md-3");
+                        var price = document.createElement("span");
+                        var pricetext = document.createTextNode("$445");
+                        price.appendChild(pricetext);
+                        var person = document.createElement("span");
+                        var persontext = document.createTextNode("/person");
+                        person.appendChild(persontext);
+                        var fclass = document.createElement("p");
+                        fclass.setAttribute("class", "booking-item-flight-class");
+                        var selectbt = document.createElement("a");
+                        selectbt.setAttribute("class", "btn btn-primary");
+                        selectbt.setAttribute("href", "#");
+                        var selectbttext = document.createTextNode("Select");
+                        selectbt.appendChild(selectbttext);
+                        coldiv4.appendChild(price);
+                        coldiv4.appendChild(person);
+                        coldiv4.appendChild(fclass);
+                        coldiv4.appendChild(selectbt);
+
+                        
+
+                        
+                        cardBlockDiv.appendChild(coldiv1);
+                        cardBlockDiv.appendChild(coldiv2);
+                        cardBlockDiv.appendChild(coldiv3);
+                        cardBlockDiv.appendChild(coldiv4);
+
+
+
+                        bookingitem.appendChild(cardBlockDiv);
+                        bookingcontainer.appendChild(bookingitem);
+                        litag.appendChild(bookingcontainer);
+                        flightCards.appendChild(litag);
+                        //console.log("Fare Per Person : " + tripOptions[i].pricing[0].saleFareTotal + ", Tax Per Person: " + tripOptions[i].pricing[0].saleTaxTotal + ", Total Fare:" + tripOptions[i].saleTotal);
+
+                        //var slice = tripOptions[i].slice;
+                        //for (var j = 0; j < slice.length; j++) {
+                        //    console.log("Duration : " + slice[j].duration + ", Cabin: " + slice[j].segment[0].cabin + ", Arrival Time:" + slice[j].segment[0].leg[0].arrivalTime + ", Departure Time:" + slice[j].segment[0].leg[0].departureTime);
+                        //}
+                    }
+                }
+                else if (type == "flightone") {
+
+                    var jsonResponse = document.getElementById('hiddenField2').value;
+
+                    jsonResponse = JSON.parse(jsonResponse);
+                    console.log(type);
+                    console.log(jsonResponse.trips.tripOption.length);
+                    var flightCards = document.getElementById('flightCards');
+
+                    console.log(getParameterByName("source") + " - " + getParameterByName("destination"));
+
+                    console.log("Trip Options Length" + jsonResponse.trips.tripOption.length);
+                    console.log("Origin : " + getParameterByName("source") + ", Destination : " + getParameterByName("destination") + ", Journey Start Date : " + getParameterByName("startdate") + ", Return Date : " + getParameterByName("enddate"));
+
+                    var tripOptions = jsonResponse.trips.tripOption;
+                    console.log(tripOptions);
+                    for (var j = 0; j < tripOptions.length; j++) {
+
+                        var litag = document.createElement("li");
+                        var bookingcontainer = document.createElement("div");
+                        bookingcontainer.setAttribute("class", "booking-item-container");
+                        var bookingitem = document.createElement("div");
+                        bookingitem.setAttribute("class", "booking-item");
+
+
+                        var cardBlockDiv = document.createElement("div");
+                        cardBlockDiv.setAttribute("class", "row");
+
+                        var coldiv1 = document.createElement("div");
+                        coldiv1.setAttribute("class", "col-md-2");
+                        var coldiv2 = document.createElement("div");
+                        coldiv2.setAttribute("class", "col-md-5");
+                        var coldiv3 = document.createElement("div");
+                        coldiv3.setAttribute("class", "col-md-2");
+                        var coldiv4 = document.createElement("div");
+                        coldiv4.setAttribute("class", "col-md-3");
+
+
+                        var airlinelogo = document.createElement("div");
+                        airlinelogo.setAttribute("class", "booking-item-airline-logo");
+                        var image = document.createElement("img");
+                        image.setAttribute("src", "images/american-airlines.jpg");
+                        var p = document.createElement("p");
+                        var airlinename = document.createTextNode("American");
+                        p.appendChild(airlinename);
+                        airlinelogo.appendChild(p);
+                        airlinelogo.appendChild(image);
+
+                        var airlinedet = document.createElement("div");
+                        airlinedet.setAttribute("class", "booking-item-flight-details");
+                        var dept = document.createElement("div");
+                        dept.setAttribute("class", "booking-item-departure");
+                        var arrival = document.createElement("div");
+                        arrival.setAttribute("class", "booking-item-arrival");
+                        airlinedet.appendChild(dept);
+                        airlinedet.appendChild(arrival);
+
+                        var i = document.createElement("i");
+                        i.setAttribute("class", "fa fa-plane");
+
+                        var depart = document.createElement("h5");
+                        var departText = document.createTextNode("Depart @ " + splitTime(tripOptions[j].slice[0].segment[0].leg[0].departureTime));
+                        depart.appendChild(departText);
+                        var startDate = document.createElement("p");
+                        startDate.setAttribute("class", "booking-item-date");
+                        var startDateText = document.createTextNode(getParameterByName("startdate"));
+                        startDate.appendChild(startDateText);
+                        var source = document.createElement("p");
+                        source.setAttribute("class", " booking-item-destination");
+                        var sourceText = document.createTextNode(getParameterByName("source"));
+                        source.appendChild(sourceText);
+                        dept.appendChild(i);
+                        dept.appendChild(depart);
+                        dept.appendChild(startDate);
+                        dept.appendChild(source);
+
+                        var i = document.createElement("i");
+                        i.setAttribute("class", "fa fa-plane fa-flip-vertical");
+                        var arrive = document.createElement("h5");
+                        var arriveText = document.createTextNode("Arrive @ " + splitTime(tripOptions[j].slice[0].segment[0].leg[0].arrivalTime));
+                        arrive.appendChild(arriveText);
+                        var startDate = document.createElement("p");
+                        startDate.setAttribute("class", "booking-item-date");
+                        var startDateText = document.createTextNode(getParameterByName("startdate"));
+                        startDate.appendChild(startDateText);
+                        var destination = document.createElement("p");
+                        destination.setAttribute("class", " booking-item-destination");
+                        var destinationText = document.createTextNode(getParameterByName("destination"));
+                        destination.appendChild(destinationText);
+                        arrival.appendChild(i);
+                        arrival.appendChild(arrive);
+                        arrival.appendChild(startDate);
+                        arrival.appendChild(destination);
+
+                        var duration = document.createElement("h5");
+                        var durationText = document.createTextNode(tripOptions[j].slice[0].duration + " mins");
+                        duration.appendChild(durationText);
+
+                        var price = document.createElement("span");
+                        var pricetext = document.createTextNode("$445");
+                        price.appendChild(pricetext);
+                        var person = document.createElement("span");
+                        var persontext = document.createTextNode("/person");
+                        person.appendChild(persontext);
+                        var fclass = document.createElement("p");
+                        fclass.setAttribute("class", "booking-item-flight-class");
+                        var selectbt = document.createElement("a");
+                        selectbt.setAttribute("class", "btn btn-primary");
+                        selectbt.setAttribute("href", "#");
+                        var selectbttext = document.createTextNode("Select");
+                        selectbt.appendChild(selectbttext);
+                        coldiv4.appendChild(price);
+                        coldiv4.appendChild(person);
+                        coldiv4.appendChild(fclass);
+                        coldiv4.appendChild(selectbt);
+
+                        coldiv3.appendChild(duration);
+                        coldiv2.appendChild(airlinedet);
+                        coldiv1.appendChild(airlinelogo);
+
+                       
+                        cardBlockDiv.appendChild(coldiv1);
+                        cardBlockDiv.appendChild(coldiv2);
+                        cardBlockDiv.appendChild(coldiv3);
+                        cardBlockDiv.appendChild(coldiv4);
+
+
+                        bookingitem.appendChild(cardBlockDiv);
+                        bookingcontainer.appendChild(bookingitem);
+                        litag.appendChild(bookingcontainer);
+                        flightCards.appendChild(litag);
+
+                    }
+                }
                 function getParameterByName(name, url) {
                     if (!url) url = window.location.href;
                     name = name.replace(/[\[\]]/g, "\\$&");

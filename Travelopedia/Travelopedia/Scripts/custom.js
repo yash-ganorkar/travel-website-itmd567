@@ -64,7 +64,7 @@ $('.typeahead').typeahead({
                 var result = [];
                 $.each(data.response.airports, function(index, val) {
                     result.push({
-                        value: val.name + " - " + val.code
+                        value: val.name + "-" + val.code
                     });
                 });
                 cb(result);

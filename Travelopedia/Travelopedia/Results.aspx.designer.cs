@@ -7,9 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Travelopedia {
-    
-    
-    public partial class Results {
+namespace Travelopedia
+{
+
+
+    public partial class Results
+    {
+
+        /// <summary>
+        /// hiddenField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenField1;
+
+        /// <summary>
+        /// hiddenField2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenField2;
     }
 }
