@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using Google.Apis.QPXExpress.v1;
 using Google.Apis.QPXExpress.v1.Data;
@@ -10,16 +14,16 @@ namespace Travelopedia_API.Controllers
     {
         [HttpPost]
         [ActionName("AllFlights")]
-        
-        public TripsSearchResponse FetchAllFlights(TripsSearchRequest tripsSearchRequest)
+
+        public TripsSearchResponse FetchAllFlights(TripsSearchRequest tripSearchRequest)
         {
             QPXExpressService service = new QPXExpressService(new BaseClientService.Initializer()
             {
-                ApiKey = "AIzaSyBOlWOYjzgML-FDW6wxgGxezzEokm0nUeI",
+                ApiKey = "AIzaSyAJ1NjLJLHj2IyiQa1SYfiRiYiDSw_RBhg",
                 ApplicationName = "API key 1",
-
             });
-            var result = service.Trips.Search(tripsSearchRequest).Execute();
+
+            var result = service.Trips.Search(tripSearchRequest).Execute();
             return result;
         }
         // GET api/<controller>

@@ -16,14 +16,14 @@ namespace Travelopedia_API.Controllers
         private List<CarTypes> carTypes;
         [HttpGet]
         [ActionName("AllCars")]
-        public CarDetails FetchAllCars()
+        public CarDetails FetchAllCars(string location, string startdate, string enddate, string pickuptime, string dropofftime)
         {
             carDetails = new CarDetails();
             XmlDocument doc = new XmlDocument();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://api.hotwire.com/v1/search/car");
-                string urlParams = "?apikey=8mgjwdbgs6pxuupdwmje72uu&dest=LAX&startdate=10/20/2017&resultType=N&enddate=10/23/2017&pickuptime=10:00&dropofftime=13:30";
+                string urlParams = "?apikey=8mgjwdbgs6pxuupdwmje72uu&dest=" + location + "&startdate=" + startdate + "&resultType=N&enddate=" + enddate + "&pickuptime=" + pickuptime + "&dropofftime=" + dropofftime;
                 // client.DefaultRequestHeaders.Accept.Clear();
                 // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
