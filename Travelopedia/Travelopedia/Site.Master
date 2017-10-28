@@ -63,7 +63,7 @@
 </head>
 <body>
     <form runat="server">
-        <asp:ScriptManager runat="server">
+        <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
@@ -110,7 +110,7 @@
                         <div class="col-md-4">
                             <div class="top-user-area clearfix">
                                 <ul class="top-user-area-list list list-horizontal list-border">
-                                    <li><a href="Login.aspx">Sign In</a>
+                                    <li><a href="/Account/Login.aspx">Sign In</a>
                                     </li>
                                 </ul>
                             </div>
@@ -528,7 +528,7 @@
                 </div>
             </div>
         </footer>
-
+        <asp:HiddenField ID="he" runat="server"/>
     <!-- Javascript -->
         <script src="Scripts/jquery.js"></script>
         <script src="Scripts/bootstrap.js"></script>
@@ -555,7 +555,7 @@
               <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
         
-
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     </div>
                 </form>
 </body>

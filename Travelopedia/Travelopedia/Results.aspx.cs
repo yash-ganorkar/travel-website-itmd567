@@ -20,6 +20,7 @@ namespace Travelopedia
         public string responseType;
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.ClientScript.GetPostBackEventReference(this, "arg");
             if (!IsPostBack)
             {
                 var queryParam = Request.QueryString["type"];
@@ -37,8 +38,8 @@ namespace Travelopedia
                         x.Request = new TripOptionsRequest();
                         x.Request.Passengers = new PassengerCounts { AdultCount = 1 };
                         x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-19" });
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = "2017-10-28" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-28" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = "2017-10-31" });
                         hiddenField1.Value = "flightround";
                     }
 
@@ -47,7 +48,7 @@ namespace Travelopedia
                         x.Request = new TripOptionsRequest();
                         x.Request.Passengers = new PassengerCounts { AdultCount = 1 };
                         x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-19" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-28" });
                         hiddenField1.Value = "flightone";
 
                     }
@@ -80,6 +81,35 @@ namespace Travelopedia
                     }
                 }
             }
+            else
+            {
+                string eventTarget = this.Request["__EVENTTARGET"];
+                string eventArgument = this.Request["__EVENTARGUMENT"];
+
+                if (eventTarget != String.Empty)
+                {
+                    if (eventArgument != String.Empty) { 
+                        Session["Data"] = eventArgument.ToString();
+                        Response.Redirect("~/Account/Login.aspx");
+                    }
+                }
+            }
+        }
+
+        protected void hiddenTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string valueChanged = hiddenTextBox1.Text;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static void Responses(string value)
+        {
+
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
