@@ -111,9 +111,10 @@
                                 // var night = document.createElement("span");
                                 // var nighttext = document.createTextNode("/night");
                                 // night.appendChild(nighttext);
-                                var booknow = document.createElement("a");
+                                var booknow = document.createElement("button");
                                 booknow.setAttribute("class", "btn btn-primary");
                                 booknow.setAttribute("href", res[i].deeplink);
+                                booknow.setAttribute("hotel", res[i].city + "-" + res[i].state + "-" + res[i].subtotal + "-" + getParameterByName("rooms") + "-" + getParameterByName("adults") + "-" + getParameterByName("children"));
                                 var booknowtext = document.createTextNode("Book Now");
                                 booknow.appendChild(booknowtext);
                                 coldiv3.appendChild(from);
@@ -128,6 +129,22 @@
                                 bookingitem.appendChild(rowdiv);
                                 litag.appendChild(bookingitem);
                                 flightCards.appendChild(litag);
+
+                                $(booknow).click(function () {
+                                    var id = $(this).attr('hotel');
+                                    console.log(id);
+                                    alert(id);
+                                    var params = id.split('-');
+
+                                    alert(params);
+
+                                    var date1 = new Date(getParameterByName("startdate"));
+                                    var date2 = new Date(getParameterByName("enddate"));
+
+                                    var paramValues = "hotel" + "&" + params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4]+ "&" + params[5] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
+                                    __doPostBack('Button2', paramValues);
+                                    //window.open(url, '_self');
+                                });
                             }
 
                         },
@@ -135,23 +152,6 @@
                             alert(xhr.error);
                         }
                     });
-
-                    //var jsonResponse = document.getElementById('hiddenField2').value;
-                    //jsonResponse = JSON.parse(jsonResponse);
-                    // alert(jsonResponse);
-                    // console.log(jsonResponse.Hotwire.MetaData.HotelMetaData.Neighborhoods.Neighborhood[2].Name);
-                    // console.log(jsonResponse.Hotwire.Result.HotelResult[0].CheckInDate);
-                    // var x = jsonResponse.Hotwire.Result.HotelResult;
-                    //var y = jsonResponse.Hotwire.MetaData.HotelMetaData.Neighborhoods.Neighborhood;
-                    //console.log(x.Name);
-                    // console.log(x.City);
-                    // console.log(x.State);
-                    // console.log(x.Country);
-
-
-
-
-
                 }
                 else if (type == "car") {
 
@@ -610,9 +610,10 @@
                         person.appendChild(persontext);
                         var fclass = document.createElement("p");
                         fclass.setAttribute("class", "booking-item-flight-class");
-                        var selectbt = document.createElement("a");
+                        var selectbt = document.createElement("button");
                         selectbt.setAttribute("class", "btn btn-primary");
                         selectbt.setAttribute("href", "#");
+                        selectbt.setAttribute("flightround", getParameterByName("source") + "-" + getParameterByName("destination") + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].departureTime) + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].arrivalTime) + "/" + getParameterByName("destination") + "-" + getParameterByName("source") + "-" + splitTime(tripOptions[j].slice[1].segment[0].leg[0].departureTime) + "-" + splitTime(tripOptions[j].slice[1].segment[0].leg[0].arrivalTime) + "-" + tripOptions[j].saleTotal);
                         var selectbttext = document.createTextNode("Select");
                         selectbt.appendChild(selectbttext);
                         coldiv4.appendChild(price);
@@ -620,7 +621,27 @@
                         coldiv4.appendChild(fclass);
                         coldiv4.appendChild(selectbt);
 
-                        
+                        $(selectbt).click(function () {
+                            var id = $(this).attr('flightround');
+                            console.log(id);
+                            alert(id);
+                            var params = id.split('/');
+                            var sourcetodestination = params[0].split('-');
+                            var destinationtosource = params[1].split('-');
+                            
+                            alert(sourcetodestination);
+                            alert(destinationtosource);
+
+                            var date1 = new Date(getParameterByName("startdate"));
+                            var date2 = new Date(getParameterByName("enddate"));
+
+                            var paramValues = "flightround" + "&" + sourcetodestination[0] + "&" + sourcetodestination[1] + "&" + sourcetodestination[2] + "&" + sourcetodestination[3] + "&" + destinationtosource[0] + "&" + destinationtosource[1] + "&" + destinationtosource[2] + "&" + destinationtosource[3] + "&" + destinationtosource[4] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
+                            console.clear();
+                            console.log(paramValues);
+                            __doPostBack('Button2', paramValues);
+                            //window.open(url, '_self');
+                        });
+
 
                         
                         cardBlockDiv.appendChild(coldiv1);
@@ -748,9 +769,10 @@
                         person.appendChild(persontext);
                         var fclass = document.createElement("p");
                         fclass.setAttribute("class", "booking-item-flight-class");
-                        var selectbt = document.createElement("a");
+                        var selectbt = document.createElement("button");
                         selectbt.setAttribute("class", "btn btn-primary");
                         selectbt.setAttribute("href", "#");
+                        selectbt.setAttribute("flightone", getParameterByName("source") + "-" + getParameterByName("destination") + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].departureTime) + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].arrivalTime) + "-" + tripOptions[j].saleTotal);
                         var selectbttext = document.createTextNode("Select");
                         selectbt.appendChild(selectbttext);
                         coldiv4.appendChild(price);
@@ -774,6 +796,22 @@
                         litag.appendChild(bookingcontainer);
                         flightCards.appendChild(litag);
 
+                        $(selectbt).click(function () {
+                            var id = $(this).attr('flightone');
+                            console.log(id);
+                            alert(id);
+                            var params = id.split('-');
+
+                            alert(params);
+
+                            var date1 = new Date(getParameterByName("startdate"));
+                            var date2 = new Date(getParameterByName("enddate"));
+
+                            var paramValues = "flightone" + "&" + params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
+                            __doPostBack('Button2', paramValues);
+                            //window.open(url, '_self');
+                        });
+
                     }
                 }
                 function getParameterByName(name, url) {
@@ -790,9 +828,7 @@
                     var dateSplit = timeValue.split("T");
                     var timeZoneSplit = dateSplit[1].split("-");
                     return timeZoneSplit[0];
-                }
-
-                
+                }                
             </script>
         </ContentTemplate>
     </asp:UpdatePanel>

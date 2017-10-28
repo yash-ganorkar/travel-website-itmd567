@@ -38,8 +38,8 @@ namespace Travelopedia
                         x.Request = new TripOptionsRequest();
                         x.Request.Passengers = new PassengerCounts { AdultCount = 1 };
                         x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-19" });
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = "2017-10-28" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-28" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = "2017-10-31" });
                         hiddenField1.Value = "flightround";
                     }
 
@@ -48,7 +48,7 @@ namespace Travelopedia
                         x.Request = new TripOptionsRequest();
                         x.Request.Passengers = new PassengerCounts { AdultCount = 1 };
                         x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-19" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-28" });
                         hiddenField1.Value = "flightone";
 
                     }
@@ -95,7 +95,6 @@ namespace Travelopedia
                 }
             }
         }
-
 
         protected void hiddenTextBox1_TextChanged(object sender, EventArgs e)
         {
