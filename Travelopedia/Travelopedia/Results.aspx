@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Results.aspx.cs" Inherits="Travelopedia.Results" %>
+﻿<%@ Page Language="C#" EnableEventValidation="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Results.aspx.cs" Inherits="Travelopedia.Results" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" ClientIDMode="Static" runat="server">
     <asp:UpdatePanel runat="server" EnableViewState="true">
@@ -19,8 +19,9 @@
                   </div>
             </div>
             <asp:HiddenField ID="hiddenField1" ClientIDMode="Static" runat="server"/>
-
+            <asp:Button ID="Button2" runat="server" Visible="false" OnClick="Button2_Click" Text="Button" />
             <asp:HiddenField ID="hiddenField2" ClientIDMode="Static" runat="server" />
+            <asp:TextBox runat="server" ID="hiddenTextBox1" ClientIDMode="Static" Style="display: none;" OnTextChanged="hiddenTextBox1_TextChanged"></asp:TextBox>
             <script type="text/javascript">
                 var type = document.getElementById('hiddenField1').value;
                 var neighborhoodData = new Array();
@@ -346,9 +347,28 @@
                                 cartype.setAttribute("class", "booking-item-flight-class");
                                 var cartypename = document.createTextNode(carresult[i].CarTypeName); //CarTypeName
                                 cartype.appendChild(cartypename);
-                                var selectbtn = document.createElement("a");
+                                var selectbtn = document.createElement("button");
                                 selectbtn.setAttribute("class", "btn btn-primary");
+                                selectbtn.setAttribute("id",i);
                                 selectbtn.setAttribute("href", carresult[i].DeepLink); // DeepLink
+                                selectbtn.setAttribute("car", carresult[i].PossibleModels + "-" + carresult[i].RentalAgency + "-" + carresult[i].VendorLocation + "-" + carresult[i].DailyRate);                                 
+                                $(selectbtn).click(function () {
+                                    var id = $(this).attr('car');
+                                    console.log(id);
+                                    alert(id);
+                                    var params = id.split('-');
+                                    console.log(params);
+                                    alert(params);
+                                    var date1 = new Date(getParameterByName("startdate"));
+                                    var date2 = new Date(getParameterByName("enddate"));
+                                    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                                    
+                                    var paramValues = params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + getParameterByName("startdate")+ "&" + getParameterByName("enddate") + "&" + diffDays;
+                                    __doPostBack('Button2',paramValues);
+                                    //window.open(url, '_self');
+                                });
+
                                 var selecttext = document.createTextNode("Select");
                                 selectbtn.appendChild(selecttext);
                                 coldiv3.appendChild(price);
@@ -372,7 +392,7 @@
                     });
 
 
-                }
+                }                
                 else if (type == "flightround") {
 
                     var jsonResponse = document.getElementById('hiddenField2').value;
@@ -771,6 +791,8 @@
                     var timeZoneSplit = dateSplit[1].split("-");
                     return timeZoneSplit[0];
                 }
+
+                
             </script>
         </ContentTemplate>
     </asp:UpdatePanel>

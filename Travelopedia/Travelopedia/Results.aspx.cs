@@ -20,6 +20,7 @@ namespace Travelopedia
         public string responseType;
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.ClientScript.GetPostBackEventReference(this, "arg");
             if (!IsPostBack)
             {
                 var queryParam = Request.QueryString["type"];
@@ -80,6 +81,36 @@ namespace Travelopedia
                     }
                 }
             }
+            else
+            {
+                string eventTarget = this.Request["__EVENTTARGET"];
+                string eventArgument = this.Request["__EVENTARGUMENT"];
+
+                if (eventTarget != String.Empty)
+                {
+                    if (eventArgument != String.Empty) { 
+                        Session["Data"] = eventArgument.ToString();
+                        Response.Redirect("~/Account/Login.aspx");
+                    }
+                }
+            }
+        }
+
+
+        protected void hiddenTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string valueChanged = hiddenTextBox1.Text;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static void Responses(string value)
+        {
+
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

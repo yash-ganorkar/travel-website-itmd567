@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Travelopedia
-{
-
-
-    public partial class Results
-    {
-
+namespace Travelopedia {
+    
+    
+    public partial class Results {
+        
         /// <summary>
         /// hiddenField1 control.
         /// </summary>
@@ -22,7 +20,16 @@ namespace Travelopedia
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenField1;
-
+        
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
         /// <summary>
         /// hiddenField2 control.
         /// </summary>
@@ -31,5 +38,14 @@ namespace Travelopedia
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenField2;
+        
+        /// <summary>
+        /// hiddenTextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox hiddenTextBox1;
     }
 }

@@ -93,7 +93,6 @@ namespace Travelopedia
             string dropoffdate = carDropDate.Text;
             string pickuptime = carPickTime.Text;
             string dropofftime = carDropTime.Text;
-
             Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
 
 
