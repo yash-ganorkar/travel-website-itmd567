@@ -27,6 +27,7 @@ namespace Travelopedia.Account
                 if (Context.User.Identity.IsAuthenticated)
                 {
                     properties.Dictionary[IdentityHelper.XsrfKey] = Context.User.Identity.GetUserId();
+                    Session["User"] = Context.User.Identity.IsAuthenticated;
                 }
                 Context.GetOwinContext().Authentication.Challenge(properties, provider);
                 Response.StatusCode = 401;

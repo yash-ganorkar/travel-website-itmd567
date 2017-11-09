@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Stripe;
+using System;
 using System.Web;
 using System.Web.Configuration;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Travelopedia.Models;
 
 namespace Travelopedia
 {
@@ -12,15 +10,90 @@ namespace Travelopedia
     {
         public string stripePublishableKey = WebConfigurationManager.AppSettings["StripePublishableKey"];
         public string amount = "0.0";
+       public string[] sessionValues;
+
+        public PaymentDetails paymentDetails;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            paymentDetails = new PaymentDetails();
+
+            HttpCookie myCookie = new HttpCookie("UserSettings");
+            myCookie["Login"] = "true";
+            
+            myCookie.Expires = DateTime.Now.AddMinutes(2d);
+            Response.Cookies.Add(myCookie);
+
+            if (User.Identity.Name != "" &&  Session["Data"].ToString() != "")
             {
+                hiddenFieldLogin.Value = "logout";
                 string username = System.Web.HttpContext.Current.User.Identity.Name;
+
+                sessionValues = Session["Data"].ToString().Split('&');
+                amount = ((Convert.ToDouble(sessionValues[3]) * Convert.ToDouble(sessionValues[6])) * 100).ToString();
+                name.Text = sessionValues[0];
+                type.Text = sessionValues[1];
+                location.Text = sessionValues[2];
+                location1.Text = sessionValues[2];
+                price.Text = sessionValues[3];
+                pickup.Text = sessionValues[4];
+                dropoff.Text = sessionValues[5];
+
+
+                if (Request.Form["stripeToken"] != null)
+                {
+                    var customers = new StripeCustomerService();
+                    var charges = new StripeChargeService();
+
+                    var customer = customers.Create(new StripeCustomerCreateOptions
+                    {
+                        Email = Request.Form["stripeEmail"],
+                        SourceToken = Request.Form["stripeToken"]
+                    });
+
+                    var charge = charges.Create(new StripeChargeCreateOptions
+                    {
+                        Amount = Convert.ToInt32(amount),
+                        Description = "Sample Charge",
+                        Currency = "usd",
+                        CustomerId = customer.Id,
+                        ReceiptEmail = customer.Email,
+                        SourceTokenOrExistingSourceId = customer.DefaultSourceId
+                    });
+
+                    StripeConfiguration.SetApiKey(WebConfigurationManager.AppSettings["StripeSecretKey"]);
+
+                    var chargeService = new StripeChargeService();
+                    StripeCharge charges2 = chargeService.Get(charge.Id);
+
+                    paymentDetails.Name = sessionValues[0];
+                    paymentDetails.PaymentAmount = Convert.ToDouble(amount);
+                    paymentDetails.StripeTRNumber = charge.Id;
+                    paymentDetails.Email = customer.Email;
+
+                    //using (var client = new HttpClient())
+                    //{
+                    //    client.BaseAddress = new Uri("http://localhost/Travelopedia-API/api/");
+                    //    client.DefaultRequestHeaders.Accept.Clear();
+                    //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    //    var response = client.PostAsJsonAsync("payment/addpayment", paymentDetails).Result;
+                    //    if (response.IsSuccessStatusCode)
+                    //    {
+
+                    //    }
+                    //}
+
+
+
+                    Response.Redirect("Default.Aspx");
+
+                }
+
             }
-            Label1.Text = "Welcome " + User.Identity.Name;
-            string[] sessionValues = Session["Data"].ToString().Split('&');
-            amount = ((Convert.ToDouble(sessionValues[3]) * Convert.ToDouble(sessionValues[6]))*100).ToString();
+            else
+            {
+                Response.Redirect("Default.Aspx");
+            }
         }
     }
 }

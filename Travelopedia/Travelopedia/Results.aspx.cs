@@ -23,6 +23,15 @@ namespace Travelopedia
             this.ClientScript.GetPostBackEventReference(this, "arg");
             if (!IsPostBack)
             {
+                if (Session["User"] == null)
+                {
+                    hiddenFieldLogin.Value = "login";
+                }
+                else
+                {
+                    hiddenFieldLogin.Value = "logout";
+                }
+
                 var queryParam = Request.QueryString["type"];
                 if (queryParam == "hotel")
                 {
@@ -36,19 +45,19 @@ namespace Travelopedia
                     {
 
                         x.Request = new TripOptionsRequest();
-                        x.Request.Passengers = new PassengerCounts { AdultCount = 1 };
+                        x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
                         x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-28" });
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = "2017-10-31" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = Request.QueryString[4] });
                         hiddenField1.Value = "flightround";
                     }
 
                     else
                     {
                         x.Request = new TripOptionsRequest();
-                        x.Request.Passengers = new PassengerCounts { AdultCount = 1 };
+                        x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
                         x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = "2017-10-28" });
+                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
                         hiddenField1.Value = "flightone";
 
                     }
@@ -88,12 +97,19 @@ namespace Travelopedia
 
                 if (eventTarget != String.Empty)
                 {
-                    if (eventArgument != String.Empty) { 
+                    if (eventArgument != String.Empty && Session["User"] == null) { 
                         Session["Data"] = eventArgument.ToString();
                         Response.Redirect("~/Account/Login.aspx");
                     }
+                    else
+                    {
+                        Session["Data"] = eventArgument.ToString();
+                        Response.Redirect("~/Home.aspx");
+                    }
                 }
             }
+            
+            
         }
 
         protected void hiddenTextBox1_TextChanged(object sender, EventArgs e)
@@ -109,7 +125,7 @@ namespace Travelopedia
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            string h = "hello"; 
         }
     }
 }

@@ -12,14 +12,22 @@ namespace Travelopedia.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            // Enable this once you have account confirmation enabled for password reset functionality
-            //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
+            if(!HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+                hiddenFieldLogin.Value = "login";
+                RegisterHyperLink.NavigateUrl = "Register";
+                // Enable this once you have account confirmation enabled for password reset functionality
+                //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
+                OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+                var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
+                if (!String.IsNullOrEmpty(returnUrl))
+                {
+                    RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+                }
+            }
+            else
+            {
+                Response.Redirect("~/Home.aspx");
             }
         }
 

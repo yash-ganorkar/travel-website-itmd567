@@ -11,6 +11,7 @@ using Owin;
 using Travelopedia.Models;
 using Google.Apis.Services;
 using Google.Apis.QPXExpress.v1;
+using Microsoft.Owin.Security.Facebook;
 
 namespace Travelopedia
 {
@@ -67,10 +68,24 @@ namespace Travelopedia
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "133055944002819",
-               appSecret: "3f4f6585b3f022676a11b0339b378859"
-               );
+            var facebookAuthentication = new FacebookAuthenticationOptions()
+            {
+
+            };
+
+
+            //app.UseFacebookAuthentication(
+            //   appId: "133055944002819",
+            //   appSecret: "3f4f6585b3f022676a11b0339b378859"
+            //   );
+
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions() {
+                AppId = "133055944002819",
+                AppSecret = "3f4f6585b3f022676a11b0339b378859",
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
+                Scope = { "email" },
+                UserInformationEndpoint = "https://graph.facebook.com/v2.7/me?fields=id,name,email"
+            });
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
