@@ -17,81 +17,87 @@ namespace Travelopedia
         {
             paymentDetails = new PaymentDetails();
 
-            HttpCookie myCookie = new HttpCookie("UserSettings");
-            myCookie["Login"] = "true";
-            
-            myCookie.Expires = DateTime.Now.AddMinutes(2d);
-            Response.Cookies.Add(myCookie);
-
-            if (User.Identity.Name != "" &&  Session["Data"].ToString() != "")
+            if(Request.Cookies["TimedCookie"] != null)
             {
-                hiddenFieldLogin.Value = "logout";
-                string username = System.Web.HttpContext.Current.User.Identity.Name;
-
-                sessionValues = Session["Data"].ToString().Split('&');
-                amount = ((Convert.ToDouble(sessionValues[3]) * Convert.ToDouble(sessionValues[6])) * 100).ToString();
-                name.Text = sessionValues[0];
-                type.Text = sessionValues[1];
-                location.Text = sessionValues[2];
-                location1.Text = sessionValues[2];
-                price.Text = sessionValues[3];
-                pickup.Text = sessionValues[4];
-                dropoff.Text = sessionValues[5];
-
-
-                if (Request.Form["stripeToken"] != null)
+                if (Session["Data"].ToString() != "")
                 {
-                    var customers = new StripeCustomerService();
-                    var charges = new StripeChargeService();
+                    hiddenFieldLogin.Value = "logout";
+                    string username = Request.Cookies["TimedCookie"]["User"].ToString();
 
-                    var customer = customers.Create(new StripeCustomerCreateOptions
+                    sessionValues = Session["Data"].ToString().Split('&');
+                    amount = ((Convert.ToDouble(sessionValues[3]) * Convert.ToDouble(sessionValues[6])) * 100).ToString();
+                    name.Text = sessionValues[0];
+                    type.Text = sessionValues[1];
+                    location.Text = sessionValues[2];
+                    location1.Text = sessionValues[2];
+                    price.Text = sessionValues[3];
+                    pickup.Text = sessionValues[4];
+                    dropoff.Text = sessionValues[5];
+
+
+                    if (Request.Form["stripeToken"] != null)
                     {
-                        Email = Request.Form["stripeEmail"],
-                        SourceToken = Request.Form["stripeToken"]
-                    });
+                        var customers = new StripeCustomerService();
+                        var charges = new StripeChargeService();
 
-                    var charge = charges.Create(new StripeChargeCreateOptions
-                    {
-                        Amount = Convert.ToInt32(amount),
-                        Description = "Sample Charge",
-                        Currency = "usd",
-                        CustomerId = customer.Id,
-                        ReceiptEmail = customer.Email,
-                        SourceTokenOrExistingSourceId = customer.DefaultSourceId
-                    });
+                        var customer = customers.Create(new StripeCustomerCreateOptions
+                        {
+                            Email = Request.Form["stripeEmail"],
+                            SourceToken = Request.Form["stripeToken"]
+                        });
 
-                    StripeConfiguration.SetApiKey(WebConfigurationManager.AppSettings["StripeSecretKey"]);
+                        var charge = charges.Create(new StripeChargeCreateOptions
+                        {
+                            Amount = Convert.ToInt32(amount),
+                            Description = "Sample Charge",
+                            Currency = "usd",
+                            CustomerId = customer.Id,
+                            ReceiptEmail = customer.Email,
+                            SourceTokenOrExistingSourceId = customer.DefaultSourceId
+                        });
 
-                    var chargeService = new StripeChargeService();
-                    StripeCharge charges2 = chargeService.Get(charge.Id);
+                        StripeConfiguration.SetApiKey(WebConfigurationManager.AppSettings["StripeSecretKey"]);
 
-                    paymentDetails.Name = sessionValues[0];
-                    paymentDetails.PaymentAmount = Convert.ToDouble(amount);
-                    paymentDetails.StripeTRNumber = charge.Id;
-                    paymentDetails.Email = customer.Email;
+                        var chargeService = new StripeChargeService();
+                        StripeCharge charges2 = chargeService.Get(charge.Id);
 
-                    //using (var client = new HttpClient())
-                    //{
-                    //    client.BaseAddress = new Uri("http://localhost/Travelopedia-API/api/");
-                    //    client.DefaultRequestHeaders.Accept.Clear();
-                    //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        paymentDetails.Name = sessionValues[0];
+                        paymentDetails.PaymentAmount = Convert.ToDouble(amount);
+                        paymentDetails.StripeTRNumber = charge.Id;
+                        paymentDetails.Email = customer.Email;
 
-                    //    var response = client.PostAsJsonAsync("payment/addpayment", paymentDetails).Result;
-                    //    if (response.IsSuccessStatusCode)
-                    //    {
+                        //using (var client = new HttpClient())
+                        //{
+                        //    client.BaseAddress = new Uri("http://localhost/Travelopedia-API/api/");
+                        //    client.DefaultRequestHeaders.Accept.Clear();
+                        //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                    //    }
-                    //}
+                        //    var response = client.PostAsJsonAsync("payment/addpayment", paymentDetails).Result;
+                        //    if (response.IsSuccessStatusCode)
+                        //    {
+
+                        //    }
+                        //}
 
 
 
-                    Response.Redirect("Default.Aspx");
+                        Response.Redirect("Default.Aspx");
 
+                    }
+
+                }
+                else
+                {
+                    Session.Clear();
+                    Session.Abandon();
+                    Session.Contents.Clear();
+                    Response.Redirect("Account/Login.Aspx");
                 }
 
             }
             else
             {
+                
                 Response.Redirect("Default.Aspx");
             }
         }

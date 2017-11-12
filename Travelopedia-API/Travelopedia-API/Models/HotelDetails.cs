@@ -8,6 +8,7 @@ namespace Travelopedia_API.Models
     public class HotelDetails
     {
         public List<HotelRoomDetails> hotelRoomDetails { get; set; }
+        public Exceptions ExceptionDetails { get; set; }
     }
 
     public class NeighborhoodDetails

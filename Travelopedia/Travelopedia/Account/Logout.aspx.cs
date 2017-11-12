@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web;
 using System.Web.Configuration;
 
 namespace Travelopedia.Account
@@ -15,22 +14,23 @@ namespace Travelopedia.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            FormsAuthentication.SignOut();
-            Session.Abandon();
-            Session.Clear();
-            Session.RemoveAll();
-
-            if (Request.Cookies["UserSettings"] != null)
+            if (Request.Cookies["TimedCookie"] != null)
             {
+                Session.Abandon();
+                Session.Clear();
+                Session.RemoveAll();
 
-                if (Request.Cookies["UserSettings"]["Login"] == "true")
-                {
-                    Request.Cookies["UserSettings"]["Login"] = "false";
-                }
+                HttpCookie cookie = new HttpCookie("TimedCookie");
+                cookie.Expires = DateTime.Now.AddMinutes(-5);
+                Response.Cookies.Add(cookie);
+
+                Response.Redirect("~/Default.aspx");
             }
 
-            Response.Redirect("~/Default.aspx",true);
+            else
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
     }
 }

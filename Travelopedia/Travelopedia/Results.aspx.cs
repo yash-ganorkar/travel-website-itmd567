@@ -23,7 +23,7 @@ namespace Travelopedia
             this.ClientScript.GetPostBackEventReference(this, "arg");
             if (!IsPostBack)
             {
-                if (Session["User"] == null)
+                if (Request.Cookies["TimedCookie"] == null)
                 {
                     hiddenFieldLogin.Value = "login";
                 }
@@ -39,55 +39,124 @@ namespace Travelopedia
                 }
                 else if (queryParam == "flight")
                 {
-                    TripsSearchRequest x = new TripsSearchRequest();
-                    string type = Session["flighttype"].ToString();
-                    if (type == "roundtrip")
+                    if(Convert.ToInt32(Request.QueryString[5]) == 0)
                     {
-
-                        x.Request = new TripOptionsRequest();
-                        x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
-                        x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = Request.QueryString[4] });
-                        hiddenField1.Value = "flightround";
-                    }
-
-                    else
-                    {
-                        x.Request = new TripOptionsRequest();
-                        x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
-                        x.Request.Slice = new List<SliceInput>();
-                        x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
-                        hiddenField1.Value = "flightone";
-
-                    }
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri("http://localhost/Travelopedia-API/api/");
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                        var response = client.PostAsJsonAsync("flights/allflights", x).Result;
-                        if (response.IsSuccessStatusCode)
+                        if(Session["flighttype"].ToString() == "roundtrip")
                         {
-                            responseString = response.Content.ReadAsStringAsync().Result;
+                            hiddenField2.Value = "Error~Number of Adults cannot be 0";
+                            hiddenField1.Value = "flightround";
+                        }
+                        else
+                        {
+                            hiddenField2.Value = "Error~Number of Adults cannot be 0";
+                            hiddenField1.Value = "flightone";
+                        }
 
+                    }
+                    else if (Request.QueryString[1] == "" || Request.QueryString[1] == null)
+                    {
+
+                        if (Session["flighttype"].ToString() == "roundtrip")
+                        {
+                            hiddenField2.Value = "Error~Source city cannot be blank.";
+                            hiddenField1.Value = "flightround";
+                        }
+                        else
+                        {
+                            hiddenField2.Value = "Error~Source city cannot be blank.";
+                            hiddenField1.Value = "flightone";
+                        }
+
+                    }
+                    else if (Request.QueryString[2] == "" || Request.QueryString[2] == null)
+                    {
+                        if (Session["flighttype"].ToString() == "roundtrip")
+                        {
+                            hiddenField2.Value = "Error~Destination city cannot be blank.";
+                            hiddenField1.Value = "flightround";
+                        }
+                        else
+                        {
+                            hiddenField2.Value = "Error~Destination city cannot be blank.";
+                            hiddenField1.Value = "flightone";
                         }
                     }
-
-                    if (!ClientScript.IsClientScriptBlockRegistered("myScript"))
+                    else if (Request.QueryString[3] == "" || Request.QueryString[3] == null)
                     {
-                        ClientScript.RegisterClientScriptBlock(typeof(_Default), "myScript", responseString, true);
+                        if (Session["flighttype"].ToString() == "roundtrip")
+                        {
+                            hiddenField2.Value = "Error~Departure Date cannot be blank.";
+                            hiddenField1.Value = "flightround";
+                        }
+                        else
+                        {
+                            hiddenField2.Value = "Error~Departure Date cannot be blank.";
+                            hiddenField1.Value = "flightone";
+                        }
                     }
-                    hiddenField2.Value = responseString;
+                    else if (Request.QueryString[4] == "" || Request.QueryString[4] == null)
+                    {
+                        if (Session["flighttype"].ToString() == "roundtrip")
+                        {
+                            hiddenField2.Value = "Error~Arrival Date cannot be blank.";
+                            hiddenField1.Value = "flightround";
+                        }
+                        else
+                        {
+                            hiddenField2.Value = "Error~Arrival Date cannot be blank.";
+                            hiddenField1.Value = "flightone";
+                        }
+                    }
+                    else
+                    {
+                        TripsSearchRequest x = new TripsSearchRequest();
+                        string type = Session["flighttype"].ToString();
+                        if (type == "roundtrip")
+                        {
+
+                            x.Request = new TripOptionsRequest();
+                            x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
+                            x.Request.Slice = new List<SliceInput>();
+                            x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
+                            x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = Request.QueryString[4] });
+                            hiddenField1.Value = "flightround";
+                        }
+
+                        else
+                        {
+                            x.Request = new TripOptionsRequest();
+                            x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
+                            x.Request.Slice = new List<SliceInput>();
+                            x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
+                            hiddenField1.Value = "flightone";
+
+                        }
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri("http://localhost/Travelopedia-API/api/");
+                            client.DefaultRequestHeaders.Accept.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                            var response = client.PostAsJsonAsync("flights/allflights", x).Result;
+                            if (response.IsSuccessStatusCode)
+                            {
+                                responseString = response.Content.ReadAsStringAsync().Result;
+
+                            }
+                        }
+
+                        if (!ClientScript.IsClientScriptBlockRegistered("myScript"))
+                        {
+                            ClientScript.RegisterClientScriptBlock(typeof(_Default), "myScript", responseString, true);
+                        }
+                        hiddenField2.Value = "Response~"+responseString;
+
+                    }
 
                 }
                 else if (queryParam == "car")
                 {
-                    using (var client = new HttpClient())
-                    {
                         hiddenField1.Value = "car";
-                    }
                 }
             }
             else
