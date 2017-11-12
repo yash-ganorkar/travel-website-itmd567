@@ -1,15 +1,18 @@
 ﻿<%@ Page Language="C#" EnableEventValidation="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Travelopedia.Home" %>
 
+
 <asp:Content ID="HomeContent" ContentPlaceHolderID="MainContent" runat="server">
+
     <asp:UpdatePanel runat="server" EnableViewState="true">
         <ContentTemplate>
+            <h3>Session Idle:&nbsp;<span id="secondsIdle"></span>&nbsp;seconds.</h3>
             <asp:LoginName ID="LoginName1" FormatString="Welcome {0}!" runat="server"/>
             <asp:Label ID="Label1" runat="server"></asp:Label>
             <form action="/Charge" method="POST">
             <div class="container">
-                 <div class="booking-item-details">
+                 <div class="booking-item-details" runat="server" id="CarDetails" visible="true">
 
-                <header class="booking-item-header">
+                    <header class="booking-item-header">
                     <div class="row">
                         <div class="col-md-9">
                             <h2 class="lh1em">
@@ -26,17 +29,49 @@
                         </div>
                     </div>
                 </header>
-                <div class="gap gap-small"></div>
+                    <div class="gap gap-small"></div>
                      <div class="row row-wrap">
                     <div class="col-md-9">
                         <div class="row">
-                            <div class="col-md-7">
+                             <div class="col-md-5" >
                                 <img src="images/Maserati-GranTurismo-Sport-facelift.png" alt="Image Alternative text" title="Image Title" />
                             </div>
-                            <div class="col-md-5">
-                                 
-                                <div id="paypal-button"></div>
-                               
+                            <div class="col-md-7">
+                                <div class="booking-item-price-calc">
+                                    <div class="row row-wrap">
+                                        <div class="col-md-6">
+                                            
+                                            
+                                            
+                                        </div>
+                                        <div class="col-md-5">
+                                            <ul class="list">
+                                                 <li>
+                                                    <p>Price Per Day<span>$<asp:Label ID="dailyprice" runat="server"></asp:Label></span>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p>Number of Days<span><asp:Label ID="days" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                              <li>
+                                                    <p>Sub Total<span>$<asp:Label ID="Subtotal" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                              <li>
+                                                    <p>Taxes and Fees<span>$<asp:Label ID="tax" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                                
+                                                <li>
+                                                    <p>Total Price<span>$<span id="car-total" data-value="490"><asp:Label ID="total" runat="server"></asp:Label></span></span>
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                            <div id="paypal-button"></div>
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="<%= this.stripePublishableKey %>"
                                     data-amount="<%= this.amount %>"
@@ -48,6 +83,9 @@
                                     
 
                                 </script>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <p class="text-small">Arrive at your destination in style with this air-conditioned automatic. With room for 4 passengers and 2 pieces of luggage, it's ideal for small groups looking to get from A to B in comfort. Price can change at any moment so book now to avoid disappointment!</p>
@@ -100,13 +138,13 @@
                                     <h5>Pick Up:</h5>
                                     
                                     <p><i class="fa fa-calendar box-icon-inline box-icon-gray"></i><asp:Label ID="pickup" runat="server"></asp:Label></p>
-                                    <p><i class="fa fa-clock-o box-icon-inline box-icon-gray"></i>12:00 AM</p>
+                                    <p><i class="fa fa-clock-o box-icon-inline box-icon-gray"></i><asp:Label runat="server" ID="pickuptime"></asp:Label></p>
                                 </li>
                                 <li>
                                     <h5>Drop Off:</h5>
                                     
                                     <p><i class="fa fa-calendar box-icon-inline box-icon-gray"></i><asp:Label runat="server" ID="dropoff"></asp:Label></p>
-                                    <p><i class="fa fa-clock-o box-icon-inline box-icon-gray"></i>12:00 AM</p>
+                                    <p><i class="fa fa-clock-o box-icon-inline box-icon-gray"></i><asp:Label runat="server" ID="dropofftime"></asp:Label></p>
                                 </li>
                             </ul>
                           <!--  <a href="#" class="btn btn-primary">Change Location & Date</a>-->
@@ -115,8 +153,595 @@
                     </div>
                 </div>
                 </div>
+                 <div class="booking-item-details" id="FlightDetailsRound" runat="server" visible="false">
+                      <div class="row row-wrap">
+                        <div class="col-md-8">
+                            <h3>Passengers</h3>
+                            <ul class="list booking-item-passengers">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Sex</label>
+                                            <div class="radio-inline radio-small">
+                                                <label>
+                                                    <input class="i-radio" type="radio" name="passenger-1-sex" />Male</label>
+                                            </div>
+                                            <div class="radio-inline radio-small">
+                                                <label>
+                                                    <input class="i-radio" type="radio" name="passenger-1-sex" />Female</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Surname</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Date of Birth</label>
+                                                <input class="date-pick-years form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-md-offset-3">
+                                            <div class="form-group">
+                                                <label>Citizenship</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Document Series</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Expiry Date</label>
+                                                <input class="date-pick-years form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                            <div class="gap gap-small"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img class="pp-img" src="images/paypal.png" alt="Image Alternative text" title="Image Title" />
+                                    <p>Important: You will be redirected to Stripe.com's website to securely complete your payment.</p>
+                                </div>
+                                <div class="col-md-6">
+                                      <div id="paypal-button"></div>
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="<%= this.stripePublishableKey %>"
+                                    data-amount="<%= this.amount %>"
+                                    data-name="Stripe.com"
+                                    data-description="Sample Charge"
+                                    data-locale="auto"
+                                    data-zip-code="true">
+
+                                    
+
+                                </script>
+
+                                    
+
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                    <div class="booking-item-payment">
+                        <header class="clearfix">
+                            <h5 class="mb0">London - New York</h5>
+                        </header>
+                        <ul class="booking-item-payment-details">
+                            <li>
+                                <h5>Flight Details</h5>
+                                <div class="booking-item-payment-flight">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="booking-item-flight-details">
+                                                <div class="booking-item-departure"><i class="fa fa-plane"></i>
+                                                    <h5><asp:Label runat="server" ID="depttime1"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label ID="deptdate1" runat="server"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="dept1"></asp:Label></p>
+                                                </div>
+                                                <div class="booking-item-arrival"><i class="fa fa-plane fa-flip-vertical"></i>
+                                                    <h5><asp:Label runat="server" ID="arrivetime1"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label runat="server" ID="arrivedate1"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="arrive1"></asp:Label></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="booking-item-flight-duration">
+                                                <p>Duration</p>
+                                                <h5><asp:Label ID="duration1" runat="server"></asp:Label></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>Return Trip</p>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="booking-item-flight-details">
+                                                <div class="booking-item-departure"><i class="fa fa-plane"></i>
+                                                    <h5><asp:Label runat="server" ID="depttime2"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label runat="server" ID="deptdate2"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="dept2"></asp:Label></p>
+                                                </div>
+                                                <div class="booking-item-arrival"><i class="fa fa-plane fa-flip-vertical"></i>
+                                                    <h5><asp:Label runat="server" ID="arrivetime2"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label runat="server" ID="arrivedate2"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="arrive2"></asp:Label></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="booking-item-flight-duration">
+                                                <p>Duration</p>
+                                                <h5><asp:Label runat="server" ID="duration2"></asp:Label></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <h5>Flight (2 Passengers)</h5>
+                                <ul class="booking-item-payment-price">
+                                    <li>
+                                        <p class="booking-item-payment-price-title">2 Passengers</p>
+                                        <p class="booking-item-payment-price-amount">$178<small>/per passnger</small>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class="booking-item-payment-price-title">Taxes</p>
+                                        <p class="booking-item-payment-price-amount">$18<small>/per passnger</small>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="booking-item-payment-total">Total trip: <span><asp:Label ID="flightprice" runat="server"></asp:Label></span>
+                        </p>
+                    </div>
+                </div>
             </div>
-            
+                 </div>
+                <div class="booking-item-details" id="FlightDetailsOne" runat="server" visible="false">
+                    <div class="row row-wrap">
+                        <div class="col-md-8">
+                            <h3>Passengers</h3>
+                            <ul class="list booking-item-passengers">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Sex</label>
+                                            <div class="radio-inline radio-small">
+                                                <label>
+                                                    <input class="i-radio" type="radio" name="passenger-1-sex" />Male</label>
+                                            </div>
+                                            <div class="radio-inline radio-small">
+                                                <label>
+                                                    <input class="i-radio" type="radio" name="passenger-1-sex" />Female</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Surname</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Date of Birth</label>
+                                                <input class="date-pick-years form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-md-offset-3">
+                                            <div class="form-group">
+                                                <label>Citizenship</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Document Series</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Expiry Date</label>
+                                                <input class="date-pick-years form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                            <div class="gap gap-small"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img class="pp-img" src="images/paypal.png" alt="Image Alternative text" title="Image Title" />
+                                    <p>Important: You will be redirected to Stripe.com's website to securely complete your payment.</p>
+                                </div>
+                                <div class="col-md-6">
+                                      <div id="paypal-button"></div>
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="<%= this.stripePublishableKey %>"
+                                    data-amount="<%= this.amount %>"
+                                    data-name="Stripe.com"
+                                    data-description="Sample Charge"
+                                    data-locale="auto"
+                                    data-zip-code="true">
+
+                                    
+
+                                </script>
+
+                                    
+
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                    <div class="booking-item-payment">
+                        <header class="clearfix">
+                            <h5 class="mb0">London - New York</h5>
+                        </header>
+                        <ul class="booking-item-payment-details">
+                            <li>
+                                <h5>Flight Details</h5>
+                                <div class="booking-item-payment-flight">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="booking-item-flight-details">
+                                                <div class="booking-item-departure"><i class="fa fa-plane"></i>
+                                                    <h5><asp:Label runat="server" ID="depttimeo"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label ID="deptdateo" runat="server"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="depto"></asp:Label></p>
+                                                </div>
+                                                <div class="booking-item-arrival"><i class="fa fa-plane fa-flip-vertical"></i>
+                                                    <h5><asp:Label runat="server" ID="arrivetimeo"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label runat="server" ID="arrivedateo"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="arriveo"></asp:Label></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="booking-item-flight-duration">
+                                                <p>Duration</p>
+                                                <h5><asp:Label ID="durationo" runat="server"></asp:Label>Mins</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            <li>
+                                <h5>Flight (2 Passengers)</h5>
+                                <ul class="booking-item-payment-price">
+                                    <li>
+                                        <p class="booking-item-payment-price-title">2 Passengers</p>
+                                        <p class="booking-item-payment-price-amount">$178<small>/per passnger</small>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class="booking-item-payment-price-title">Taxes</p>
+                                        <p class="booking-item-payment-price-amount">$18<small>/per passnger</small>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="booking-item-payment-total">Total trip: <span><asp:Label ID="flightpriceo" runat="server"></asp:Label></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="booking-item-details" id="HotelDetails" runat="server" visible="false">
+                    <header class="booking-item-header">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h2 class="lh1em"><asp:Label ID="hotelname" runat="server"></asp:Label></h2>
+                            <p class="lh1em text-small"><i class="fa fa-map-marker"></i> <asp:Label ID="city" runat="server"></asp:Label>, <asp:Label ID="state" runat="server"></asp:Label></p>
+                            <ul class="list list-inline text-small">
+                                <li><a href="#"><i class="fa fa-envelope"></i> Hotel E-mail</a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-home"></i> Hotel Website</a>
+                                </li>
+                                <li><i class="fa fa-phone"></i> +1 (163) 493-1463</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="booking-item-header-price"><small>price from</small>  <span class="text-lg">$<asp:Label ID="subtotalhotel" runat="server"></asp:Label></span>/night</p>
+                        </div>
+                    </div>
+                </header>
+                    <div class="gap gap-small"></div>
+                     <div class="row row-wrap">
+                    <div class="col-md-9">
+                        <div class="row">
+                             <div class="col-md-5" id="map" style="height:150px;">
+                            
+                            </div>
+                            <div class="col-md-7">
+                                <div class="booking-item-price-calc">
+                                    <div class="row row-wrap">
+                                        <div class="col-md-6">
+                                            
+                                            
+                                            
+                                        </div>
+                                        <div class="col-md-5">
+                                            <ul class="list">
+                                               <!--  <li>
+                                                    <p>Price Per Day<span>$<asp:Label ID="hotelpriceday" runat="server"></asp:Label></span>
+                                                    </p>
+                                                </li>-->
+                                                <li>
+                                                    <p>Number of Rooms<span><asp:Label ID="noofrooms" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                              <li>
+                                                    <p>Sub Total<span>$<asp:Label ID="subtotalhotel1" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                              <li>
+                                                    <p>Taxes and Fees<span>$<asp:Label ID="hoteltax" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                                
+                                                <li>
+                                                    <p>Total Price<span>$<span id="hotel-total" data-value="490"><asp:Label ID="hoteltotal" runat="server"></asp:Label></span></span>
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                            <div id="paypal-button"></div>
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="<%= this.stripePublishableKey %>"
+                                    data-amount="<%= this.amount %>"
+                                    data-name="Stripe.com"
+                                    data-description="Sample Charge"
+                                    data-locale="auto"
+                                    data-zip-code="true">
+
+                                    
+
+                                </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-small">Arrive at your destination in style with this air-conditioned automatic. With room for 4 passengers and 2 pieces of luggage, it's ideal for small groups looking to get from A to B in comfort. Price can change at any moment so book now to avoid disappointment!</p>
+
+                        <hr>
+                        <div class="row row-wrap">
+                            <div class="col-md-4">
+                                <h5>Hotel Facilities</h5>
+                                <ul class="booking-item-features booking-item-features-expand clearfix">
+                                    <li><i class="im im-wi-fi"></i><span class="booking-item-feature-title">Wi-Fi Internet</span>
+                                    </li>
+                                    <li><i class="im im-parking"></i><span class="booking-item-feature-title">Parking</span>
+                                    </li>
+                                    <li><i class="im im-plane"></i><span class="booking-item-feature-title">Airport Transport</span>
+                                    </li>
+                                    <li><i class="im im-bus"></i><span class="booking-item-feature-title">Shuttle Bus Service</span>
+                                    </li>
+                                    <li><i class="im im-fitness"></i><span class="booking-item-feature-title">Fitness Center</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h5></h5>
+                                <ul class="booking-item-features booking-item-features-expand clearfix">
+                                    <li><i class="im im-pool"></i><span class="booking-item-feature-title">Pool</span>
+                                    </li>
+                                    <li><i class="im im-spa"></i><span class="booking-item-feature-title">SPA</span>
+                                    </li>
+                                    <li><i class="im im-restaurant"></i><span class="booking-item-feature-title">Restaurant</span>
+                                    </li>
+                                    <li><i class="im im-wheel-chair"></i><span class="booking-item-feature-title">Wheelchair Access</span>
+                                    </li>
+                                    <li><i class="im im-business-person"></i><span class="booking-item-feature-title">Business Center</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h5></h5>
+                                <ul class="booking-item-features booking-item-features-expand clearfix">
+                                    <li><i class="im im-children"></i><span class="booking-item-feature-title">Children Activites</span>
+                                    </li>
+                                    <li><i class="im im-casino"></i><span class="booking-item-feature-title">Casino & Gambling</span>
+                                    </li>
+                                    <li><i class="im im-bar"></i><span class="booking-item-feature-title">Bar/Lounge</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="booking-item-deails-date-location">
+                            <ul>
+                                <li>
+                                    <h5>Location:</h5>
+                                    <p><asp:Label ID="hotelnamefilter" runat="server"></asp:Label></p>
+                                    <p><asp:Label ID="hotelcityfilter" runat="server"></asp:Label>, <asp:Label ID="hotelstatefilter" runat="server"></asp:Label></p>
+                                    <p></p>
+                                </li>
+                                <li>
+                                    <h5>Check In</h5>
+                                    
+                                    <p><i class="fa fa-calendar box-icon-inline box-icon-gray"></i><asp:Label ID="hotelcheckin" runat="server"></asp:Label></p>
+                                   
+                                </li>
+                                <li>
+                                    <h5>Check Out</h5>
+                                    
+                                    <p><i class="fa fa-calendar box-icon-inline box-icon-gray"></i><asp:Label runat="server" ID="hotelcheckout"></asp:Label></p>
+                                </li>
+                            </ul>
+                            <h4 class="lh1em">Summary</h4>
+                                <ul class="list booking-item-raiting-summary-list">
+                                    <li>
+                                        <div class="booking-item-raiting-list-title">Sleep</div>
+                                        <ul class="icon-group booking-item-rating-stars">
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="booking-item-raiting-list-title">Location</div>
+                                        <ul class="icon-group booking-item-rating-stars">
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o text-gray"></i>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="booking-item-raiting-list-title">Service</div>
+                                        <ul class="icon-group booking-item-rating-stars">
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="booking-item-raiting-list-title">Clearness</div>
+                                        <ul class="icon-group booking-item-rating-stars">
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="booking-item-raiting-list-title">Rooms</div>
+                                        <ul class="icon-group booking-item-rating-stars">
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                            <li><i class="fa fa-smile-o"></i>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                          <!--  <a href="#" class="btn btn-primary">Change Location & Date</a>-->
+                        </div>
+                        <div class="gap gap-small"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+             <script>
+                                 
+                 var map;
+                 var infowindow;
+                 function initMap(latitude,longitude) {
+                     var pyrmont = { lat: latitude, lng: longitude };
+                     map = new google.maps.Map(document.getElementById('map'), {
+                         center: pyrmont,
+                         zoom: 15
+                     });
+                     infowindow = new google.maps.InfoWindow();
+                     var service = new google.maps.places.PlacesService(map);
+                     service.nearbySearch({
+                         location: pyrmont,
+                         radius: 500,
+                         type: ['store']
+                     }, callback);
+                 }
+                 function callback(results, status) {
+                     if (status === google.maps.places.PlacesServiceStatus.OK) {
+                         for (var j = 0; j < results.length; j++) {
+                             createMarker(results[j]);
+                         }
+                     }
+                 }
+                 function createMarker(place) {
+                     var placeLoc = place.geometry.location;
+                     var marker = new google.maps.Marker({
+                         map: map,
+                         position: place.geometry.location
+                     });
+                     google.maps.event.addListener(marker, 'click', function () {
+                         infowindow.setContent(place.name);
+                         infowindow.open(map, this);
+                     });
+                 }
+
+                 </script>  
+            <script type="text/javascript">
+                 function SessionExpireAlert(timeout) {
+                     alert(timeout);
+                     var seconds = timeout / 1000;
+                     document.getElementsByName("secondsIdle").innerHTML = seconds;
+                     setInterval(function () {
+                         seconds--;
+                         document.getElementById("secondsIdle").innerHTML = seconds;
+                     }, 1000);
+                     setTimeout(function () {
+                         window.location = "Account/Logout.aspx";
+                     }, timeout);
+                 };
+            </script>            
             
           <asp:HiddenField runat="server" ID="hiddenFieldLogin" ClientIDMode="Static"/>    
 </form>

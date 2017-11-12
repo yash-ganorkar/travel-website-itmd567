@@ -514,6 +514,7 @@
     <Content Include="fonts\icomoon.eot" />
     <Content Include="fonts\icomoon.ttf" />
     <Content Include="fonts\icomoon.woff" />
+    <Content Include="media\loop.webm" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="images\100x100.png" />
     <Content Include="images\1024x487.png" />
@@ -2120,6 +2121,7 @@
     <Content Include="images\Volkswagen-Polo-BlueGT.png" />
     <Content Include="images\Volkswagen-Touareg-Edition-X.png" />
     <Content Include="images\Volvo-V40.png" />
+    <Content Include="media\loop.mp4" />
     <Content Include="Redirect.aspx" />
     <Content Include="Results.aspx" />
     <Content Include="Scripts\ajax\cruise-slideshow-popup.html" />

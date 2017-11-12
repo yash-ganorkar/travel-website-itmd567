@@ -13,6 +13,15 @@ namespace Travelopedia {
     public partial class _Default {
         
         /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel Panel1;
+        
+        /// <summary>
         /// txtDest control.
         /// </summary>
         /// <remarks>
@@ -236,6 +245,16 @@ namespace Travelopedia {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearchCars;
+		
+        /// <summary>
+        /// prog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress prog;
+		
         
         /// <summary>
         /// hiddenFieldLogin control.

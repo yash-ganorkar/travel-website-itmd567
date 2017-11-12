@@ -1,11 +1,21 @@
 ﻿<%@ Page Title="Home Page" Language="C#" EnableEventValidation="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Travelopedia._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:UpdatePanel runat="server" EnableViewState="true">
+    <style>
+        #preloader 
+{ position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; overflow: visible; background: #333 url('http://files.mimoymima.com/images/loading.gif') no-repeat center center; }
+    </style>
+    <asp:UpdatePanel runat="server" EnableViewState="true" ID="Panel1">
         <ContentTemplate>
              <div class="loader"></div>
         <div class="top-area show-onload">
             <div class="bg-holder full">
+                <div class="bg-mask"></div>
+                <div class="bg-img" style="background-image:url(images/2048x1365.png);"></div>
+                <video class="bg-video hidden-sm hidden-xs" preload="auto" autoplay="true" loop="loop" muted="muted" poster="img/video-bg.jpg">
+                    <source src="media/loop.webm" type="video/webm" />
+                    <source src="media/loop.mp4" type="video/mp4" />
+                </video>
                 <div class="bg-front full-height bg-front-mob-rel">
                     <div class="container full-height">
                         <div class="rel full-height">
@@ -502,6 +512,12 @@
         </div>
             
             <asp:HiddenField runat="server" ID="hiddenFieldLogin" ClientIDMode="Static"/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script type="text/javascript">
+                $(window).load(function () {
+                    $(".loader").fadeOut("60000");
+                })
+            </script>
             <script type="text/javascript">
                 $(function () {
                     $("#<%= txtStartDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
@@ -517,4 +533,9 @@
             </script>
             </ContentTemplate>
         </asp:UpdatePanel>
+    <asp:UpdateProgress runat="server" ID="prog" AssociatedUpdatePanelID="Panel1">
+        <ProgressTemplate>
+             <div id="preloader"></div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>
