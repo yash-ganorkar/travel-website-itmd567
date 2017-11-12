@@ -330,7 +330,7 @@
 
                                 for (var i = 0; i < response.hotelRoomDetails.length; i++) {
                                     //alert(response.hotelRoomDetails[0].state);
-                                    var cent = response[i].centroid;
+                                    var cent = res[i].centroid;
                                     var latlong = cent.split(',');
                                     var lat = latlong[0];
                                     var long = latlong[1];
@@ -406,7 +406,7 @@
                                     var booknow = document.createElement("button");
                                     booknow.setAttribute("class", "btn btn-primary");
                                     booknow.setAttribute("href", res[i].deeplink);
-                                    booknow.setAttribute("hotel", res[i].city + "-" + res[i].state + "-" + res[i].subtotal + "-" + getParameterByName("rooms") + "-" + getParameterByName("adults") + "-" + getParameterByName("children"));
+                                    booknow.setAttribute("hotel", res[i].name + "~" + res[i].city + "~" + res[i].state + "~" + res[i].subtotal + "~" + res[i].taxesandfees + "~" + res[i].totalprice + "~" + lat + "~" + long + "~" + getParameterByName("rooms") + "~" + getParameterByName("adults") + "~" + getParameterByName("children"));
                                     var booknowtext = document.createTextNode("Book Now");
                                     booknow.appendChild(booknowtext);
                                     coldiv3.appendChild(from);
@@ -426,21 +426,20 @@
                                         var id = $(this).attr('hotel');
                                         console.log(id);
                                         alert(id);
-                                        var params = id.split('-');
+                                        var params = id.split('~');
 
                                         alert(params);
 
                                         var date1 = new Date(getParameterByName("startdate"));
                                         var date2 = new Date(getParameterByName("enddate"));
 
-                                        var paramValues = "hotel" + "&" + params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4] + "&" + params[5] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
-
+                                        var paramValues = "hotel" + "&" + params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4] + "&" + params[5] + "&" + params[6] + "&" + params[7] + "&" + params[8] + "&" + params[9] + "&" + params[10] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
+                                        alert(paramValues);
                                         __doPostBack('Button2', paramValues);
                                         //window.open(url, '_self');
                                     });
 
                                     initMap(parseFloat(lat), parseFloat(long), i);
-
                                 }
 
                             }
@@ -471,370 +470,514 @@
                             var flightCards = document.getElementById('flightCards');
                             var carresult = response.carResults;
 
-                            var filterform = document.getElementById("test");
-                            var maindiv = document.createElement("div");
-                            maindiv.setAttribute("class", "booking-item-dates-change mb30");
-                            var formc = document.createElement("form");
-                            formc.setAttribute("class", "input-daterange");
-                            formc.setAttribute("data-date-format", "m/d");
+                            if (carresult == null) {
 
-                            var filterdivpickup = document.createElement("div");
-                            filterdivpickup.setAttribute("class", "form-group form-group-icon-left");
-                            var mapicon = document.createElement("i");
-                            mapicon.setAttribute("class", "fa fa-map-marker input-icon input-icon-hightlight");
-                            filterdivpickup.appendChild(mapicon);
-                            var pickuplabel = document.createElement("label");
-                            var pickup = document.createTextNode("Pickup Location");
-                            pickuplabel.appendChild(pickup);
-                            filterdivpickup.appendChild(pickuplabel);
-                            var pickupinput = document.createElement("input");
-                            pickupinput.setAttribute("class", "typeahead form-control");
-                            pickupinput.setAttribute("placeholder", "City or Airport");
-                            pickupinput.setAttribute("value", getParameterByName("dest"));
-                            pickupinput.setAttribute("type", "text");
-                            filterdivpickup.appendChild(pickupinput);
+                                var filterform = document.getElementById("test");
+                                var maindiv = document.createElement("form");
+                                maindiv.setAttribute("class", "booking-item-dates-change mb30");
+                                var filterdivwhere = document.createElement("div");
+                                filterdivwhere.setAttribute("class", "form-group form-group-icon-left");
+                                var mapicon = document.createElement("i");
+                                mapicon.setAttribute("class", "fa fa-map-marker input-icon input-icon-hightlight");
+                                filterdivwhere.appendChild(mapicon);
+                                var wherelabel = document.createElement("label");
+                                var where = document.createTextNode("Where");
+                                wherelabel.appendChild(where);
+                                filterdivwhere.appendChild(wherelabel);
+                                var whereinput = document.createElement("input");
+                                whereinput.setAttribute("class", "typeahead form-control");
+                                whereinput.setAttribute("placeholder", "City, Hotel Name or U.S. Zip Code");
+                                whereinput.setAttribute("type", "text");
+                                whereinput.setAttribute("value", getParameterByName("dest"));
+                                filterdivwhere.appendChild(whereinput);
 
-                            var filterrow = document.createElement("div");
-                            filterrow.setAttribute("class", "row");
+                                var filterdivwhen = document.createElement("div");
+                                filterdivwhen.setAttribute("class", "input-daterange");
 
-                            var filtercol = document.createElement("div");
-                            filtercol.setAttribute("class", "col-md-6");
-                            var checkindiv = document.createElement("div");
-                            checkindiv.setAttribute("class", "form-group form-group-icon-left form-group-filled");
-                            var calendar = document.createElement("i");
-                            calendar.setAttribute("class", "fa fa-calendar input-icon input-icon-hightlight");
-                            checkindiv.appendChild(calendar);
-                            var whenlabel = document.createElement("label");
-                            var checkin = document.createTextNode("Start Date");
-                            whenlabel.appendChild(checkin);
-                            checkindiv.appendChild(whenlabel);
-                            var checkininput = document.createElement("input");
-                            checkininput.setAttribute("class", "form-control");
-                            checkininput.setAttribute("name", "start");
-                            checkininput.setAttribute("type", "text");
-                            checkininput.setAttribute("value", getParameterByName("startdate"));
-                            checkindiv.appendChild(checkininput);
+                                var checkindiv = document.createElement("div");
+                                checkindiv.setAttribute("class", "form-group form-group-icon-left");
+                                filterdivwhen.appendChild(checkindiv);
+                                var calendar = document.createElement("i");
+                                calendar.setAttribute("class", "fa fa-calendar input-icon input-icon-hightlight");
+                                checkindiv.appendChild(calendar);
+                                var whenlabel = document.createElement("label");
+                                var checkin = document.createTextNode("Check In");
+                                whenlabel.appendChild(checkin);
+                                checkindiv.appendChild(whenlabel);
+                                var checkininput = document.createElement("input");
+                                checkininput.setAttribute("class", "form-control");
+                                checkininput.setAttribute("name", "start");
+                                checkininput.setAttribute("value", getParameterByName("startdate"));
+                                checkininput.setAttribute("type", "text");
+                                checkindiv.appendChild(checkininput);
 
-                            filterrow.appendChild(filtercol);
-                            filtercol.appendChild(checkindiv);
+                                var checkoutdiv = document.createElement("div");
+                                checkoutdiv.setAttribute("class", "form-group form-group-icon-left");
+                                filterdivwhen.appendChild(checkoutdiv);
+                                var calendar = document.createElement("i");
+                                calendar.setAttribute("class", "fa fa-calendar input-icon input-icon-hightlight");
+                                checkoutdiv.appendChild(calendar);
+                                var whenlabel = document.createElement("label");
+                                var checkout = document.createTextNode("Check Out");
+                                whenlabel.appendChild(checkout);
+                                checkoutdiv.appendChild(whenlabel);
+                                var checkoutinput = document.createElement("input");
+                                checkoutinput.setAttribute("class", "form-control");
+                                checkoutinput.setAttribute("name", "end");
+                                checkoutinput.setAttribute("value", getParameterByName("enddate"))
+                                checkoutinput.setAttribute("type", "text");
+                                checkoutdiv.appendChild(checkoutinput);
 
-
-                            var filtercol = document.createElement("div");
-                            filtercol.setAttribute("class", "col-md-6");
-                            var checkintimediv = document.createElement("div");
-                            checkintimediv.setAttribute("class", "form-group form-group-icon-left");
-                            var calendar = document.createElement("i");
-                            calendar.setAttribute("class", "fa fa-clock-o input-icon input-icon-hightlight");
-                            checkintimediv.appendChild(calendar);
-                            var whenlabel = document.createElement("label");
-                            var checkintime = document.createTextNode("Pickup Time");
-                            whenlabel.appendChild(checkintime);
-                            checkintimediv.appendChild(whenlabel);
-                            var checkintimeinput = document.createElement("input");
-                            checkintimeinput.setAttribute("class", "time-pick form-control");
-                            checkintimeinput.setAttribute("placeholder", "12:00 AM");
-                            checkintimeinput.setAttribute("value", getParameterByName("pickuptime"));
-                            checkintimeinput.setAttribute("type", "text");
-                            checkintimediv.appendChild(checkintimeinput);
-                            filterrow.appendChild(filtercol);
-                            filtercol.appendChild(checkintimediv);
-
-                            var filterdivdrop = document.createElement("div");
-                            filterdivdrop.setAttribute("class", "form-group form-group-icon-left");
-                            var mapicon = document.createElement("i");
-                            mapicon.setAttribute("class", "fa fa-map-marker input-icon input-icon-hightlight");
-                            filterdivdrop.appendChild(mapicon);
-                            var droplabel = document.createElement("label");
-                            var drop = document.createTextNode("Drop Off Location");
-                            droplabel.appendChild(drop);
-                            filterdivdrop.appendChild(droplabel);
-                            var dropinput = document.createElement("input");
-                            dropinput.setAttribute("class", "typeahead form-control");
-                            dropinput.setAttribute("placeholder", "Same as drop");
-                            dropinput.setAttribute("value", getParameterByName("dest"));
-                            dropinput.setAttribute("type", "text");
-                            filterdivdrop.appendChild(dropinput);
-
-                            var filterrow2 = document.createElement("div");
-                            filterrow2.setAttribute("class", "row");
-
-                            var filtercol = document.createElement("div");
-                            filtercol.setAttribute("class", "col-md-6");
-                            var checkoutdiv = document.createElement("div");
-                            checkoutdiv.setAttribute("class", "form-group form-group-icon-left form-group-filled");
-                            var calendar = document.createElement("i");
-                            calendar.setAttribute("class", "fa fa-calendar input-icon input-icon-hightlight");
-                            checkoutdiv.appendChild(calendar);
-                            var whenlabel = document.createElement("label");
-                            var checkout = document.createTextNode("End Date");
-                            whenlabel.appendChild(checkout);
-                            checkoutdiv.appendChild(whenlabel);
-                            var checkoutinput = document.createElement("input");
-                            checkoutinput.setAttribute("class", "form-control");
-                            checkoutinput.setAttribute("name", "end");
-                            checkoutinput.setAttribute("value", getParameterByName("enddate"));
-                            checkoutinput.setAttribute("type", "text");
-                            checkoutdiv.appendChild(checkoutinput);
-                            filterrow2.appendChild(filtercol);
-                            filtercol.appendChild(checkoutdiv);
-
-                            var filtercol = document.createElement("div");
-                            filtercol.setAttribute("class", "col-md-6");
-                            var checkouttimediv = document.createElement("div");
-                            checkouttimediv.setAttribute("class", "form-group form-group-icon-left");
-                            var calendar = document.createElement("i");
-                            calendar.setAttribute("class", "fa fa-clock-o input-icon input-icon-hightlight");
-                            checkouttimediv.appendChild(calendar);
-                            var whenlabel = document.createElement("label");
-                            var checkouttime = document.createTextNode("Dropoff Time");
-                            whenlabel.appendChild(checkouttime);
-                            checkouttimediv.appendChild(whenlabel);
-                            var checkouttimeinput = document.createElement("input");
-                            checkouttimeinput.setAttribute("class", "time-pick form-control");
-                            checkouttimeinput.setAttribute("value", getParameterByName("dropofftime"));
-                            checkouttimeinput.setAttribute("type", "text");
-                            checkouttimediv.appendChild(checkouttimeinput);
-                            filterrow2.appendChild(filtercol);
-                            filtercol.appendChild(checkouttimediv);
-
-                            var updatebt = document.createElement("input");
-                            updatebt.setAttribute("class", "btn btn-primary");
-                            updatebt.setAttribute("type", "submit");
-                            updatebt.setAttribute("value", "Update Search");
-
-                            filterform.appendChild(maindiv);
-                            maindiv.appendChild(formc);
-                            formc.appendChild(filterdivpickup);
-                            formc.appendChild(filterrow);
-                            formc.appendChild(filterdivdrop);
-                            formc.appendChild(filterrow2);
-
-                            formc.appendChild(updatebt);
-
-                            for (var i = 0; i < response.carResults.length; i++) {
-
-                                
-
-                                var litag = document.createElement("li");
-                                var bookingitem = document.createElement("a");
-                                bookingitem.setAttribute("class", "booking-item");
-
-                                var rowd = document.createElement("div");
-                                rowd.setAttribute("class", "row");
-
-                                var coldiv1 = document.createElement("div");
-                                coldiv1.setAttribute("class", "col-md-3");
-                                var imgdiv = document.createElement("div");
-                                imgdiv.setAttribute("class", "booking-item-car-img");
-                                if (carresult[i].PossibleModels.includes("ford")) {
-                                    var img = document.createElement("img");
-                                    img.setAttribute("src", "images/Honda-Civic.png");
+                                var guestdiv = document.createElement("div");
+                                guestdiv.setAttribute("class", "form-group form-group- form-group-select-plus");
+                                var guestlabel = document.createElement("label");
+                                var guesttext = document.createTextNode("Guests");
+                                guestlabel.appendChild(guesttext);
+                                guestdiv.appendChild(guestlabel);
+                                var dropdown = document.createElement("select");
+                                dropdown.setAttribute("class", "form-control");
+                                var array = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+                                for (var i = 0; i < array.length; i++) {
+                                    var option = document.createElement("option");
+                                    option.value = array[i];
+                                    option.text = array[i];
+                                    dropdown.appendChild(option);
                                 }
-                                else if (carresult[i].PossibleModels.includes("Nissan")) {
-                                    var img = document.createElement("img");
-                                    img.setAttribute("src", "images/Nissan-GT-R.png");
+                                guestdiv.appendChild(dropdown);
+
+
+                                var roomdiv = document.createElement("div");
+                                roomdiv.setAttribute("class", "form-group form-group- form-group-select-plus");
+                                var roomlabel = document.createElement("label");
+                                var roomtext = document.createTextNode("Rooms");
+                                roomlabel.appendChild(roomtext);
+                                roomdiv.appendChild(roomlabel);
+                                var dropdown = document.createElement("select");
+                                dropdown.setAttribute("class", "form-control");
+                                var array = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+                                for (var i = 0; i < array.length; i++) {
+                                    var option = document.createElement("option");
+                                    option.value = array[i];
+                                    option.text = array[i];
+                                    dropdown.appendChild(option);
                                 }
-                                else if (carresult[i].PossibleModels.includes("Toyota")) {
-                                    var img = document.createElement("img");
-                                    img.setAttribute("src", "images/Toyota-Prius-Plus.png");
+                                roomdiv.appendChild(dropdown);
+
+
+                                var childiv = document.createElement("div");
+                                childiv.setAttribute("class", "form-group form-group- form-group-select-plus");
+                                var childlabel = document.createElement("label");
+                                var childtext = document.createTextNode("children");
+                                childlabel.appendChild(childtext);
+                                childiv.appendChild(childlabel);
+                                var dropdown = document.createElement("select");
+                                dropdown.setAttribute("class", "form-control");
+                                var array = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+                                for (var i = 0; i < array.length; i++) {
+                                    var option = document.createElement("option");
+                                    option.value = array[i];
+                                    option.text = array[i];
+                                    dropdown.appendChild(option);
                                 }
-                                else if (carresult[i].PossibleModels.includes("kia")) {
-                                    var img = document.createElement("img");
-                                    img.setAttribute("src", "images/Mercedes-Benz-Clasa-G-facelift.png");
-                                }
-                                else {
-                                    var img = document.createElement("img");
-                                    img.setAttribute("src", "images/Volkswagen-Touareg-Edition-X.png");
-                                }
-                                var carname = document.createElement("p");
-                                carname.setAttribute("class", "booking-item-car-title");
-                                var carnametext = document.createTextNode(carresult[i].PossibleModels); //possibleModels
-                                carname.appendChild(carnametext);
+                                childiv.appendChild(dropdown);
+
+                                var updatebt = document.createElement("input");
+                                updatebt.setAttribute("class", "btn btn-primary");
+                                updatebt.setAttribute("type", "submit");
+                                updatebt.setAttribute("value", "Update Search");
 
 
-                                imgdiv.appendChild(img);
-                                coldiv1.appendChild(imgdiv);
-                                coldiv1.appendChild(carname);
+                                filterform.appendChild(maindiv);
+                                maindiv.appendChild(filterdivwhere);
+                                maindiv.appendChild(filterdivwhen);
+                                maindiv.appendChild(guestdiv);
+                                maindiv.appendChild(roomdiv);
+                                maindiv.appendChild(childiv);
+                                maindiv.appendChild(updatebt);
 
+                                var flightCards = document.getElementById('flightCards');
+                                res = response.ExceptionDetails;
+                                alert(response.ExceptionDetails.ExceptionMessage);
 
-                                var coldiv2 = document.createElement("div");
-                                coldiv2.setAttribute("class", "col-md-6");
-                                var agency = document.createElement("h5");
-                                agency.setAttribute("class", "booking-item-title");
-                                var agencyname = document.createTextNode("Agency Name: " + carresult[i].RentalAgency); //RentalAgency
-                                agency.appendChild(agencyname);
-                                var address = document.createElement("p");
-                                address.setAttribute("class", "booking-item-address");
-                                var maplogo = document.createElement("i");
-                                maplogo.setAttribute("class", "fa fa-map-marker");
-                                address.appendChild(maplogo);
-                                addresstext = document.createTextNode(carresult[i].VendorLocation); //VendorLocation
-                                address.appendChild(addresstext);
-                                var iconul = document.createElement("ul");
-                                iconul.setAttribute("class", "booking-item-features booking-item-features-sign clearfix");
+                                var errormessage = document.createElement("div");
+                                var h2 = document.createElement("h2");
+                                var h2text = document.createTextNode("Error");
 
-                                var iconli = document.createElement("li");
-                                iconli.setAttribute("rel", "tooltip");
-                                iconli.setAttribute("data-placement", "top");
-                                iconli.setAttribute("data-original-title", "Passengers");
-                                var maleicon = document.createElement("i");
-                                maleicon.setAttribute("class", "fa fa-male");
-                                iconli.appendChild(maleicon);
-                                var numpas = document.createElement("span");
-                                numpas.setAttribute("class", "booking-item-feature-sign");
-                                numpas.setAttribute("style", "bottom:-8px");
-                                var numpastext = document.createTextNode(carresult[i].TypicalSeating); //TypicalSeating
-                                numpas.appendChild(numpastext);
-                                iconli.appendChild(numpas);
+                                h2.appendChild(h2text);
+                                errormessage.appendChild(h2);
+                                flightCards.appendChild(errormessage);
 
-                                var iconli2 = document.createElement("li");
-                                iconli2.setAttribute("rel", "tooltip");
-                                iconli2.setAttribute("data-placement", "top");
-                                iconli2.setAttribute("data-original-title", "Mileage");
-                                var caricon = document.createElement("i");
-                                caricon.setAttribute("class", "im im-car-doors");
-                                iconli2.appendChild(caricon);
-                                var mileage = document.createElement("span");
-                                mileage.setAttribute("class", "booking-item-feature-sign");
-                                mileage.setAttribute("style", "bottom:-8px");
-                                var mileagetext = document.createTextNode(carresult[i].MileageDescription); //MileageDescription
-                                mileage.appendChild(mileagetext);
-                                iconli2.appendChild(mileage);
-
-                                var iconli3 = document.createElement("li");
-                                iconli3.setAttribute("rel", "tooltip");
-                                iconli3.setAttribute("data-placement", "top");
-                                iconli3.setAttribute("data-original-title", "Air Conditioning");
-                                var ac = document.createElement("i");
-                                ac.setAttribute("class", "im im-air");
-                                iconli3.appendChild(ac);
-                                var air = document.createElement("span");
-                                air.setAttribute("class", "booking-item-feature-sign");
-                                air.setAttribute("style", "bottom:-8px");
-                                var airtext = document.createTextNode("AC"); //airconditioningDescription
-                                air.appendChild(airtext);
-                                iconli3.appendChild(air);
-
-                                var iconli4 = document.createElement("li");
-                                iconli4.setAttribute("rel", "tooltip");
-                                iconli4.setAttribute("data-placement", "top");
-                                iconli4.setAttribute("data-original-title", "Power Steering");
-                                var steeringicon = document.createElement("i");
-                                steeringicon.setAttribute("class", "im im-car-wheel");
-                                iconli4.appendChild(steeringicon);
-                                var steering = document.createElement("span");
-                                steering.setAttribute("class", "booking-item-feature-sign");
-                                steering.setAttribute("style", "bottom:-8px");
-                                var steeringtext = document.createTextNode("Power Steering"); //power steering
-                                steering.appendChild(steeringtext);
-                                iconli4.appendChild(steering);
-
-                                var iconli5 = document.createElement("li");
-                                iconli5.setAttribute("rel", "tooltip");
-                                iconli5.setAttribute("data-placement", "top");
-                                iconli5.setAttribute("data-original-title", "Automic Transmission");
-                                var autominicon = document.createElement("i");
-                                autominicon.setAttribute("class", "im im-shift-auto");
-                                iconli5.appendChild(autominicon);
-                                var automic = document.createElement("span");
-                                automic.setAttribute("class", "booking-item-feature-sign");
-                                automic.setAttribute("style", "bottom:-8px");
-                                var automictext = document.createTextNode("Automic Transmission"); //Automic Transmission
-                                automic.appendChild(automictext);
-                                iconli5.appendChild(automic);
-
-                                var iconli6 = document.createElement("li");
-                                iconli6.setAttribute("rel", "tooltip");
-                                iconli6.setAttribute("data-placement", "top");
-                                iconli6.setAttribute("data-original-title", "FM Radio");
-                                var fmicon = document.createElement("i");
-                                fmicon.setAttribute("class", "im im-fm");
-                                iconli6.appendChild(fmicon);
-                                var FM = document.createElement("span");
-                                FM.setAttribute("class", "booking-item-feature-sign");
-                                FM.setAttribute("style", "bottom:-8px");
-                                var FMtext = document.createTextNode("FM Radio"); //FM Radio
-                                FM.appendChild(FMtext);
-                                iconli6.appendChild(FM);
-
-
-                                iconul.appendChild(iconli);
-                                iconul.appendChild(iconli2);
-                                iconul.appendChild(iconli3);
-                                iconul.appendChild(iconli4);
-                                iconul.appendChild(iconli6);
-                                iconul.appendChild(iconli5);
-
-                                /* var feature=document.createElement("p");
-                                 feature.setAttribute("class","booking-item-address");
-                                 var featuretext=document.createTextNode("Automatic Transmission, Power Steering, Air Conditioning, Air Bags, Cruise Control, Anti-Lock Brakes, AM/FM Stereo");
-                                 feature.appendChild(featuretext);*/
-
-
-
-                                coldiv2.appendChild(agency);
-                                coldiv2.appendChild(address);
-                                coldiv2.appendChild(iconul);
-                                //coldiv2.appendChild(feature);
-
-                                var coldiv3 = document.createElement("div");
-                                coldiv3.setAttribute("class", "col-md-3");
-                                var price = document.createElement("span");
-                                price.setAttribute("class", "booking-item-price");
-                                var pricetext = document.createTextNode("$"+carresult[i].DailyRate); //DailyRate
-                                price.appendChild(pricetext);
-                                var perday = document.createElement("span");
-                                var perdaytext = document.createTextNode("/day");
-                                perday.appendChild(perdaytext);
-                                var cartype = document.createElement("p");
-                                cartype.setAttribute("class", "booking-item-flight-class");
-                                var cartypename = document.createTextNode(carresult[i].CarTypeName); //CarTypeName
-                                cartype.appendChild(cartypename);
-                                var selectbtn = document.createElement("button");
-                                selectbtn.setAttribute("class", "btn btn-primary");
-                                selectbtn.setAttribute("id",i);
-                                selectbtn.setAttribute("href", carresult[i].DeepLink); // DeepLink
-                                selectbtn.setAttribute("car", carresult[i].PossibleModels + "-" + carresult[i].RentalAgency + "-" + carresult[i].VendorLocation + "-" + carresult[i].DailyRate);                                 
-                                $(selectbtn).click(function () {
-                                    var id = $(this).attr('car');
-                                    console.log(id);
-                                    alert(id);
-                                    var params = id.split('-');
-                                    console.log(params);
-                                    alert(params);
-                                    var date1 = new Date(getParameterByName("startdate"));
-                                    var date2 = new Date(getParameterByName("enddate"));
-                                    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-                                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                                    
-                                    var paramValues = params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + getParameterByName("startdate")+ "&" + getParameterByName("enddate") + "&" + diffDays;
-                                    __doPostBack('Button2',paramValues);
-                                    //window.open(url, '_self');
-                                });
-
-                                var selecttext = document.createTextNode("Select");
-                                selectbtn.appendChild(selecttext);
-                                coldiv3.appendChild(price);
-                                coldiv3.appendChild(perday);
-                                coldiv3.appendChild(cartype);
-                                coldiv3.appendChild(selectbtn);
-
-                                rowd.appendChild(coldiv1);
-                                rowd.appendChild(coldiv2);
-                                rowd.appendChild(coldiv3);
-                                bookingitem.appendChild(rowd);
-                                litag.appendChild(bookingitem);
-                                flightCards.appendChild(litag);
+                                var errordiv = document.createElement("div");
+                                var h2 = document.createElement("h2");
+                                var h2text = document.createTextNode(response.ExceptionDetails.ExceptionMessage);
+                                h2.appendChild(h2text);
+                                errordiv.appendChild(h2);
+                                flightCards.appendChild(errordiv);
                             }
+                            else {
+                                var filterform = document.getElementById("test");
+                                var maindiv = document.createElement("div");
+                                maindiv.setAttribute("class", "booking-item-dates-change mb30");
+                                var formc = document.createElement("form");
+                                formc.setAttribute("class", "input-daterange");
+                                formc.setAttribute("data-date-format", "m/d");
 
+                                var filterdivpickup = document.createElement("div");
+                                filterdivpickup.setAttribute("class", "form-group form-group-icon-left");
+                                var mapicon = document.createElement("i");
+                                mapicon.setAttribute("class", "fa fa-map-marker input-icon input-icon-hightlight");
+                                filterdivpickup.appendChild(mapicon);
+                                var pickuplabel = document.createElement("label");
+                                var pickup = document.createTextNode("Pickup Location");
+                                pickuplabel.appendChild(pickup);
+                                filterdivpickup.appendChild(pickuplabel);
+                                var pickupinput = document.createElement("input");
+                                pickupinput.setAttribute("class", "typeahead form-control");
+                                pickupinput.setAttribute("placeholder", "City or Airport");
+                                pickupinput.setAttribute("value", getParameterByName("dest"));
+                                pickupinput.setAttribute("type", "text");
+                                filterdivpickup.appendChild(pickupinput);
+
+                                var filterrow = document.createElement("div");
+                                filterrow.setAttribute("class", "row");
+
+                                var filtercol = document.createElement("div");
+                                filtercol.setAttribute("class", "col-md-6");
+                                var checkindiv = document.createElement("div");
+                                checkindiv.setAttribute("class", "form-group form-group-icon-left form-group-filled");
+                                var calendar = document.createElement("i");
+                                calendar.setAttribute("class", "fa fa-calendar input-icon input-icon-hightlight");
+                                checkindiv.appendChild(calendar);
+                                var whenlabel = document.createElement("label");
+                                var checkin = document.createTextNode("Start Date");
+                                whenlabel.appendChild(checkin);
+                                checkindiv.appendChild(whenlabel);
+                                var checkininput = document.createElement("input");
+                                checkininput.setAttribute("class", "form-control");
+                                checkininput.setAttribute("name", "start");
+                                checkininput.setAttribute("type", "text");
+                                checkininput.setAttribute("value", getParameterByName("startdate"));
+                                checkindiv.appendChild(checkininput);
+
+                                filterrow.appendChild(filtercol);
+                                filtercol.appendChild(checkindiv);
+
+
+                                var filtercol = document.createElement("div");
+                                filtercol.setAttribute("class", "col-md-6");
+                                var checkintimediv = document.createElement("div");
+                                checkintimediv.setAttribute("class", "form-group form-group-icon-left");
+                                var calendar = document.createElement("i");
+                                calendar.setAttribute("class", "fa fa-clock-o input-icon input-icon-hightlight");
+                                checkintimediv.appendChild(calendar);
+                                var whenlabel = document.createElement("label");
+                                var checkintime = document.createTextNode("Pickup Time");
+                                whenlabel.appendChild(checkintime);
+                                checkintimediv.appendChild(whenlabel);
+                                var checkintimeinput = document.createElement("input");
+                                checkintimeinput.setAttribute("class", "time-pick form-control");
+                                checkintimeinput.setAttribute("placeholder", "12:00 AM");
+                                checkintimeinput.setAttribute("value", getParameterByName("pickuptime"));
+                                checkintimeinput.setAttribute("type", "text");
+                                checkintimediv.appendChild(checkintimeinput);
+                                filterrow.appendChild(filtercol);
+                                filtercol.appendChild(checkintimediv);
+
+                                var filterdivdrop = document.createElement("div");
+                                filterdivdrop.setAttribute("class", "form-group form-group-icon-left");
+                                var mapicon = document.createElement("i");
+                                mapicon.setAttribute("class", "fa fa-map-marker input-icon input-icon-hightlight");
+                                filterdivdrop.appendChild(mapicon);
+                                var droplabel = document.createElement("label");
+                                var drop = document.createTextNode("Drop Off Location");
+                                droplabel.appendChild(drop);
+                                filterdivdrop.appendChild(droplabel);
+                                var dropinput = document.createElement("input");
+                                dropinput.setAttribute("class", "typeahead form-control");
+                                dropinput.setAttribute("placeholder", "Same as drop");
+                                dropinput.setAttribute("value", getParameterByName("dest"));
+                                dropinput.setAttribute("type", "text");
+                                filterdivdrop.appendChild(dropinput);
+
+                                var filterrow2 = document.createElement("div");
+                                filterrow2.setAttribute("class", "row");
+
+                                var filtercol = document.createElement("div");
+                                filtercol.setAttribute("class", "col-md-6");
+                                var checkoutdiv = document.createElement("div");
+                                checkoutdiv.setAttribute("class", "form-group form-group-icon-left form-group-filled");
+                                var calendar = document.createElement("i");
+                                calendar.setAttribute("class", "fa fa-calendar input-icon input-icon-hightlight");
+                                checkoutdiv.appendChild(calendar);
+                                var whenlabel = document.createElement("label");
+                                var checkout = document.createTextNode("End Date");
+                                whenlabel.appendChild(checkout);
+                                checkoutdiv.appendChild(whenlabel);
+                                var checkoutinput = document.createElement("input");
+                                checkoutinput.setAttribute("class", "form-control");
+                                checkoutinput.setAttribute("name", "end");
+                                checkoutinput.setAttribute("value", getParameterByName("enddate"));
+                                checkoutinput.setAttribute("type", "text");
+                                checkoutdiv.appendChild(checkoutinput);
+                                filterrow2.appendChild(filtercol);
+                                filtercol.appendChild(checkoutdiv);
+
+                                var filtercol = document.createElement("div");
+                                filtercol.setAttribute("class", "col-md-6");
+                                var checkouttimediv = document.createElement("div");
+                                checkouttimediv.setAttribute("class", "form-group form-group-icon-left");
+                                var calendar = document.createElement("i");
+                                calendar.setAttribute("class", "fa fa-clock-o input-icon input-icon-hightlight");
+                                checkouttimediv.appendChild(calendar);
+                                var whenlabel = document.createElement("label");
+                                var checkouttime = document.createTextNode("Dropoff Time");
+                                whenlabel.appendChild(checkouttime);
+                                checkouttimediv.appendChild(whenlabel);
+                                var checkouttimeinput = document.createElement("input");
+                                checkouttimeinput.setAttribute("class", "time-pick form-control");
+                                checkouttimeinput.setAttribute("value", getParameterByName("dropofftime"));
+                                checkouttimeinput.setAttribute("type", "text");
+                                checkouttimediv.appendChild(checkouttimeinput);
+                                filterrow2.appendChild(filtercol);
+                                filtercol.appendChild(checkouttimediv);
+
+                                var updatebt = document.createElement("input");
+                                updatebt.setAttribute("class", "btn btn-primary");
+                                updatebt.setAttribute("type", "submit");
+                                updatebt.setAttribute("value", "Update Search");
+
+                                filterform.appendChild(maindiv);
+                                maindiv.appendChild(formc);
+                                formc.appendChild(filterdivpickup);
+                                formc.appendChild(filterrow);
+                                formc.appendChild(filterdivdrop);
+                                formc.appendChild(filterrow2);
+
+                                formc.appendChild(updatebt);
+
+                                for (var i = 0; i < response.carResults.length; i++) {
+
+
+
+                                    var litag = document.createElement("li");
+                                    var bookingitem = document.createElement("a");
+                                    bookingitem.setAttribute("class", "booking-item");
+
+                                    var rowd = document.createElement("div");
+                                    rowd.setAttribute("class", "row");
+
+                                    var coldiv1 = document.createElement("div");
+                                    coldiv1.setAttribute("class", "col-md-3");
+                                    var imgdiv = document.createElement("div");
+                                    imgdiv.setAttribute("class", "booking-item-car-img");
+                                    if (carresult[i].PossibleModels.includes("ford")) {
+                                        var img = document.createElement("img");
+                                        img.setAttribute("src", "images/Honda-Civic.png");
+                                    }
+                                    else if (carresult[i].PossibleModels.includes("Nissan")) {
+                                        var img = document.createElement("img");
+                                        img.setAttribute("src", "images/Nissan-GT-R.png");
+                                    }
+                                    else if (carresult[i].PossibleModels.includes("Toyota")) {
+                                        var img = document.createElement("img");
+                                        img.setAttribute("src", "images/Toyota-Prius-Plus.png");
+                                    }
+                                    else if (carresult[i].PossibleModels.includes("kia")) {
+                                        var img = document.createElement("img");
+                                        img.setAttribute("src", "images/Mercedes-Benz-Clasa-G-facelift.png");
+                                    }
+                                    else {
+                                        var img = document.createElement("img");
+                                        img.setAttribute("src", "images/Volkswagen-Touareg-Edition-X.png");
+                                    }
+                                    var carname = document.createElement("p");
+                                    carname.setAttribute("class", "booking-item-car-title");
+                                    var carnametext = document.createTextNode(carresult[i].PossibleModels); //possibleModels
+                                    carname.appendChild(carnametext);
+
+
+                                    imgdiv.appendChild(img);
+                                    coldiv1.appendChild(imgdiv);
+                                    coldiv1.appendChild(carname);
+
+
+                                    var coldiv2 = document.createElement("div");
+                                    coldiv2.setAttribute("class", "col-md-6");
+                                    var agency = document.createElement("h5");
+                                    agency.setAttribute("class", "booking-item-title");
+                                    var agencyname = document.createTextNode("Agency Name: " + carresult[i].RentalAgency); //RentalAgency
+                                    agency.appendChild(agencyname);
+                                    var address = document.createElement("p");
+                                    address.setAttribute("class", "booking-item-address");
+                                    var maplogo = document.createElement("i");
+                                    maplogo.setAttribute("class", "fa fa-map-marker");
+                                    address.appendChild(maplogo);
+                                    addresstext = document.createTextNode(carresult[i].VendorLocation); //VendorLocation
+                                    address.appendChild(addresstext);
+                                    var iconul = document.createElement("ul");
+                                    iconul.setAttribute("class", "booking-item-features booking-item-features-sign clearfix");
+
+                                    var iconli = document.createElement("li");
+                                    iconli.setAttribute("rel", "tooltip");
+                                    iconli.setAttribute("data-placement", "top");
+                                    iconli.setAttribute("data-original-title", "Passengers");
+                                    var maleicon = document.createElement("i");
+                                    maleicon.setAttribute("class", "fa fa-male");
+                                    iconli.appendChild(maleicon);
+                                    var numpas = document.createElement("span");
+                                    numpas.setAttribute("class", "booking-item-feature-sign");
+                                    numpas.setAttribute("style", "bottom:-8px");
+                                    var numpastext = document.createTextNode(carresult[i].TypicalSeating); //TypicalSeating
+                                    numpas.appendChild(numpastext);
+                                    iconli.appendChild(numpas);
+
+                                    var iconli2 = document.createElement("li");
+                                    iconli2.setAttribute("rel", "tooltip");
+                                    iconli2.setAttribute("data-placement", "top");
+                                    iconli2.setAttribute("data-original-title", "Mileage");
+                                    var caricon = document.createElement("i");
+                                    caricon.setAttribute("class", "im im-car-doors");
+                                    iconli2.appendChild(caricon);
+                                    var mileage = document.createElement("span");
+                                    mileage.setAttribute("class", "booking-item-feature-sign");
+                                    mileage.setAttribute("style", "bottom:-8px");
+                                    var mileagetext = document.createTextNode(carresult[i].MileageDescription); //MileageDescription
+                                    mileage.appendChild(mileagetext);
+                                    iconli2.appendChild(mileage);
+
+                                    var iconli3 = document.createElement("li");
+                                    iconli3.setAttribute("rel", "tooltip");
+                                    iconli3.setAttribute("data-placement", "top");
+                                    iconli3.setAttribute("data-original-title", "Air Conditioning");
+                                    var ac = document.createElement("i");
+                                    ac.setAttribute("class", "im im-air");
+                                    iconli3.appendChild(ac);
+                                    var air = document.createElement("span");
+                                    air.setAttribute("class", "booking-item-feature-sign");
+                                    air.setAttribute("style", "bottom:-8px");
+                                    var airtext = document.createTextNode("AC"); //airconditioningDescription
+                                    air.appendChild(airtext);
+                                    iconli3.appendChild(air);
+
+                                    var iconli4 = document.createElement("li");
+                                    iconli4.setAttribute("rel", "tooltip");
+                                    iconli4.setAttribute("data-placement", "top");
+                                    iconli4.setAttribute("data-original-title", "Power Steering");
+                                    var steeringicon = document.createElement("i");
+                                    steeringicon.setAttribute("class", "im im-car-wheel");
+                                    iconli4.appendChild(steeringicon);
+                                    var steering = document.createElement("span");
+                                    steering.setAttribute("class", "booking-item-feature-sign");
+                                    steering.setAttribute("style", "bottom:-8px");
+                                    var steeringtext = document.createTextNode("Power Steering"); //power steering
+                                    steering.appendChild(steeringtext);
+                                    iconli4.appendChild(steering);
+
+                                    var iconli5 = document.createElement("li");
+                                    iconli5.setAttribute("rel", "tooltip");
+                                    iconli5.setAttribute("data-placement", "top");
+                                    iconli5.setAttribute("data-original-title", "Automic Transmission");
+                                    var autominicon = document.createElement("i");
+                                    autominicon.setAttribute("class", "im im-shift-auto");
+                                    iconli5.appendChild(autominicon);
+                                    var automic = document.createElement("span");
+                                    automic.setAttribute("class", "booking-item-feature-sign");
+                                    automic.setAttribute("style", "bottom:-8px");
+                                    var automictext = document.createTextNode("Automic Transmission"); //Automic Transmission
+                                    automic.appendChild(automictext);
+                                    iconli5.appendChild(automic);
+
+                                    var iconli6 = document.createElement("li");
+                                    iconli6.setAttribute("rel", "tooltip");
+                                    iconli6.setAttribute("data-placement", "top");
+                                    iconli6.setAttribute("data-original-title", "FM Radio");
+                                    var fmicon = document.createElement("i");
+                                    fmicon.setAttribute("class", "im im-fm");
+                                    iconli6.appendChild(fmicon);
+                                    var FM = document.createElement("span");
+                                    FM.setAttribute("class", "booking-item-feature-sign");
+                                    FM.setAttribute("style", "bottom:-8px");
+                                    var FMtext = document.createTextNode("FM Radio"); //FM Radio
+                                    FM.appendChild(FMtext);
+                                    iconli6.appendChild(FM);
+
+
+                                    iconul.appendChild(iconli);
+                                    iconul.appendChild(iconli2);
+                                    iconul.appendChild(iconli3);
+                                    iconul.appendChild(iconli4);
+                                    iconul.appendChild(iconli6);
+                                    iconul.appendChild(iconli5);
+
+                                    /* var feature=document.createElement("p");
+                                     feature.setAttribute("class","booking-item-address");
+                                     var featuretext=document.createTextNode("Automatic Transmission, Power Steering, Air Conditioning, Air Bags, Cruise Control, Anti-Lock Brakes, AM/FM Stereo");
+                                     feature.appendChild(featuretext);*/
+
+
+
+                                    coldiv2.appendChild(agency);
+                                    coldiv2.appendChild(address);
+                                    coldiv2.appendChild(iconul);
+                                    //coldiv2.appendChild(feature);
+
+                                    var coldiv3 = document.createElement("div");
+                                    coldiv3.setAttribute("class", "col-md-3");
+                                    var price = document.createElement("span");
+                                    price.setAttribute("class", "booking-item-price");
+                                    var pricetext = document.createTextNode("$" + carresult[i].DailyRate); //DailyRate
+                                    price.appendChild(pricetext);
+                                    var perday = document.createElement("span");
+                                    var perdaytext = document.createTextNode("/day");
+                                    perday.appendChild(perdaytext);
+                                    var cartype = document.createElement("p");
+                                    cartype.setAttribute("class", "booking-item-flight-class");
+                                    var cartypename = document.createTextNode(carresult[i].CarTypeName); //CarTypeName
+                                    cartype.appendChild(cartypename);
+                                    var selectbtn = document.createElement("button");
+                                    selectbtn.setAttribute("class", "btn btn-primary");
+                                    selectbtn.setAttribute("id", i);
+                                    selectbtn.setAttribute("href", carresult[i].DeepLink); // DeepLink
+                                    selectbtn.setAttribute("car", carresult[i].PossibleModels + "~" + carresult[i].RentalAgency + "~" + carresult[i].VendorLocation + "~" + carresult[i].DailyRate + "~" + carresult[i].SubTotal + "~" + carresult[i].TaxesAndFees + "~" + carresult[i].TotalPrice);
+                                    $(selectbtn).click(function () {
+                                        var id = $(this).attr('car');
+                                        console.log(id);
+                                        alert(id);
+                                        var params = id.split('~');
+                                        console.log(params);
+                                        alert(params);
+                                        var date1 = new Date(getParameterByName("startdate"));
+                                        var date2 = new Date(getParameterByName("enddate"));
+                                        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                                        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                                        var paramValues = params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4] + "&" + params[5] + "&" + params[6] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate") + "&" + diffDays + "&" + getParameterByName("pickuptime") + "&" + getParameterByName("dropofftime") + "&" + "car";
+                                        __doPostBack('Button2', paramValues);
+                                        //window.open(url, '_self');
+                                    });
+
+                                    var selecttext = document.createTextNode("Select");
+                                    selectbtn.appendChild(selecttext);
+                                    coldiv3.appendChild(price);
+                                    coldiv3.appendChild(perday);
+                                    coldiv3.appendChild(cartype);
+                                    coldiv3.appendChild(selectbtn);
+
+                                    rowd.appendChild(coldiv1);
+                                    rowd.appendChild(coldiv2);
+                                    rowd.appendChild(coldiv3);
+                                    bookingitem.appendChild(rowd);
+                                    litag.appendChild(bookingitem);
+                                    flightCards.appendChild(litag);
+
+                            }
+                        }
 
                         },
                         error: function (xhr) {
                             alert(xhr.error);
                         }
                     });
-
-
                 }                
                 else if (type == "flightround") {
 
@@ -1533,7 +1676,7 @@
                         duration.appendChild(durationText);
 
                         var price = document.createElement("span");
-                        var pricetext = document.createTextNode("$445");
+                        var pricetext = document.createTextNode( tripOptions[j].saleTotal);
                         price.appendChild(pricetext);
                         var person = document.createElement("span");
                         var persontext = document.createTextNode("/person");
@@ -1543,7 +1686,7 @@
                         var selectbt = document.createElement("button");
                         selectbt.setAttribute("class", "btn btn-primary");
                         selectbt.setAttribute("href", "#");
-                        selectbt.setAttribute("flightone", getParameterByName("source") + "-" + getParameterByName("destination") + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].departureTime) + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].arrivalTime) + "-" + tripOptions[j].saleTotal);
+                        selectbt.setAttribute("flightone", getParameterByName("source") + "-" + getParameterByName("destination") + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].departureTime) + "-" + splitTime(tripOptions[j].slice[0].segment[0].leg[0].arrivalTime) + "-" + tripOptions[j].saleTotal + "-" + tripOptions[j].slice[0].duration);
                         var selectbttext = document.createTextNode("Select");
                         selectbt.appendChild(selectbttext);
                         coldiv4.appendChild(price);
@@ -1578,7 +1721,7 @@
                             var date1 = new Date(getParameterByName("startdate"));
                             var date2 = new Date(getParameterByName("enddate"));
 
-                            var paramValues = "flightone" + "&" + params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
+                            var paramValues = "flightone" + "&" + params[0] + "&" + params[1] + "&" + params[2] + "&" + params[3] + "&" + params[4] + "&" + params[5] + "&" + getParameterByName("startdate") + "&" + getParameterByName("enddate");
                             __doPostBack('Button2', paramValues);
                             //window.open(url, '_self');
                         });
@@ -1592,7 +1735,7 @@
                 var map;
                 var infowindow;
                 function initMap(latitude, longitude,id) {
-                    var pyrmont = { lat: latitude, lng: longitude };
+                   /* var pyrmont = { lat: latitude, lng: longitude };
                     map = new google.maps.Map(document.getElementById('map'+id), {
                         center: pyrmont,
                         zoom: 15
@@ -1603,7 +1746,7 @@
                         location: pyrmont,
                         radius: 500,
                         type: ['store']
-                    }, callback);
+                    }, callback);*/
                 }
                 function callback(results, status) {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -1653,8 +1796,6 @@
                 }
 
             </script>
-      <
-
         </ContentTemplate>
     </asp:UpdatePanel>
     <asp:UpdateProgress runat="server" ID="prog" AssociatedUpdatePanelID="Panel1"> 

@@ -123,8 +123,12 @@ namespace Travelopedia_API.Controllers
 
                 var city = neighborHoodDetails.Single(s => s.id == hrd.id).city;
                 var state = neighborHoodDetails.Single(s => s.id == hrd.id).state;
+                var name = neighborHoodDetails.Single(s => s.id == hrd.id).name;
+                var centroid = neighborHoodDetails.Single(s => s.id == hrd.id).centroid;
                 hrd.city = city;
                 hrd.state = state;
+                hrd.name = name;
+                hrd.centroid = centroid;
                 hotelRoomDetails.Add(hrd);
             }
             return hotelRoomDetails;
