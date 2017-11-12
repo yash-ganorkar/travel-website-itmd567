@@ -8,6 +8,7 @@ namespace Travelopedia_API.Models
     public class CarDetails
     {
         public List<CarResult> carResults { get; set; }
+        public Exceptions ExceptionDetails { get; set; }
     }
 
     public class CarTypes

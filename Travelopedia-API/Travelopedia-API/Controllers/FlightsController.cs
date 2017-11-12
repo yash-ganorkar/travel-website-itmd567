@@ -17,14 +17,22 @@ namespace Travelopedia_API.Controllers
 
         public TripsSearchResponse FetchAllFlights(TripsSearchRequest tripSearchRequest)
         {
-            QPXExpressService service = new QPXExpressService(new BaseClientService.Initializer()
+            try
             {
-                ApiKey = "AIzaSyAJ1NjLJLHj2IyiQa1SYfiRiYiDSw_RBhg",
-                ApplicationName = "API key 1",
-            });
+                QPXExpressService service = new QPXExpressService(new BaseClientService.Initializer()
+                {
+                    ApiKey = "AIzaSyAJ1NjLJLHj2IyiQa1SYfiRiYiDSw_RBhg",
+                    ApplicationName = "API key 1",
+                });
 
-            var result = service.Trips.Search(tripSearchRequest).Execute();
-            return result;
+                var result = service.Trips.Search(tripSearchRequest).Execute();
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
         // GET api/<controller>
         public IEnumerable<string> Get()

@@ -14,31 +14,67 @@ namespace Travelopedia_API.Controllers
         public CarDetails carDetails;
         private string responseString;
         private List<CarTypes> carTypes;
+        public Exceptions exceptions;
+
         [HttpGet]
         [ActionName("AllCars")]
         public CarDetails FetchAllCars(string location, string startdate, string enddate, string pickuptime, string dropofftime)
         {
-            carDetails = new CarDetails();
-            XmlDocument doc = new XmlDocument();
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri("http://api.hotwire.com/v1/search/car");
-                string urlParams = "?apikey=8mgjwdbgs6pxuupdwmje72uu&dest=" + location + "&startdate=" + startdate + "&resultType=N&enddate=" + enddate + "&pickuptime=" + pickuptime + "&dropofftime=" + dropofftime;
-                // client.DefaultRequestHeaders.Accept.Clear();
-                // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                var response = client.GetAsync(urlParams).Result;
-                if (response.IsSuccessStatusCode)
+                carDetails = new CarDetails();
+                XmlDocument doc = new XmlDocument();
+                using (var client = new HttpClient())
                 {
-                    responseString = response.Content.ReadAsStringAsync().Result;
-                    doc.LoadXml(responseString);
+                    client.BaseAddress = new Uri("http://api.hotwire.com/v1/search/car");
+                    string urlParams = "?apikey=8mgjwdbgs6pxuupdwmje72uu&dest=" + location + "&startdate=" + startdate + "&resultType=N&enddate=" + enddate + "&pickuptime=" + pickuptime + "&dropofftime=" + dropofftime;
+                    // client.DefaultRequestHeaders.Accept.Clear();
+                    // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = client.GetAsync(urlParams).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseString = response.Content.ReadAsStringAsync().Result;
+                        doc.LoadXml(responseString);
+
+                        if (doc.DocumentElement.ChildNodes[0].ChildNodes.Count == 0)
+                        {
+                            GetCarTypesDetails(doc);
+                            carDetails.carResults = GetCarDetails(doc);
+                        }
+
+                        else
+                        {
+
+                            Exceptions exceptions = new Exceptions();
+                            exceptions.ExceptionMessage = doc.DocumentElement.ChildNodes[0].ChildNodes[0].ChildNodes[1].InnerText.ToString();
+                            carDetails.carResults = null;
+                            carDetails.ExceptionDetails = exceptions;
+                        }
+                    }
+
+                    else
+                    {
+                        Exceptions exceptions = new Exceptions();
+                        exceptions.ExceptionMessage = "Car Service API was not called successfully";
+                        carDetails.carResults = null;
+                        carDetails.ExceptionDetails = exceptions;
+                    }
+
                 }
 
-                GetCarTypesDetails(doc);
-                carDetails.carResults = GetCarDetails(doc);
-            }
+                return carDetails;
 
-            return carDetails;
+            }
+            catch (Exception ex)
+            {
+
+                Exceptions exceptions = new Exceptions();
+                exceptions.ExceptionMessage = "Error in FetchAllCars() :" + ex.InnerException;
+                carDetails.carResults = null;
+                carDetails.ExceptionDetails = exceptions;
+                return carDetails;
+            }
         }
 
         private void GetCarTypesDetails(XmlDocument doc)

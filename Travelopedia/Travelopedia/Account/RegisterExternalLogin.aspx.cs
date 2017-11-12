@@ -26,6 +26,8 @@ namespace Travelopedia.Account
             private set { ViewState["ProviderAccountKey"] = value; }
         }
 
+        public string nameClaim;
+
         private void RedirectOnFail()
         {
             Response.Redirect((User.Identity.IsAuthenticated) ? "~/Account/Manage" : "~/Account/Login");
@@ -55,14 +57,33 @@ namespace Travelopedia.Account
                 var user = manager.Find(loginInfo.Login);
 
                 var verifiedloginInfox = Context.GetOwinContext().Authentication.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
-                var nameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
-                var emailClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-                var surNameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
-                var fullNameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                if(ProviderName == "Facebook")
+                {
+                    var nameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                    var emailClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                    email.Text = "";
+                    userName = nameClaim.Value.ToString().ToLower();
+                    lastName = nameClaim.Value.ToString().Split(' ')[1];
+                    firstName = nameClaim.Value.ToString().Split(' ')[0];
+                    userName = firstName.ToLower() + "" + lastName.ToLower();
+
+                }
+                else
+                {
+                    var nameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
+                    var emailClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                    var surNameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
+                    var fullNameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                    email.Text = emailClaim.Value.ToString();
+                    userName = nameClaim.Value.ToString();
+                    lastName = surNameClaim.Value.ToString();
+                    firstName = fullNameClaim.Value.ToString();
+
+                }
 
                 if (user != null)
                 {
-                    Session["name"] = fullNameClaim.ToString();
+                    Session["name"] = firstName.ToString();
                     signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                 }
@@ -91,10 +112,6 @@ namespace Travelopedia.Account
                 }
                 else
                 {
-                    email.Text = emailClaim.Value.ToString();
-                    userName = nameClaim.Value.ToString();
-                    lastName = surNameClaim.Value.ToString();
-                    firstName = fullNameClaim.Value.ToString();
                     CreateAndLoginUser();
                 }
             }
@@ -137,10 +154,10 @@ namespace Travelopedia.Account
 
         private void AddErrors(IdentityResult result) 
         {
-            foreach (var error in result.Errors) 
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
-            }
+            }   
         }
     }
 }

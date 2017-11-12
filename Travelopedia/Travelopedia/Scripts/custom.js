@@ -48,30 +48,82 @@ $('.form-group').each(function() {
     });
 });
 
-$('.typeahead').typeahead({
+//$('#From .typeahead').typeahead({
+//    hint: true,
+//    highlight: true,
+//    minLength: 3,
+//    limit: 8
+//}, {
+//    source: function(q, cb) {
+//        return $.ajax({
+//            dataType: 'jsonp',
+//            type: 'get',
+//            url: 'http://iatacodes.org/api/v4/autocomplete.jsonp?api_key=46e6f196-cdd3-4734-8fc1-c72f8dba3637&callback=?&query=' + q,
+//            chache: false,
+//            success: function(data) {
+//                var result = [];
+//                $.each(data.response.airports, function(index, val) {
+//                    result.push({
+//                        value: val.name + "-" + val.code
+//                    });
+//                });
+//                cb(result);
+//            }
+//        });
+//    }
+//    });
+
+$('#Hotel .typeahead').typeahead({
     hint: true,
     highlight: true,
     minLength: 3,
     limit: 8
 }, {
-    source: function(q, cb) {
-        return $.ajax({
-            dataType: 'jsonp',
-            type: 'get',
-            url: 'http://iatacodes.org/api/v4/autocomplete.jsonp?api_key=46e6f196-cdd3-4734-8fc1-c72f8dba3637&callback=?&query=' + q,
-            chache: false,
-            success: function(data) {
-                var result = [];
-                $.each(data.response.airports, function(index, val) {
-                    result.push({
-                        value: val.name + "-" + val.code
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'jsonp',
+                type: 'get',
+                url: 'http://iatacodes.org/api/v6/cities.jsonp?api_key=46e6f196-cdd3-4734-8fc1-c72f8dba3637&callback=?&code=' + q,
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    console.log(data.response);
+                    $.each(data.response, function (index, val) {
+                        result.push({
+                            value: val.name + "-" + val.code
+                        });
                     });
-                });
-                cb(result);
-            }
-        });
-    }
-});
+                    cb(result);
+                }
+            });
+        }
+    });
+
+
+//$('#To .typeahead').typeahead({
+//    hint: true,
+//    highlight: true,
+//    minLength: 3,
+//    limit: 8
+//}, {
+//        source: function (q, cb) {
+//            return $.ajax({
+//                dataType: 'jsonp',
+//                type: 'get',
+//                url: 'http://iatacodes.org/api/v4/autocomplete.jsonp?api_key=46e6f196-cdd3-4734-8fc1-c72f8dba3637&callback=?&query=' + q,
+//                chache: false,
+//                success: function (data) {
+//                    var result = [];
+//                    $.each(data.response.airports, function (index, val) {
+//                        result.push({
+//                            value: val.name + "-" + val.code
+//                        });
+//                    });
+//                    cb(result);
+//                }
+//            });
+//        }
+//    });
 
 
 $('input.date-pick, .input-daterange, .date-pick-inline').datepicker({
@@ -82,11 +134,6 @@ $('input.date-pick, .input-daterange, .date-pick-inline').datepicker({
 
 $('input.date-pick, .input-daterange input[name="start"]').datepicker('setDate', 'today');
 $('.input-daterange input[name="end"]').datepicker('setDate', '+7d');
-
-$('input.time-pick').timepicker({
-    minuteStep: 15,
-    showInpunts: false
-})
 
 $('input.date-pick-years').datepicker({
     startView: 2
@@ -507,3 +554,145 @@ function tagline_vertical_slide() {
 function abortTimer() { // to be called when you want to stop the timer
     clearInterval(tid);
 }
+
+
+$('#From .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3,
+    limit: 8
+}, {
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'get',
+                url: 'https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json',
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    $.each(data, function (index, val) {
+                        if (val.code.includes(q) || val.city.includes(q) && !val.type.includes('Heliport2')) {
+                            result.push({
+                                value: val.name + "-" + val.code + "-" + val.city
+                            });
+                        }
+                    });
+                    cb(result);
+                }
+            });
+        }
+    });
+$('#To .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3,
+    limit: 8
+}, {
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'get',
+                url: 'https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json',
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    $.each(data, function (index, val) {
+                        if (val.code.includes(q) || val.city.includes(q) && !val.type.includes('Heliport2')) {
+                            result.push({
+                                value: val.name + "-" + val.code + "-" + val.city
+                            });
+                        }
+                    });
+                    cb(result);
+                }
+            });
+        }
+    });
+
+$('#OneWayFrom .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3,
+    limit: 8
+}, {
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'get',
+                url: 'https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json',
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    $.each(data, function (index, val) {
+                        if (val.code.includes(q) || val.city.includes(q) && !val.type.includes('Heliport2')) {
+                            result.push({
+                                value: val.name + "-" + val.code + "-" + val.city
+                            });
+                        }
+                    });
+                    cb(result);
+                }
+            });
+        }
+    });
+
+$('#OneWayTo .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3,
+    limit: 8
+}, {
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'get',
+                url: 'https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json',
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    $.each(data, function (index, val) {
+                        if (val.code.includes(q) || val.city.includes(q) && !val.type.includes('Heliport2')) {
+                            result.push({
+                                value: val.name + "-" + val.code + "-" + val.city
+                            });
+                        }
+                    });
+                    cb(result);
+                }
+            });
+        }
+    });
+
+
+$('#Cars .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3,
+    limit: 8
+}, {
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'get',
+                url: 'https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json',
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    $.each(data, function (index, val) {
+                        if (val.code.includes(q) || val.city.includes(q)) {
+                            result.push({
+                                value: val.city + "-" + val.state
+                            });
+                        }
+                    });
+                    cb(result);
+                }
+            });
+        }
+    });
+
+$(window).load(function () {
+    $(".loader").fadeOut("60000");
+});
+
+
