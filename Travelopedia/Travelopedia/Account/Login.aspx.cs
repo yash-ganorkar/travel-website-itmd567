@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Owin;
-using Travelopedia.Models;
 
 namespace Travelopedia.Account
 {
@@ -18,6 +15,7 @@ namespace Travelopedia.Account
                 RegisterHyperLink.NavigateUrl = "Register";
                 // Enable this once you have account confirmation enabled for password reset functionality
                 //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
+
                 OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
                 var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
                 if (!String.IsNullOrEmpty(returnUrl))
@@ -28,12 +26,15 @@ namespace Travelopedia.Account
                 HttpCookie cookie = new HttpCookie("TimedCookie");
                 cookie["User"] = User.Identity.Name;
                 cookie.Expires = DateTime.Now.AddMinutes(5);
-                Response.Cookies.Add(cookie);
-//                Response.Redirect("~/Home.aspx");
 
+                Session["Timer"] = DateTime.Now;
+                Session.Timeout = 10;
+                Response.Cookies.Add(cookie);
             }
             else
             {
+                Session.Timeout = 10;
+                Session["Timer"] = DateTime.Now;
                 Response.Redirect("~/Home.aspx");
             }
         }

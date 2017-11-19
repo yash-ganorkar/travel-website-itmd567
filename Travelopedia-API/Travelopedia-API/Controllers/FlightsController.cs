@@ -7,6 +7,7 @@ using System.Web.Http;
 using Google.Apis.QPXExpress.v1;
 using Google.Apis.QPXExpress.v1.Data;
 using Google.Apis.Services;
+using Newtonsoft.Json;
 
 namespace Travelopedia_API.Controllers
 {
@@ -25,7 +26,9 @@ namespace Travelopedia_API.Controllers
                     ApplicationName = "API key 1",
                 });
 
-                var result = service.Trips.Search(tripSearchRequest).Execute();
+                var result = new TripsSearchResponse();
+                //var result = service.Trips.Search(tripSearchRequest).Execute();
+                //var json = JsonConvert.SerializeObject(result);
                 return result;
             }
             catch(Exception ex)

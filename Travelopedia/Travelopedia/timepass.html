@@ -1,0 +1,640 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Hello AngularJS - Hello World</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
+    <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
+
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mystyles.css">
+    <script src="js/modernizr.js"></script>
+
+    <style>
+        .grid {
+            width: 1500px;
+            height: 250px;
+        }
+        .panel-body {
+            width: 100%;
+            max-height: 800px;
+            overflow-y: scroll;
+        }
+        #veil {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            cursor: not-allowed;
+            filter: alpha(opacity=60);
+            opacity: 0.6;
+            background: #000000 url(https://www.w3schools.com/angular/pic_angular.jpg) no-repeat center;
+        }
+        #feedLoading {
+            position: absolute;
+            top: 200px;
+            width: 100%;
+            text-align: center;
+            font-size: 4em;
+            color: white;
+            text-shadow: 2px 2px 2px #021124;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container" ng-app="myApp">
+        <div class="panel-body">
+            <div ng-controller="DataCtrl" ng-init="loadData()">
+                <div id="veil" ng-show="isLoading"></div>
+                <div id="feedLoading" ng-show="isLoading">Loading...</div>
+                <div class="row" id="cardata">
+                    <div class="col-md-3" id="test">
+                        <div class="booking-item-dates-change mb30">
+                            <form class="input-daterange" data-date-format="m/d">
+                                <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                    <label>Pickup Location</label>
+                                    <input class="typeahead form-control" id="startcity" placeholder="City or Airport" value="Chicago-Illinois" type="text">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-icon-left form-group-filled"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                            <label>Start Date</label>
+                                            <input class="form-control" id="startdate" name="start" type="text" value="11/16/2017">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-icon-left"><i class="fa fa-clock-o input-icon input-icon-hightlight"></i>
+                                            <label>Pickup Time</label>
+                                            <input class="time-pick form-control" id="starttime" placeholder="12:00 AM" value="10:00" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                    <label>Drop Off Location</label>
+                                    <input class="typeahead form-control" id="endcity" placeholder="Same as drop" value="Chicago-Illinois" type="text">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-icon-left form-group-filled"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                            <label>End Date</label>
+                                            <input class="form-control" name="end" id="enddate" value="11/17/2017" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-icon-left"><i class="fa fa-clock-o input-icon input-icon-hightlight"></i>
+                                            <label>Dropoff Time</label>
+                                            <input class="time-pick form-control" id="endtime" value="11:30" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input class="btn btn-primary" type="submit" ng-click="loadFilteredData()" value="Update Search">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                            <li id="webservicedata">
+                                <a class="booking-item" href="#">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div ng-if="item.CarTypeName == 'Economy'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/spark.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Compact'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/versa.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Midsize'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/corolla.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Premium'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/maxima.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Luxury'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/luxury.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Full Size SUV'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/NissanFullSizeSUV.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Standard'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/StandardSUV.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Midsize SUV'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/Mid-Size-SUV.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Standard SUV'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/StandardSUV.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Minivan'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/minivan.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Convertible'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/Convertible.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.CarTypeName == 'Full Size'">
+                                                <div class="booking-item-car-img">
+                                                    <img src="img/NissanFullSizeSUV.png" alt="Car" title="Car" />
+                                                    <p class="booking-item-car-title">{{ item.PossibleModels }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <h5 class="booking-item-title">Agency Name: {{ item.RentalAgency }}</h5>
+                                                <p class="booking-item-address"><i class="fa fa-map-marker"></i>
+                                                    <br/>{{ item.VendorLocation }}</p>
+
+                                                <ul class="booking-item-features booking-item-features-sign clearfix">
+                                                    <li rel="tooltip" data-placement="top" title="Passengers"><i class="fa fa-male"></i><span style="bottom:-8px;" class="booking-item-feature-sign">{{ item.TypicalSeating }}</span>
+                                                    </li>
+                                                    <li rel="tooltip" data-placement="top" title="Doors"><i class="im im-car-doors"></i><span class="booking-item-feature-sign" style="bottom: -8px;">{{ item.MileageDescription }}</span>
+                                                    </li>
+                                                    <li rel="tooltip" data-placement="top" data-original-title="Air Conditioning"><i class="im im-air"></i><span class="booking-item-feature-sign" style="bottom:-8px">AC</span>
+                                                    </li>
+
+                                                    <li rel="tooltip" data-placement="top" data-original-title="Power Steering"><i class="im im-car-wheel"></i><span class="booking-item-feature-sign" style="bottom:-8px">Power Steering</span>
+                                                    </li>
+                                                    <li rel="tooltip" data-placement="top" data-original-title="FM Radio"><i class="im im-fm"></i><span class="booking-item-feature-sign" style="bottom:-8px">FM Radio</span>
+                                                    </li>
+                                                    <li rel="tooltip" data-placement="top" data-original-title="Automic Transmission"><i class="im im-shift-auto"></i><span class="booking-item-feature-sign" style="bottom:-8px">Automic Transmission</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"><span class="booking-item-price">${{ item.DailyRate }}</span><span>/day</span>
+                                            <p class="booking-item-flight-class">{{ item.CarTypeName }}</p><button class="btn btn-primary" ng-click="selectCar(item)">Select</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                        <div class="row">
+                            <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                Previous
+                            </button>
+                            {{currentPage+1}}/{{numberOfPages()}}
+                            <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                                Next
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row" id="hoteldata">
+                    <div class="col-md-3" id="test">
+                        <form class="booking-item-dates-change mb30">
+                            <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                <label>Where</label>
+                                <input class="typeahead form-control" id="city" placeholder="City, Hotel Name or U.S. Zip Code" type="text" value="Chicago-Illinois">
+                            </div>
+                            <div class="input-daterange">
+                                <div class="form-group form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                    <label>Check In</label>
+                                    <input class="form-control" id="checkindate" name="start" value="11/16/2017" type="text">
+                                </div>
+                                <div class="form-group form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                    <label>Check Out</label>
+                                    <input class="form-control" name="end" id="checkoutdate" value="11/17/2017" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group form-group- form-group-select-plus">
+                                <label>Guests</label>
+                                <select id="guests" class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group- form-group-select-plus">
+                                <label>Rooms</label>
+                                <select id="rooms" class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group- form-group-select-plus">
+                                <label>children</label>
+                                <select id="children" class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <input class="btn btn-primary" type="submit" ng-click="loadFilteredData()" value="Update Search">
+                        </form>
+                    </div>
+                    <div class="col-md-9">
+                        <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                            <li>
+                                <a class="booking-item" href="#">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div ng-if="item.subtotal <= '200'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel4.jpg" alt="Hotel" title="Hotel" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '300' && item.subtotal > '200'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel5.jpg" alt="Hotel" title="Hotel" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '400' && item.subtotal > '300'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel1.jpg" alt="Hotel" title="Hotel" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '500' && item.subtotal > '400'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel6.jpg" alt="Car" title="Car" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '600' && item.subtotal > '500'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel2.jpg" alt="Car" title="Car" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="booking-item-rating">
+                                                <span class="booking-item-rating-number"><b>***</b></span>
+                                            </div>
+
+                                            <h5 class="booking-item-title">{{ item.name }}</h5>
+                                            <p class="booking-item-address"><i class="fa fa-map-marker"></i>{{ item.city }}, {{ item.state }}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="booking-item-price-from">from</span>
+                                            <span class="booking-item-price">${{ item.subtotal }}</span>
+                                            <button class="btn btn-primary" ng-click="selectHotel(item)">Book Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                        <div class="row">
+                            <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                Previous
+                            </button>
+                            {{currentPage+1}}/{{numberOfPages()}}
+                            <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                                Next
+                            </button>
+                        </div>                        
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        
+        document.getElementById('hoteldata').style.display = "none";                
+        document.getElementById('cardata').style.display = "none";      
+
+        var App = angular.module('myApp', []);
+
+        var data = {
+
+        };
+
+        App.controller("DataCtrl", function($scope, $http) {
+
+            $scope.selectCar = function(car){
+                alert(car.DailyRate);
+            }
+
+            $scope.selectHotel = function(hotel){
+                alert(hotel.subtotal);
+            }
+            
+            $scope.setLoading = function(loading) {
+                $scope.isLoading = loading;
+            }
+            if(window.location.href.includes('hotel'))
+{
+            if(document.getElementById('hoteldata').style.display == "none"){
+                document.getElementById('hoteldata').style.display = "block"
+                document.getElementById('cardata').style.display = "none";
+            }
+
+            $scope.loadData = function() {
+                $scope.setLoading(true);
+
+                document.getElementById('city').disabled = true;
+                document.getElementById('checkindate').disabled = true;
+                document.getElementById('checkoutdate').disabled = true;
+                document.getElementById('guests').disabled = true;
+                document.getElementById('rooms').disabled = true;
+                document.getElementById('children').disabled = true;
+
+                var httpRequest = $http({
+                    method: 'GET',
+                    url: 'http://104.194.103.50/Travelopedia-API/api/hotels/allhotels',
+                    params: {
+                        destination: "Chicago",
+                        rooms: "1",
+                        adults: "1",
+                        children: "1",
+                        startdate: "11/20/2017",
+                        enddate: "11/26/2017"
+                    }
+
+                    //data: mockData
+
+                }).success(function(data, status) {
+                    $scope.items = data.hotelRoomDetails;
+                    $scope.currentPage = 0;
+                    $scope.pageSize = 4;
+
+                    $scope.numberOfPages = function() {
+                        return Math.ceil($scope.items.length / $scope.pageSize);
+                    }
+                    $scope.setLoading(false);
+
+                document.getElementById('city').disabled = false;
+                document.getElementById('checkindate').disabled = false;
+                document.getElementById('checkoutdate').disabled = false;
+                document.getElementById('guests').disabled = false;
+                document.getElementById('rooms').disabled = false;
+                document.getElementById('children').disabled = false;
+
+                }).error(function(error) {
+                    alert(error);
+                    //    $scope.setLoading(false);
+                });
+
+            };
+
+
+            $scope.loadFilteredData = function() {
+
+
+                document.getElementById('city').disabled = true;
+                document.getElementById('checkindate').disabled = true;
+                document.getElementById('checkoutdate').disabled = true;
+                document.getElementById('guests').disabled = true;
+                document.getElementById('rooms').disabled = true;
+                document.getElementById('children').disabled = true;
+
+
+                $scope.setLoading(true);
+
+                var httpRequest = $http({
+                    method: 'GET',
+                    url: 'http://104.194.103.50/Travelopedia-API/api/hotels/allhotels',
+                    params: {
+                        destination: document.getElementById('city').value.split('-')[0],
+                        rooms: document.getElementById('rooms').value,
+                        adults: document.getElementById('guests').value,
+                        children: document.getElementById('children').value,
+                        startdate: document.getElementById('checkindate').value,
+                        enddate: document.getElementById('checkoutdate').value
+                    }
+
+                    //data: mockData
+
+                }).success(function(data, status) {
+                    $scope.items = data.hotelRoomDetails;
+                    $scope.currentPage = 0;
+                    $scope.pageSize = 4;
+
+                    $scope.numberOfPages = function() {
+                        return Math.ceil($scope.items.length / $scope.pageSize);
+                    }
+                    $scope.setLoading(false);
+
+                document.getElementById('city').disabled = false;
+                document.getElementById('checkindate').disabled = false;
+                document.getElementById('checkoutdate').disabled = false;
+                document.getElementById('guests').disabled = false;
+                document.getElementById('rooms').disabled = false;
+                document.getElementById('children').disabled = false;
+
+                }).error(function(error) {
+                    alert(error);
+                    //    $scope.setLoading(false);
+                });
+
+            };    
+}            
+
+            else if(window.location.href.includes('car'))
+{            
+            
+
+            if(document.getElementById('cardata').style.display == "none"){
+                document.getElementById('hoteldata').style.display = "none";
+                document.getElementById('cardata').style.display = "block";
+            }
+
+            $scope.loadData = function() {
+                $scope.setLoading(true);
+
+                document.getElementById('startcity').disabled = true;
+                document.getElementById('endcity').disabled = true;
+                document.getElementById('startdate').disabled = true;
+                document.getElementById('enddate').disabled = true;
+                document.getElementById('starttime').disabled = true;
+                document.getElementById('endtime').disabled = true;
+
+                var httpRequest = $http({
+                    method: 'GET',
+                    url: 'http://104.194.103.50/Travelopedia-API/api/car/allcars',
+                    params: {
+                        location: "Chicago",
+                        startdate: "11/20/2017",
+                        enddate: "11/26/2017",
+                        pickuptime: "10:00",
+                        dropofftime: "10:00"
+                    }
+                    //data: mockData
+
+                }).success(function(data, status) {
+                    $scope.items = data.carResults;
+                    $scope.currentPage = 0;
+                    $scope.pageSize = 4;
+
+                    $scope.numberOfPages = function() {
+                        return Math.ceil($scope.items.length / $scope.pageSize);
+                    }
+                    $scope.setLoading(false);
+
+                    document.getElementById('startcity').disabled = false;
+                    document.getElementById('endcity').disabled = false;
+                    document.getElementById('startdate').disabled = false;
+                    document.getElementById('enddate').disabled = false;
+                    document.getElementById('starttime').disabled = false;
+                    document.getElementById('endtime').disabled = false;
+
+                }).error(function(error) {
+                    alert(error);
+                    //    $scope.setLoading(false);
+                });
+
+            };
+
+
+            $scope.loadFilteredData = function() {
+
+
+                document.getElementById('startcity').disabled = true;
+                document.getElementById('endcity').disabled = true;
+                document.getElementById('startdate').disabled = true;
+                document.getElementById('enddate').disabled = true;
+                document.getElementById('starttime').disabled = true;
+                document.getElementById('endtime').disabled = true;
+
+
+                $scope.setLoading(true);
+
+                var httpRequest = $http({
+                    method: 'GET',
+                    url: 'http://104.194.103.50/Travelopedia-API/api/car/allcars',
+                    params: {
+                        location: document.getElementById('startcity').value.split('-')[0],
+                        startdate: document.getElementById('startdate').value,
+                        enddate: document.getElementById('enddate').value,
+                        pickuptime: document.getElementById('starttime').value,
+                        dropofftime: document.getElementById('endtime').value
+                    }
+                    //data: mockData
+
+                }).success(function(data, status) {
+                    $scope.items = data.carResults;
+                    $scope.currentPage = 0;
+                    $scope.pageSize = 4;
+
+                    $scope.numberOfPages = function() {
+                        return Math.ceil($scope.items.length / $scope.pageSize);
+                    }
+                    $scope.setLoading(false);
+
+                    document.getElementById('startcity').disabled = false;
+                    document.getElementById('endcity').disabled = false;
+                    document.getElementById('startdate').disabled = false;
+                    document.getElementById('enddate').disabled = false;
+                    document.getElementById('starttime').disabled = false;
+                    document.getElementById('endtime').disabled = false;
+                }).error(function(error) {
+                    alert(error);
+                    //    $scope.setLoading(false);
+                });
+
+            };    
+}            
+
+
+        });
+
+        App.filter('startFrom', function() {
+            return function(input, start) {
+                if (!input || !input.length) {
+                    return;
+                }
+                start = +start; //parse to int
+                return input.slice(start);
+            }
+        });
+
+        //url = http://10.0.0.248/Travelopedia-API/api/hotels/allhotels
+    </script>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/slimmenu.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/bootstrap-timepicker.js"></script>
+    <script src="js/nicescroll.js"></script>
+    <script src="js/dropit.js"></script>
+    <script src="js/ionrangeslider.js"></script>
+    <script src="js/icheck.js"></script>
+    <script src="js/fotorama.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="js/typeahead.js"></script>
+    <script src="js/card-payment.js"></script>
+    <script src="js/magnific.js"></script>
+    <script src="js/owl-carousel.js"></script>
+    <script src="js/fitvids.js"></script>
+    <script src="js/tweet.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/gridrotator.js"></script>
+
+    <pagination ng-model="currentPage" total-items="todos.length" max-size="maxSize" boundary-links="true">
+    </pagination>
+
+</body>
+
+</html>

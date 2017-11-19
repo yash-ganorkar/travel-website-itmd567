@@ -154,7 +154,7 @@
                                                     <div class="tab-content">
                                                         <div class="tab-pane fade in active" id="flight-search-1">
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-5">
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div id="From" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
@@ -163,33 +163,28 @@
                                                                                 <asp:TextBox ID="txtSource" OnTextChanged="txtSource_TextChanged" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
-                                                                        </div>
-                                                                    <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div id="To" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>To</label>
                                                                                 <asp:TextBox ID="txtDestination" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                        </div>
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-5">
                                                                     <div class="input-daterange">
                                                                         <div class="row">
-                                                                            <div class="col-md-6">
+                                                                            <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Departing</label>
                                                                                     <asp:Textbox runat="server" class="form-control" ID="txtStartDate" />
                                                                                 </div>
                                                                             </div>
-                                                                            </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
+                                                                            <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Returning</label>
                                                                                     <asp:Textbox runat="server" class="form-control" ID="txtEndDate" />
                                                                                 </div>
-                                                                            </div>
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
@@ -210,6 +205,8 @@
                                                                                             </asp:DropDownList>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -242,15 +239,6 @@
                                                                                     <asp:Textbox runat="server" class="form-control" ID="txtStartDate2" />
                                                                                 </div>
                                                                             </div>
-                                                                            </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                                                                    <label>Returning</label>
-                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtEndDate2" />
-                                                                                </div>
-                                                                            </div>
-                                                                            </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
                                                                                     <label>Passengers</label>
@@ -270,6 +258,7 @@
                                                                                             </asp:DropDownList>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -523,7 +512,7 @@
                     $("#<%= txtStartDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
                     $("#<%= txtEndDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
                 $("#<%= txtStartDate2.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
-                $("#<%= txtEndDate2.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
+               
                 $("#<%= txtCheckin.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
                 $("#<%= txtCheckout.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
                 $("#<%= carPickDate.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });

@@ -22,6 +22,24 @@ namespace Travelopedia {
         protected global::System.Web.UI.UpdatePanel Panel1;
         
         /// <summary>
+        /// sourcecity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText sourcecity;
+        
+        /// <summary>
+        /// destinationcity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText destinationcity;
+        
+        /// <summary>
         /// hiddenField1 control.
         /// </summary>
         /// <remarks>

@@ -22,7 +22,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600' rel='stylesheet' type='text/css'>
 
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <!-- Theme Styles -->
     <link rel="stylesheet" href="Content/bootstrap.min.css">
     <!-- GOOGLE FONTS -->
@@ -211,8 +211,9 @@
         </footer>
         <asp:HiddenField ID="he" runat="server"/>
     <!-- Javascript -->
+
         <script src="Scripts/jquery.js"></script>
-        <script src="Scripts/bootstrap.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="Scripts/slimmenu.js"></script>
         <script src="Scripts/bootstrap-datepicker.js"></script>
         <script src="Scripts/nicescroll.js"></script>
@@ -230,14 +231,12 @@
         <script src="Scripts/countdown.js"></script>
         <script src="Scripts/gridrotator.js"></script>
         <script src="Scripts/custom.js"></script>
+      
+
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-              <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-        
-        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-
         <script type="text/javascript">
+            localStorage['env'] = localStorage['env'] || "http://localhost" //'https://yashganorkar-001-site1.itempurl.com'
             var loginstatus = $("#hiddenFieldLogin").val();
             var login = document.getElementById('login').style;
             var logout = document.getElementById('logout').style;

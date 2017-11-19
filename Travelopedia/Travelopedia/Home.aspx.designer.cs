@@ -319,6 +319,15 @@ namespace Travelopedia {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FlightDetailsOne;
         
         /// <summary>
+        /// flightlocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl flightlocation;
+        
+        /// <summary>
         /// depttimeo control.
         /// </summary>
         /// <remarks>
@@ -380,6 +389,33 @@ namespace Travelopedia {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label durationo;
+        
+        /// <summary>
+        /// totalpassengers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalpassengers;
+        
+        /// <summary>
+        /// totalamounttext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalamounttext;
+        
+        /// <summary>
+        /// totaltax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totaltax;
         
         /// <summary>
         /// flightpriceo control.

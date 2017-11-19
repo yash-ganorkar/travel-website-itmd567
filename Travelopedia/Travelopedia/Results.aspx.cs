@@ -36,20 +36,23 @@ namespace Travelopedia
                 if (queryParam == "hotel")
                 {
                     hiddenField1.Value = "hotel";
+                    Session["DataType"] = hiddenField1.Value;
                 }
                 else if (queryParam == "flight")
                 {
-                    if(Convert.ToInt32(Request.QueryString[5]) == 0)
+                    if (Convert.ToInt32(Request.QueryString[5]) == 0)
                     {
-                        if(Session["flighttype"].ToString() == "roundtrip")
+                        if (Session["flighttype"].ToString() == "roundtrip")
                         {
                             hiddenField2.Value = "Error~Number of Adults cannot be 0";
                             hiddenField1.Value = "flightround";
+                            
                         }
                         else
                         {
                             hiddenField2.Value = "Error~Number of Adults cannot be 0";
                             hiddenField1.Value = "flightone";
+                            
                         }
 
                     }
@@ -109,76 +112,40 @@ namespace Travelopedia
                     }
                     else
                     {
-                        TripsSearchRequest x = new TripsSearchRequest();
-                        string type = Session["flighttype"].ToString();
-                        if (type == "roundtrip")
+                        if(Session["flighttype"].ToString() == "roundtrip")
                         {
-
-                            x.Request = new TripOptionsRequest();
-                            x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
-                            x.Request.Slice = new List<SliceInput>();
-                            x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
-                            x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[2], Destination = Request.QueryString[1], Date = Request.QueryString[4] });
-                            hiddenField1.Value = "flightround";
+                            Session["DataType"] = "flightround";
+                            Session["Location"] = sourcecity.Value.Split('-')[2] + " - " + destinationcity.Value.Split('-')[2];
                         }
-
                         else
                         {
-                            x.Request = new TripOptionsRequest();
-                            x.Request.Passengers = new PassengerCounts { AdultCount = Convert.ToInt32(Request.QueryString[5]) };
-                            x.Request.Slice = new List<SliceInput>();
-                            x.Request.Slice.Add(new SliceInput() { Origin = Request.QueryString[1], Destination = Request.QueryString[2], Date = Request.QueryString[3] });
-                            hiddenField1.Value = "flightone";
-
+                            Session["DataType"] = "flightone";
+                            Session["Location"] = sourcecity.Value.Split('-')[2] + " - " + destinationcity.Value.Split('-')[2];
                         }
-                        using (var client = new HttpClient())
-                        {
-                            client.BaseAddress = new Uri("http://localhost/Travelopedia-API/api/");
-                            client.DefaultRequestHeaders.Accept.Clear();
-                            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                            var response = client.PostAsJsonAsync("flights/allflights", x).Result;
-                            if (response.IsSuccessStatusCode)
-                            {
-                                responseString = response.Content.ReadAsStringAsync().Result;
-
-                            }
-                        }
-
-                        if (!ClientScript.IsClientScriptBlockRegistered("myScript"))
-                        {
-                            ClientScript.RegisterClientScriptBlock(typeof(_Default), "myScript", responseString, true);
-                        }
-                        hiddenField2.Value = "Response~"+responseString;
-
                     }
-
                 }
                 else if (queryParam == "car")
                 {
-                        hiddenField1.Value = "car";
+                    hiddenField1.Value = "car";
+                    Session["DataType"] = hiddenField1.Value;
                 }
             }
             else
             {
-                string eventTarget = this.Request["__EVENTTARGET"];
-                string eventArgument = this.Request["__EVENTARGUMENT"];
-
-                if (eventTarget != String.Empty)
+                if (Session["User"] == null)
                 {
-                    if (eventArgument != String.Empty && Session["User"] == null) { 
-                        Session["Data"] = eventArgument.ToString();
-                        Response.Redirect("~/Account/Login.aspx");
-                    }
-                    else
-                    {
-                        Session["Data"] = eventArgument.ToString();
-                        Response.Redirect("~/Home.aspx");
-                    }
+                    Session["Data"] = hiddenField1.Value;
+                    
+                    Response.Redirect("~/Account/Login.aspx");
+                }
+
+                else
+                {
+                    Session["Data"] = hiddenField1.Value;
+                    
+                    Response.Redirect("~/Home.aspx");
                 }
             }
-            
-            
         }
 
         protected void hiddenTextBox1_TextChanged(object sender, EventArgs e)
@@ -194,7 +161,7 @@ namespace Travelopedia
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            string h = "hello"; 
+            
         }
     }
 }

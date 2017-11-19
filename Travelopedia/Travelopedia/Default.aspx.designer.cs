@@ -157,15 +157,6 @@ namespace Travelopedia {
         protected global::System.Web.UI.WebControls.TextBox txtStartDate2;
         
         /// <summary>
-        /// txtEndDate2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEndDate2;
-        
-        /// <summary>
         /// dropdownNumberOfPassengers2 control.
         /// </summary>
         /// <remarks>
@@ -245,16 +236,6 @@ namespace Travelopedia {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearchCars;
-		
-        /// <summary>
-        /// prog control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress prog;
-		
         
         /// <summary>
         /// hiddenFieldLogin control.
@@ -264,5 +245,14 @@ namespace Travelopedia {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenFieldLogin;
+        
+        /// <summary>
+        /// prog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress prog;
     }
 }
