@@ -238,6 +238,24 @@ namespace Travelopedia {
         protected global::System.Web.UI.WebControls.Button btnSearchCars;
         
         /// <summary>
+        /// eventLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox eventLocation;
+        
+        /// <summary>
+        /// btnSearchEvents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchEvents;
+        
+        /// <summary>
         /// hiddenFieldLogin control.
         /// </summary>
         /// <remarks>

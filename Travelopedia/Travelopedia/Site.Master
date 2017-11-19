@@ -102,7 +102,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3">
-                            <a class="logo" href="index.html">
+                            <a class="logo" href="Default.aspx">
                                 <img src="images/logo-invert.png" alt="Image Alternative text" title="Image Title" />
                             </a>
                         </div>
@@ -126,11 +126,11 @@
                     <ul class="slimmenu" id="slimmenu">
                         <li class="active"><a href="Default.aspx">Home</a>
                         </li>
-                                <li><a href="blog.html">Blog</a>
+                                <li><a href="Blog.aspx">Blog</a>
                                 </li>
-                                <li><a href="contact-us.html">Contact Us</a>
-                                    </li>
-                                <li><a href="about.html">About</a>
+                                <li><a href="Contact.aspx">Contact Us</a>
+                                </li>
+                                <li><a href="About.aspx">About</a>
                                 </li>
                     </ul>
                 </div>
@@ -149,7 +149,7 @@
                         <a class="logo" href="index.html">
                             <img src="images/logo-invert.png" alt="Image Alternative text" title="Image Title" />
                         </a>
-                        <p class="mb20">Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>
+                        <p class="mb20">Booking, reviews and explore on hotels, cars, flights, events, and lots more!</p>
                         <ul class="list list-horizontal list-space">
                             <li>
                                 <a class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
@@ -181,28 +181,26 @@
                     </div>
                     <div class="col-md-2">
                         <ul class="list list-footer">
-                            <li><a href="#">About US</a>
+                            <li><a href="About.aspx">About US</a>
                             </li>
-                            <li><a href="#">Press Centre</a>
-                            </li>
+                           
                             <li><a href="#">Best Price Guarantee</a>
                             </li>
-                            <li><a href="#">Travel News</a>
+                           
+                            <li><a href="Blog.aspx">Blog</a>
                             </li>
-                            <li><a href="#">Jobs</a>
+                            <li><a href="PrivacyPolicy.aspx">Privacy Policy</a>
                             </li>
-                            <li><a href="#">Privacy Policy</a>
+                            <li><a href="PrivacyPolicy.aspx">Terms of Use</a>
                             </li>
-                            <li><a href="#">Terms of Use</a>
-                            </li>
-                            <li><a href="#">Feedback</a>
+                            <li><a href="PrivacyPolicy.aspx">Feedback</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-4">
                         <h4>Have Questions?</h4>
-                        <h4 class="text-color">+1-202-555-0173</h4>
-                        <h4><a href="#" class="text-color">support@traveler.com</a></h4>
+                        <h4 class="text-color">+1-312-450-9277</h4>
+                        <h4><a href="#" class="text-color">support@travelopedia.com</a></h4>
                         <p>24/7 Dedicated Customer Support</p>
                     </div>
 
@@ -231,7 +229,7 @@
         <script src="Scripts/countdown.js"></script>
         <script src="Scripts/gridrotator.js"></script>
         <script src="Scripts/custom.js"></script>
-      
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNn1aIOuJNsHcmgWs6TheuQVpBwOyU8uw&libraries=places"></script>
 
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 

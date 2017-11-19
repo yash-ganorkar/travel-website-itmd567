@@ -26,9 +26,8 @@ namespace Travelopedia_API.Controllers
                     ApplicationName = "API key 1",
                 });
 
-                var result = new TripsSearchResponse();
-                //var result = service.Trips.Search(tripSearchRequest).Execute();
-                //var json = JsonConvert.SerializeObject(result);
+                var result = service.Trips.Search(tripSearchRequest).Execute();
+                var json = JsonConvert.SerializeObject(result);
                 return result;
             }
             catch(Exception ex)

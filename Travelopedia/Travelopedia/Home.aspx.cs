@@ -178,7 +178,7 @@ namespace Travelopedia
                             var chargeService = new StripeChargeService();
                             StripeCharge charges2 = chargeService.Get(charge.Id);
 
-                            Response.Redirect("Default.Aspx");
+                        Response.Redirect("SuccessPayment.aspx");
 
                         }
                     }
@@ -227,7 +227,7 @@ namespace Travelopedia
                             var chargeService = new StripeChargeService();
                             StripeCharge charges2 = chargeService.Get(charge.Id);
 
-                            Response.Redirect("Default.Aspx");
+                        Response.Redirect("ErrorPayment.aspx");
 
                         }
 

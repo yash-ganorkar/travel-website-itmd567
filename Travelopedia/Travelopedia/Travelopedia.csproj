@@ -506,12 +506,16 @@
     <Content Include="images\google.png" />
     <Content Include="images\key.png" />
     <Content Include="images\page-loader.gif" />
+    <Content Include="images\paris.jpg" />
     <Content Include="images\patterns\Thumbs.db" />
     <Content Include="images\payment\Thumbs.db" />
+    <Content Include="images\Prof.jpg" />
+    <Content Include="images\shruti.jpg" />
     <Content Include="images\Thumbs.db" />
     <Content Include="fonts\icomoon.eot" />
     <Content Include="fonts\icomoon.ttf" />
     <Content Include="fonts\icomoon.woff" />
+    <Content Include="images\yash.jpg" />
     <Content Include="img\100x100.png" />
     <Content Include="img\1024x487.png" />
     <Content Include="img\1024x672.png" />
@@ -2104,6 +2108,10 @@
     <Content Include="img\patterns\Thumbs.db" />
     <Content Include="img\payment\Thumbs.db" />
     <Content Include="img\Thumbs.db" />
+    <Content Include="Blog.aspx" />
+    <Content Include="ErrorPayment.aspx" />
+    <Content Include="PrivacyPolicy.aspx" />
+    <Content Include="SuccessPayment.aspx" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
@@ -4011,6 +4019,34 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Blog.aspx.cs">
+      <DependentUpon>Blog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Blog.aspx.designer.cs">
+      <DependentUpon>Blog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPayment.aspx.cs">
+      <DependentUpon>ErrorPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPayment.aspx.designer.cs">
+      <DependentUpon>ErrorPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PrivacyPolicy.aspx.cs">
+      <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrivacyPolicy.aspx.designer.cs">
+      <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuccessPayment.aspx.cs">
+      <DependentUpon>SuccessPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuccessPayment.aspx.designer.cs">
+      <DependentUpon>SuccessPayment.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

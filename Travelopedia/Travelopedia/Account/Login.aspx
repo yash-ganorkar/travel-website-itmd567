@@ -3,27 +3,31 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="container">
-        <h1 class="page-title"><%: Title %>/Register</h1>
-        </div>
-    <div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h3>Welcome to Traveler</h3>
-                    <p>Euismod nunc porta magna elementum penatibus amet gravida sit ligula odio id nunc proin sem augue quis posuere interdum in sapien congue rutrum scelerisque sociosqu cubilia ridiculus et luctus mollis</p>
-                    <p>Praesent est semper massa lobortis quisque lectus ridiculus hac eget</p>
-         </div>
-        <div class="col-md-4">
-            <section id="loginForm">
-                    <h4>Use a local account to log in.</h4>
-                    <hr />
-                    <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="FailureText" />
-                        </p>
-                    </asp:PlaceHolder>
-                    <div class="form-group form-group-icon-left">
-                        <asp:Label runat="server" AssociatedControlID="Email" CssClass=" control-label">Email</asp:Label>
+    <div class="bg-holder full">
+        <div class="bg-mask"></div>
+       <div class="bg-img" style="background-image:url(../images/backgrounds/road.jpg);"></div>
+        <div class="bg-holder-content text-white">
+            <div class="container">
+            <h1 class="page-title"><%: Title %>/Register</h1>
+            </div>
+            <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Welcome to Traveler</h3>
+                        <p>Euismod nunc porta magna elementum penatibus amet gravida sit ligula odio id nunc proin sem augue quis posuere interdum in sapien congue rutrum scelerisque sociosqu cubilia ridiculus et luctus mollis</p>
+                        <p>Praesent est semper massa lobortis quisque lectus ridiculus hac eget</p>
+             </div>
+            <div class="col-md-4">
+                <section id="loginForm">
+                        <h4>Use a local account to log in</h4>
+                        <hr />
+                        <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                            <p class="text-danger">
+                                <asp:Literal runat="server" ID="FailureText" />
+                            </p>
+                        </asp:PlaceHolder>
+                        <div class="form-group form-group-icon-left">
+                            <asp:Label runat="server" AssociatedControlID="Email" CssClass=" control-label">Email</asp:Label>
                         
                             <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
@@ -46,29 +50,34 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
                             <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn btn-primary" />
                         </div>
-                    </div>
+                    
                 
-                <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink>
-                </p>
-                <p>
-                    <%-- Enable this once you have account confirmation enabled for password reset functionality
-                    <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">Forgot your password?</asp:HyperLink>
-                    --%>
-                </p>
-            </section>
-        </div>
+                    <h4>
+                        <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink>
+                    </h4>
+                    <p>
+                        <%-- Enable this once you have account confirmation enabled for password reset functionality
+                        <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">Forgot your password?</asp:HyperLink>
+                        --%>
+                    </p>
+                </section>
+            </div>
 
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-            </section>
-
+            <div class="col-md-4">
+                <h4>Social Log in</h4>
+                <div class="form-group">
+                    <section id="socialLoginForm" >
+                        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin"/>
+                    </section>
+                </div>
+                </div>
+          </div>
+         </div>
+        
+    
+            <asp:HiddenField runat="server" ID="hiddenFieldLogin" ClientIDMode="Static"/>
         </div>
     </div>
-        </div>
-    <asp:HiddenField runat="server" ID="hiddenFieldLogin" ClientIDMode="Static"/>
 </asp:Content>

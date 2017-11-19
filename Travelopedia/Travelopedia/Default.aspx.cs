@@ -65,7 +65,12 @@ namespace Travelopedia
             }
         }
 
+        protected void btnSearchEvents_Click(object sender, EventArgs e)
+        {
+            string eventlocation = eventLocation.Text;
+            Response.Redirect("Results.Aspx?" + "type=event&location=" + Server.UrlEncode(eventlocation));
 
+        }
 
         protected void btnSearchHotel_Click(object sender, EventArgs e)
         {
