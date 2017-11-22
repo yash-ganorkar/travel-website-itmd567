@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stripe;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,14 @@ namespace Travelopedia
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                if (Session["Payment"] != null)
+                {
+                    StripeCharge charge = (StripeCharge)Session["Payment"];
+                    transactionid.InnerText = charge.Id;
+                }
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
 
 <html lang="en">
 <head runat="server">
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="Template, html, premium, themeforest" />
     <meta name="description" content="Traveler - Premium template for travel companies">
     <meta name="author" content="Tsoy">
@@ -142,11 +142,11 @@
             </asp:ContentPlaceHolder>
 
 
-        <footer id="main-footer">
+        <footer id="main-footer" style="margin-top:0px !important;">
             <div class="container">
                 <div class="row row-wrap">
                     <div class="col-md-3">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="Default.aspx">
                             <img src="images/logo-invert.png" alt="Image Alternative text" title="Image Title" />
                         </a>
                         <p class="mb20">Booking, reviews and explore on hotels, cars, flights, events, and lots more!</p>

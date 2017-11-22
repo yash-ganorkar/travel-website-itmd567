@@ -20,6 +20,7 @@ namespace Travelopedia_API
 
             var cors = new EnableCorsAttribute("*","*","*");
             config.EnableCors(cors);
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{username}",

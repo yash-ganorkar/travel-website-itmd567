@@ -18,14 +18,30 @@ namespace Travelopedia
         public string flight_type;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["TimedCookie"] != null)
+            if (User.Identity.IsAuthenticated)
             {
-                hiddenFieldLogin.Value = "logout";
+                if (Request.Cookies["TimedCookie"] == null)
+                    {
+                      hiddenFieldLogin.Value = "login";
+                    }
+                else
+                    hiddenFieldLogin.Value = "logout";
             }
             else
             {
                 hiddenFieldLogin.Value = "login";
             }
+            //if (Request.Cookies["TimedCookie"] != null)
+            //{
+            //    hiddenFieldLogin.Value = "logout";
+            //}
+            //else
+            //{
+            //    if(Session["User"] == null)
+            //        hiddenFieldLogin.Value = "login";
+            //    else
+            //        hiddenFieldLogin.Value = "logout";
+            //}
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)

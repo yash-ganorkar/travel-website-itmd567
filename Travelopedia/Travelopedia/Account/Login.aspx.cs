@@ -9,6 +9,7 @@ namespace Travelopedia.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if(Request.Cookies["TimedCookie"] == null)
             {
                 hiddenFieldLogin.Value = "login";
@@ -22,20 +23,19 @@ namespace Travelopedia.Account
                 {
                     RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 }
-
-                HttpCookie cookie = new HttpCookie("TimedCookie");
-                cookie["User"] = User.Identity.Name;
-                cookie.Expires = DateTime.Now.AddMinutes(5);
-
-                Session["Timer"] = DateTime.Now;
-                Session.Timeout = 10;
-                Response.Cookies.Add(cookie);
             }
             else
             {
-                Session.Timeout = 10;
-                Session["Timer"] = DateTime.Now;
-                Response.Redirect("~/Home.aspx");
+                if(Session["Timer"] == null)
+                {
+                    Session.Timeout = 10;
+                    Session["Timer"] = DateTime.Now;
+                    Response.Redirect("~/Home.aspx");
+                }
+                else
+                {
+                    Response.Redirect("~/Home.aspx");
+                }
             }
         }
 

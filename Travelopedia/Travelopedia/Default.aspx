@@ -331,7 +331,7 @@
                                         <form>
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
+                                                    <div id="Activities" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                         <label>Where are you going?</label>
                                                          <asp:TextBox ID="eventLocation" ClientIDMode="Static" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                     </div>

@@ -691,6 +691,33 @@ $('#Cars .typeahead').typeahead({
         }
     });
 
+$('#Activities .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3,
+    limit: 8
+}, {
+        source: function (q, cb) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'get',
+                url: 'https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json',
+                chache: false,
+                success: function (data) {
+                    var result = [];
+                    $.each(data, function (index, val) {
+                        if (val.code.includes(q) || val.city.includes(q)) {
+                            result.push({
+                                value: val.city + "-" + val.state
+                            });
+                        }
+                    });
+                    cb(result);
+                }
+            });
+        }
+    });
+
 $(window).load(function () {
     $(".loader").fadeOut("60000");
 });

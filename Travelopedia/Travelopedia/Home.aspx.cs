@@ -18,7 +18,7 @@ namespace Travelopedia
         public PaymentDetails paymentDetails;
         protected void Page_Load(object sender, EventArgs e)
         {
-            paymentDetails = new PaymentDetails();
+                paymentDetails = new PaymentDetails();
                 if (Request.Cookies["TimedCookie"] != null)
                 {
                     if (Session["Data"].ToString() != "")
@@ -122,7 +122,17 @@ namespace Travelopedia
                             var chargeService = new StripeChargeService();
                             StripeCharge charges2 = chargeService.Get(charge.Id);
 
-                            Response.Redirect("Default.Aspx");
+                            if (charges2.Captured == true)
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("SuccessPayment.aspx");
+                            }
+                            else
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("ErrorPayment.aspx");
+                            }
+
 
                         }
                     }
@@ -178,7 +188,17 @@ namespace Travelopedia
                             var chargeService = new StripeChargeService();
                             StripeCharge charges2 = chargeService.Get(charge.Id);
 
-                        Response.Redirect("SuccessPayment.aspx");
+                            if (charges2.Captured == true)
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("SuccessPayment.aspx");
+                            }
+                            else
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("ErrorPayment.aspx");
+                            }
+
 
                         }
                     }
@@ -227,12 +247,28 @@ namespace Travelopedia
                             var chargeService = new StripeChargeService();
                             StripeCharge charges2 = chargeService.Get(charge.Id);
 
-                        Response.Redirect("ErrorPayment.aspx");
+                            if (charges2.Captured == true)
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("SuccessPayment.aspx");
+                            }
+                            else
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("ErrorPayment.aspx");
+                            }
+                                
 
                         }
 
                     }
 
+                    }
+                    else
+                    {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        Response.Redirect("Default.Aspx");
                     }
                     else
                     {
@@ -243,10 +279,12 @@ namespace Travelopedia
                     }
 
                 }
+
+                }
                 else
-            {
-                Response.Redirect("Default.Aspx");
-            }
+                {
+                    Response.Redirect("Default.Aspx");
+                }
         }
     }
 }

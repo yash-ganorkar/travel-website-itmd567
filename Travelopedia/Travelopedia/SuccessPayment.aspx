@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <i class="fa fa-check round box-icon-large box-icon-center box-icon-success mb30"></i>	
-                    <h2 class="text-center"><asp:LoginName ID="LoginName1" FormatString="Your payment was successful {0} !" runat="server"/></h2>
-                    <h5 class="text-center mb30">Booking details has been send to johndoe@gmail.com</h5>
+                    <h2 class="text-center">Payment successfull!! Your transaction id is <p runat="server" id="transactionid"></p> </h2>
+                    
                   
                     <h4 class="text-center">You might also need </h4>
                     <ul class="list list-inline list-center">
