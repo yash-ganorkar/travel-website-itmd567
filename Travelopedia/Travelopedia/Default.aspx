@@ -43,6 +43,8 @@
                                         </li>
                                         <li><a href="#tab-3" data-toggle="tab"><i class="fa fa-car"></i> <span >Cars</span></a>
                                         </li>
+                                        <li><a href="#tab-4" data-toggle="tab"><i class="fa fa-bolt"></i> <span >Activities</span></a>
+                                    </li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane fade in active" id="tab-1">
@@ -154,7 +156,7 @@
                                                     <div class="tab-content">
                                                         <div class="tab-pane fade in active" id="flight-search-1">
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-5">
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div id="From" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
@@ -163,33 +165,28 @@
                                                                                 <asp:TextBox ID="txtSource" OnTextChanged="txtSource_TextChanged" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
-                                                                        </div>
-                                                                    <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div id="To" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>To</label>
                                                                                 <asp:TextBox ID="txtDestination" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                        </div>
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-5">
                                                                     <div class="input-daterange">
                                                                         <div class="row">
-                                                                            <div class="col-md-6">
+                                                                            <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Departing</label>
                                                                                     <asp:Textbox runat="server" class="form-control" ID="txtStartDate" />
                                                                                 </div>
                                                                             </div>
-                                                                            </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
+                                                                            <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Returning</label>
                                                                                     <asp:Textbox runat="server" class="form-control" ID="txtEndDate" />
                                                                                 </div>
-                                                                            </div>
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
@@ -210,6 +207,8 @@
                                                                                             </asp:DropDownList>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -242,15 +241,6 @@
                                                                                     <asp:Textbox runat="server" class="form-control" ID="txtStartDate2" />
                                                                                 </div>
                                                                             </div>
-                                                                            </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                                                                    <label>Returning</label>
-                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtEndDate2" />
-                                                                                </div>
-                                                                            </div>
-                                                                            </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
                                                                                     <label>Passengers</label>
@@ -270,6 +260,7 @@
                                                                                             </asp:DropDownList>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -335,6 +326,21 @@
                                                 </div>
                                                  <asp:Button runat="server" Text="Search for Cars" CssClass="btn btn-primary btn-lg" CausesValidation="false" ID="btnSearchCars" OnClick="btnSearchCars_Click"/> 
                                         </div>
+                                        <div class="tab-pane fade" id="tab-4">
+                                        <h2>Search for Activities</h2>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div id="Activities" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
+                                                        <label>Where are you going?</label>
+                                                         <asp:TextBox ID="eventLocation" ClientIDMode="Static" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <asp:Button runat="server" Text="Search for Events" CssClass="btn btn-primary btn-lg" CausesValidation="false" ID="btnSearchEvents" OnClick="btnSearchEvents_Click"/> 
+                                        </form>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -375,7 +381,7 @@
                                 </header>
                                 <div class="thumb-caption">
                                     <h5 class="thumb-title"><a class="text-darken" href="#">Combine & Save</a></h5>
-                                    <p class="thumb-desc">Risus quisque egestas venenatis potenti lobortis senectus tellus sodales commodo</p>
+                                    <p class="thumb-desc">Book Flights, Hotels, Cars and Events from single application.</p>
                                 </div>
                             </div>
                         </div>
@@ -384,8 +390,8 @@
                                 <header class="thumb-header"><i class="fa fa-thumbs-o-up box-icon-black round box-icon-big animate-icon-top-to-bottom"></i>
                                 </header>
                                 <div class="thumb-caption">
-                                    <h5 class="thumb-title"><a class="text-darken" href="#">Best Travel Agent</a></h5>
-                                    <p class="thumb-desc">Montes dictumst tortor a suspendisse accumsan blandit adipiscing proin ut</p>
+                                    <h5 class="thumb-title"><a class="text-darken" href="#">Best Travel Application</a></h5>
+                                    <p class="thumb-desc">Rewarded as best travel application that makes travel easy and fun!</p>
                                 </div>
                             </div>
                         </div>
@@ -395,7 +401,7 @@
                                 </header>
                                 <div class="thumb-caption">
                                     <h5 class="thumb-title"><a class="text-darken" href="#">Best Destinations</a></h5>
-                                    <p class="thumb-desc">Cubilia malesuada odio aptent est etiam mollis velit dictumst posuere</p>
+                                    <p class="thumb-desc">Select the best destination from Travelopedia and explore more!</p>
                                 </div>
                             </div>
                         </div>
@@ -404,32 +410,7 @@
             </div>
             <div class="gap gap-small"></div>
         </div>
-        <div class="bg-holder">
-            <div class="bg-mask"></div>
-            <div class="bg-img" style="background-image:url(images/2048x1293.png);"></div>
-            <div class="bg-content">
-                <div class="container">
-                    <div class="gap gap-big text-center text-white">
-                        <h2 class="text-uc mb20">Last Minute Deal</h2>
-                        <ul class="icon-list list-inline-block mb0 last-minute-rating">
-                            <li><i class="fa fa-star"></i>
-                            </li>
-                            <li><i class="fa fa-star"></i>
-                            </li>
-                            <li><i class="fa fa-star"></i>
-                            </li>
-                            <li><i class="fa fa-star"></i>
-                            </li>
-                            <li><i class="fa fa-star"></i>
-                            </li>
-                        </ul>
-                        <h5 class="last-minute-title">The Peninsula - New York</h5>
-                        <p class="last-minute-date">Fri 14 Mar - Sun 16 Mar</p>
-                        <p class="mb20"><b>$120</b> / person</p><a class="btn btn-lg btn-white btn-ghost" href="#">Book Now <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="container">
             <div class="gap"></div>
             <h2 class="text-center">Top Destinations</h2>
@@ -439,7 +420,7 @@
                         <div class="thumb">
                             <header class="thumb-header">
                                 <a class="hover-img curved" href="#">
-                                    <img src="images/800x600.png" alt="Image Alternative text" title="196_365" />
+                                    <img src="images/paris.jpg" alt="Image Alternative text" title="196_365" />
                                 </a>
                             </header>
                             <div class="img-left">
@@ -448,7 +429,7 @@
                             <div class="thumb-caption">
                                 <h4 class="thumb-title"><a class="text-darken" href="#">Paris</a></h4>
                                 <div class="thumb-caption">
-                                    <p class="thumb-desc">Nullam potenti ac sagittis iaculis justo</p>
+                                    <p class="thumb-desc">Effiel Tower and many mor!!</p>
                                 </div>
                             </div>
                         </div>
@@ -457,16 +438,16 @@
                         <div class="thumb">
                             <header class="thumb-header">
                                 <a class="hover-img curved" href="#">
-                                    <img src="images/800x600.png" alt="Image Alternative text" title="El inevitable paso del tiempo" />
+                                    <img src="images/backgrounds/road.jpg" alt="Image Alternative text" title="El inevitable paso del tiempo" />
                                 </a>
                             </header>
                             <div class="img-left">
-                                <img src="images/flags/32/hu.png" alt="Image Alternative text" title="Image Title" />
+                                <img src="images/flags/32/in.png" alt="Image Alternative text" title="Image Title" />
                             </div>
                             <div class="thumb-caption">
-                                <h4 class="thumb-title"><a class="text-darken" href="#">Budapest</a></h4>
+                                <h4 class="thumb-title"><a class="text-darken" href="#">India</a></h4>
                                 <div class="thumb-caption">
-                                    <p class="thumb-desc">Sociis interdum sed a senectus porta</p>
+                                    <p class="thumb-desc">Kashmir, Leh Ladhak and many more!!</p>
                                 </div>
                             </div>
                         </div>
@@ -475,7 +456,7 @@
                         <div class="thumb">
                             <header class="thumb-header">
                                 <a class="hover-img curved" href="#">
-                                    <img src="images/800x600.png" alt="Image Alternative text" title="Upper Lake in New York Central Park" />
+                                    <img src="images/backgrounds/taxi.jpg" alt="Image Alternative text" title="Upper Lake in New York Central Park" />
                                 </a>
                             </header>
                             <div class="img-left">
@@ -484,7 +465,7 @@
                             <div class="thumb-caption">
                                 <h4 class="thumb-title"><a class="text-darken" href="#">New York</a></h4>
                                 <div class="thumb-caption">
-                                    <p class="thumb-desc">Erat ultricies auctor tellus natoque cursus</p>
+                                    <p class="thumb-desc">Time Square and many more!!</p>
                                 </div>
                             </div>
                         </div>
@@ -493,16 +474,16 @@
                         <div class="thumb">
                             <header class="thumb-header">
                                 <a class="hover-img curved" href="#">
-                                    <img src="images/800x600.png" alt="Image Alternative text" title="people on the beach" />
+                                    <img src="images/backgrounds/beach.jpg" alt="Image Alternative text" title="people on the beach" />
                                 </a>
                             </header>
                             <div class="img-left">
-                                <img src="images/flags/32/gr.png" alt="Image Alternative text" title="Image Title" />
+                                <img src="images/flags/32/us.png" alt="Image Alternative text" title="Image Title" />
                             </div>
                             <div class="thumb-caption">
-                                <h4 class="thumb-title"><a class="text-darken" href="#">Crete</a></h4>
+                                <h4 class="thumb-title"><a class="text-darken" href="#">Florida</a></h4>
                                 <div class="thumb-caption">
-                                    <p class="thumb-desc">Cursus parturient commodo diam donec est</p>
+                                    <p class="thumb-desc">Miami beach and many more!!</p>
                                 </div>
                             </div>
                         </div>
@@ -523,7 +504,7 @@
                     $("#<%= txtStartDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
                     $("#<%= txtEndDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
                 $("#<%= txtStartDate2.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
-                $("#<%= txtEndDate2.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
+               
                 $("#<%= txtCheckin.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
                 $("#<%= txtCheckout.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
                 $("#<%= carPickDate.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });

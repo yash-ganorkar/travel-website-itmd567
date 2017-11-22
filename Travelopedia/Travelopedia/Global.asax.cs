@@ -25,7 +25,6 @@ namespace Travelopedia
 
         void Session_Start(object sender, EventArgs e)
         {
-            Session.Timeout = 10;
             Session["Data"] = "";
         }
     }

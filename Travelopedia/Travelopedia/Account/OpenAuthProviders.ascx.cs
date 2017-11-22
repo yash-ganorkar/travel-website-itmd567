@@ -28,6 +28,15 @@ namespace Travelopedia.Account
                 {
                     properties.Dictionary[IdentityHelper.XsrfKey] = Context.User.Identity.GetUserId();
                     Session["User"] = Context.User.Identity.IsAuthenticated;
+
+                    HttpCookie cookie = new HttpCookie("TimedCookie");
+                    cookie["User"] = Context.User.Identity.Name;
+                    cookie.Expires = DateTime.Now.AddMinutes(5);
+
+                    Session["Timer"] = DateTime.Now;
+                    Session.Timeout = 10;
+                    Response.Cookies.Add(cookie);
+
                 }
                 Context.GetOwinContext().Authentication.Challenge(properties, provider);
                 Response.StatusCode = 401;

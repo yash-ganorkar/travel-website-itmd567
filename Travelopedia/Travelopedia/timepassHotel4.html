@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Hello AngularJS - Hello World</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
+    <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
+
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mystyles.css">
+    <script src="js/modernizr.js"></script>
+
+    <style>
+        .grid {
+            width: 1500px;
+            height: 250px;
+        }
+        .panel-body {
+            width: 100%;
+            max-height: 700px;
+            overflow-y: scroll;
+        }
+        #veil {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            cursor: not-allowed;
+            filter: alpha(opacity=60);
+            opacity: 0.6;
+            background: #000000 url(https://www.w3schools.com/angular/pic_angular.jpg) no-repeat center;
+        }
+        #feedLoading {
+            position: absolute;
+            top: 200px;
+            width: 100%;
+            text-align: center;
+            font-size: 4em;
+            color: white;
+            text-shadow: 2px 2px 2px #021124;
+        }        
+    </style>
+
+</head>
+
+<body>
+    <div class="container" ng-app="myApp">
+        <div class="panel-body">
+            <div ng-controller="DataCtrl" ng-init="loadData()">
+                <div id="veil" ng-show="isLoading"></div>
+                <div id="feedLoading" ng-show="isLoading">Loading...</div>
+                <div class="row">
+                    <div class="col-md-3" id="test">
+                        <form class="booking-item-dates-change mb30">
+                            <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                <label>Where</label>
+                                <input class="typeahead form-control" placeholder="City, Hotel Name or U.S. Zip Code" type="text" value="Chicago">
+                            </div>
+                            <div class="input-daterange">
+                                <div class="form-group form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                    <label>Check In</label>
+                                    <input class="form-control" name="start" value="11/16/2017" type="text">
+                                </div>
+                                <div class="form-group form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                    <label>Check Out</label>
+                                    <input class="form-control" name="end" value="11/17/2017" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group form-group- form-group-select-plus">
+                                <label>Guests</label>
+                                <select class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group- form-group-select-plus">
+                                <label>Rooms</label>
+                                <select class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group- form-group-select-plus">
+                                <label>children</label>
+                                <select class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <input class="btn btn-primary" type="submit" ng-click="loadFilteredData()" value="Update Search">
+                        </form>
+                    </div>
+                    <div class="col-md-9">
+                        <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                            <li>
+                                <a class="booking-item" href="#">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div ng-if="item.subtotal <= '200'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel4.jpg" alt="Hotel" title="Hotel" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '300' && item.subtotal > '200'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel5.jpg" alt="Hotel" title="Hotel" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '400' && item.subtotal > '300'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel1.jpg" alt="Hotel" title="Hotel" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '500' && item.subtotal > '400'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel6.jpg" alt="Car" title="Car" />
+
+                                                </div>
+                                            </div>
+                                            <div ng-if="item.subtotal <= '600' && item.subtotal > '500'">
+                                                <div class="booking-item-img-wrap">
+                                                    <img src="img/hotel2.jpg" alt="Car" title="Car" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="booking-item-rating">
+                                                <span class="booking-item-rating-number"><b>***</b></span>
+                                            </div>
+
+                                            <h5 class="booking-item-title">{{ item.name }}</h5>
+                                            <p class="booking-item-address"><i class="fa fa-map-marker"></i>{{ item.city }}, {{ item.state }}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="booking-item-price-from">from</span>
+                                            <span class="booking-item-price">${{ item.subtotal }}</span>
+                                            <button class="btn btn-primary" href="https://www.hotwire.com/hotel/deeplink-details.jsp?resultId=MjA1ODYwMzE0MTM6MTYxMjAxODY3MjQ5NQ--&amp;useCluster=1&amp;sid=S001&amp;bid=B001&amp;inputId=api-results&amp;actionType=303&amp;useCluster=1" hotel="River North~Chicago~IL~90.00~25.08~115.08~41.8923~-87.6308~1~1~1">Book Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                        <div class="row">
+                            <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                Previous
+                            </button>
+                            {{currentPage+1}}/{{numberOfPages()}}
+                            <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                                Next
+                            </button>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var App = angular.module('myApp', []);
+
+        var data = {
+
+        };
+        App.controller("DataCtrl", function($scope, $http) {
+
+            $scope.loadData = function() {
+                var httpRequest = $http({
+                    method: 'GET',
+                    url: 'http://10.0.0.248/Travelopedia-API/api/hotels/allhotels',
+                    params: {
+                        destination: "Chicago",
+                        rooms: "1",
+                        adults: "1",
+                        children: "1",
+                        startdate: "11/20/2017",
+                        enddate: "11/26/2017"
+                    }
+                    //data: mockData
+
+                }).success(function(data, status) {
+                    console.log(data.hotelRoomDetails);
+                    $scope.items = data.hotelRoomDetails;
+                    $scope.currentPage = 0;
+                    $scope.pageSize = 4;
+
+                    $scope.numberOfPages = function() {
+                        return Math.ceil($scope.items.length / $scope.pageSize);
+                    }
+
+
+                }).error(function(error) {
+                    alert(error);
+                });
+
+            };
+
+            $scope.loadFilteredData = function() {
+
+                $scope.setLoading(true);
+
+                var httpRequest = $http({
+                    method: 'GET',
+                    url: 'http://10.0.0.248/Travelopedia-API/api/car/allcars',
+                    params: {
+                        destination: "Chicago",
+                        rooms: "1",
+                        adults: "1",
+                        children: "1",
+                        startdate: "11/20/2017",
+                        enddate: "11/26/2017"
+                    }
+                    //data: mockData
+
+                }).success(function(data, status) {
+                    alert(data.carResults);
+                    $scope.items = data.carResults;
+                    $scope.currentPage = 0;
+                    $scope.pageSize = 4;
+
+                    $scope.numberOfPages = function() {
+                        return Math.ceil($scope.items.length / $scope.pageSize);
+                    }
+                    $scope.setLoading(false);
+
+                    document.getElementById('startcity').disabled = false;
+                    document.getElementById('endcity').disabled = false;
+                    document.getElementById('startdate').disabled = false;
+                    document.getElementById('enddate').disabled = false;
+                    document.getElementById('starttime').disabled = false;
+                    document.getElementById('endtime').disabled = false;
+                }).error(function(error) {
+                    alert(error);
+                    //    $scope.setLoading(false);
+                });
+
+            };
+
+
+        });
+
+        App.filter('startFrom', function() {
+            return function(input, start) {
+                if (!input || !input.length) {
+                    return;
+                }
+                start = +start; //parse to int
+                return input.slice(start);
+            }
+        });
+
+        //url = http://10.0.0.248/Travelopedia-API/api/hotels/allhotels
+    </script>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/slimmenu.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/bootstrap-timepicker.js"></script>
+    <script src="js/nicescroll.js"></script>
+    <script src="js/dropit.js"></script>
+    <script src="js/ionrangeslider.js"></script>
+    <script src="js/icheck.js"></script>
+    <script src="js/fotorama.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="js/typeahead.js"></script>
+    <script src="js/card-payment.js"></script>
+    <script src="js/magnific.js"></script>
+    <script src="js/owl-carousel.js"></script>
+    <script src="js/fitvids.js"></script>
+    <script src="js/tweet.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/gridrotator.js"></script>
+
+    <pagination ng-model="currentPage" total-items="todos.length" max-size="maxSize" boundary-links="true">
+    </pagination>
+
+</body>
+
+</html>

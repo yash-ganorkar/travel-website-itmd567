@@ -4,7 +4,7 @@
 
 <html lang="en">
 <head runat="server">
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="Template, html, premium, themeforest" />
     <meta name="description" content="Traveler - Premium template for travel companies">
     <meta name="author" content="Tsoy">
@@ -22,7 +22,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600' rel='stylesheet' type='text/css'>
 
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <!-- Theme Styles -->
     <link rel="stylesheet" href="Content/bootstrap.min.css">
     <!-- GOOGLE FONTS -->
@@ -102,7 +102,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3">
-                            <a class="logo" href="index.html">
+                            <a class="logo" href="Default.aspx">
                                 <img src="images/logo-invert.png" alt="Image Alternative text" title="Image Title" />
                             </a>
                         </div>
@@ -126,11 +126,11 @@
                     <ul class="slimmenu" id="slimmenu">
                         <li class="active"><a href="Default.aspx">Home</a>
                         </li>
-                                <li><a href="blog.html">Blog</a>
+                                <li><a href="Blog.aspx">Blog</a>
                                 </li>
-                                <li><a href="contact-us.html">Contact Us</a>
-                                    </li>
-                                <li><a href="about.html">About</a>
+                                <li><a href="Contact.aspx">Contact Us</a>
+                                </li>
+                                <li><a href="About.aspx">About</a>
                                 </li>
                     </ul>
                 </div>
@@ -142,14 +142,14 @@
             </asp:ContentPlaceHolder>
 
 
-        <footer id="main-footer">
+        <footer id="main-footer" style="margin-top:0px !important;">
             <div class="container">
                 <div class="row row-wrap">
                     <div class="col-md-3">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="Default.aspx">
                             <img src="images/logo-invert.png" alt="Image Alternative text" title="Image Title" />
                         </a>
-                        <p class="mb20">Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>
+                        <p class="mb20">Booking, reviews and explore on hotels, cars, flights, events, and lots more!</p>
                         <ul class="list list-horizontal list-space">
                             <li>
                                 <a class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
@@ -181,28 +181,26 @@
                     </div>
                     <div class="col-md-2">
                         <ul class="list list-footer">
-                            <li><a href="#">About US</a>
+                            <li><a href="About.aspx">About US</a>
                             </li>
-                            <li><a href="#">Press Centre</a>
-                            </li>
+                           
                             <li><a href="#">Best Price Guarantee</a>
                             </li>
-                            <li><a href="#">Travel News</a>
+                           
+                            <li><a href="Blog.aspx">Blog</a>
                             </li>
-                            <li><a href="#">Jobs</a>
+                            <li><a href="PrivacyPolicy.aspx">Privacy Policy</a>
                             </li>
-                            <li><a href="#">Privacy Policy</a>
+                            <li><a href="PrivacyPolicy.aspx">Terms of Use</a>
                             </li>
-                            <li><a href="#">Terms of Use</a>
-                            </li>
-                            <li><a href="#">Feedback</a>
+                            <li><a href="PrivacyPolicy.aspx">Feedback</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-4">
                         <h4>Have Questions?</h4>
-                        <h4 class="text-color">+1-202-555-0173</h4>
-                        <h4><a href="#" class="text-color">support@traveler.com</a></h4>
+                        <h4 class="text-color">+1-312-450-9277</h4>
+                        <h4><a href="#" class="text-color">support@travelopedia.com</a></h4>
                         <p>24/7 Dedicated Customer Support</p>
                     </div>
 
@@ -211,8 +209,9 @@
         </footer>
         <asp:HiddenField ID="he" runat="server"/>
     <!-- Javascript -->
+
         <script src="Scripts/jquery.js"></script>
-        <script src="Scripts/bootstrap.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="Scripts/slimmenu.js"></script>
         <script src="Scripts/bootstrap-datepicker.js"></script>
         <script src="Scripts/nicescroll.js"></script>
@@ -230,14 +229,12 @@
         <script src="Scripts/countdown.js"></script>
         <script src="Scripts/gridrotator.js"></script>
         <script src="Scripts/custom.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNn1aIOuJNsHcmgWs6TheuQVpBwOyU8uw&libraries=places"></script>
+
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-              <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-        
-        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-
         <script type="text/javascript">
+            localStorage['env'] = localStorage['env'] || "http://localhost" //'https://yashganorkar-001-site1.itempurl.com'
             var loginstatus = $("#hiddenFieldLogin").val();
             var login = document.getElementById('login').style;
             var logout = document.getElementById('logout').style;

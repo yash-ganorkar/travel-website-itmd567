@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Xml;
-using System.Xml.Serialization;
 using Travelopedia_API.Models;
 
 namespace Travelopedia_API.Controllers
@@ -90,8 +87,10 @@ namespace Travelopedia_API.Controllers
                         city = doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes[1].ChildNodes[i].ChildNodes[1].InnerText,//city
                         id = doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes[1].ChildNodes[i].ChildNodes[3].InnerText,//id
                         name = doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes[1].ChildNodes[i].ChildNodes[4].InnerText,//Name
-                        state = doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes[1].ChildNodes[i].ChildNodes[6].InnerText//state
+                        state = doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes[1].ChildNodes[i].ChildNodes[6].InnerText,// state
+                        centroid = doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes[1].ChildNodes[i].ChildNodes[0].InnerText
                     };
+                    
                     neighborHoodDetails.Add(nd);
                 }
             }
@@ -116,9 +115,9 @@ namespace Travelopedia_API.Controllers
                     deeplink = doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[1].InnerText,
                     hotwirerefnumber = doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[3].InnerText,
                     rooms = doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[15].InnerText,
-                    subtotal = doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[4].InnerText,
-                    taxesandfees = doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[5].InnerText,
-                    totalprice = doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[6].InnerText,
+                    subtotal = Convert.ToDouble(doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[4].InnerText),
+                    taxesandfees = Convert.ToDouble(doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[5].InnerText),
+                    totalprice = Convert.ToDouble(doc.DocumentElement.ChildNodes[2].ChildNodes[i].ChildNodes[6].InnerText),
                 };
 
                 var city = neighborHoodDetails.Single(s => s.id == hrd.id).city;
@@ -131,8 +130,9 @@ namespace Travelopedia_API.Controllers
                 hrd.centroid = centroid;
                 hotelRoomDetails.Add(hrd);
             }
+            if (hotelRoomDetails != null)
+                hotelRoomDetails = hotelRoomDetails.OrderBy(p => p.totalprice).ToList();
             return hotelRoomDetails;
-            throw new NotImplementedException();
         }
 
     }

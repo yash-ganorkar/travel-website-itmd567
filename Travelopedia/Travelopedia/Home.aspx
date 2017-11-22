@@ -74,14 +74,11 @@
                                             <div id="paypal-button"></div>
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="<%= this.stripePublishableKey %>"
-                                    data-amount="<%= this.amount %>"
+                                    data-amount=<%= this.amount %> * 100
                                     data-name="Stripe.com"
                                     data-description="Sample Charge"
                                     data-locale="auto"
                                     data-zip-code="true">
-
-                                    
-
                                 </script>
                                         </div>
                                     </div>
@@ -223,7 +220,7 @@
                                       <div id="paypal-button"></div>
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="<%= this.stripePublishableKey %>"
-                                    data-amount="<%= this.amount %>"
+                                    data-amount=<%= this.amount %> * 100
                                     data-name="Stripe.com"
                                     data-description="Sample Charge"
                                     data-locale="auto"
@@ -387,7 +384,7 @@
                                       <div id="paypal-button"></div>
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="<%= this.stripePublishableKey %>"
-                                    data-amount="<%= this.amount %>"
+                                    data-amount=<%= this.amount %> * 100
                                     data-name="Stripe.com"
                                     data-description="Sample Charge"
                                     data-locale="auto"
@@ -406,7 +403,7 @@
                         <div class="col-md-4">
                     <div class="booking-item-payment">
                         <header class="clearfix">
-                            <h5 class="mb0">London - New York</h5>
+                            <h5 runat="server" id="flightlocation" class="mb0">London - New York</h5>
                         </header>
                         <ul class="booking-item-payment-details">
                             <li>
@@ -438,16 +435,16 @@
                                 </div>
                             </li>
                             <li>
-                                <h5>Flight (2 Passengers)</h5>
+                                <h5>Flight Details</h5>
                                 <ul class="booking-item-payment-price">
                                     <li>
-                                        <p class="booking-item-payment-price-title">2 Passengers</p>
-                                        <p class="booking-item-payment-price-amount">$178<small>/per passnger</small>
+                                        <p runat="server" id="totalpassengers" class="booking-item-payment-price-title">2 Passengers</p>
+                                        <p runat="server" id="totalamounttext" class="booking-item-payment-price-amount">$178<small>/per passnger</small>
                                         </p>
                                     </li>
                                     <li>
                                         <p class="booking-item-payment-price-title">Taxes</p>
-                                        <p class="booking-item-payment-price-amount">$18<small>/per passnger</small>
+                                        <p runat="server" id="totaltax" class="booking-item-payment-price-amount">$18<small>/per passnger</small>
                                         </p>
                                     </li>
                                 </ul>
@@ -523,7 +520,7 @@
                                             <div id="paypal-button"></div>
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="<%= this.stripePublishableKey %>"
-                                    data-amount="<%= this.amount %>"
+                                    data-amount=<%= this.amount %> * 100
                                     data-name="Stripe.com"
                                     data-description="Sample Charge"
                                     data-locale="auto"
@@ -690,10 +687,13 @@
                 </div>
                 </div>
             </div>
-             <script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&libraries=place‌s"></script>
+             <script type="text/javascript">
                                  
                  var map;
                  var infowindow;
+
+                 alert(<%= this.amount %>);
                  function initMap(latitude,longitude) {
                      var pyrmont = { lat: latitude, lng: longitude };
                      map = new google.maps.Map(document.getElementById('map'), {
@@ -733,6 +733,7 @@
                      alert(timeout);
                      var seconds = timeout / 1000;
                      document.getElementsByName("secondsIdle").innerHTML = seconds;
+
                      setInterval(function () {
                          seconds--;
                          document.getElementById("secondsIdle").innerHTML = seconds;

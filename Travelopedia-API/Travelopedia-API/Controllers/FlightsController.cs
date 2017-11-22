@@ -7,6 +7,8 @@ using System.Web.Http;
 using Google.Apis.QPXExpress.v1;
 using Google.Apis.QPXExpress.v1.Data;
 using Google.Apis.Services;
+using Newtonsoft.Json;
+using System.Web.Http.Cors;
 
 namespace Travelopedia_API.Controllers
 {
@@ -14,7 +16,6 @@ namespace Travelopedia_API.Controllers
     {
         [HttpPost]
         [ActionName("AllFlights")]
-
         public TripsSearchResponse FetchAllFlights(TripsSearchRequest tripSearchRequest)
         {
             try
@@ -26,6 +27,7 @@ namespace Travelopedia_API.Controllers
                 });
 
                 var result = service.Trips.Search(tripSearchRequest).Execute();
+                var json = JsonConvert.SerializeObject(result);
                 return result;
             }
             catch(Exception ex)

@@ -13,11 +13,12 @@ namespace Travelopedia_API.Models
 
     public class NeighborhoodDetails
     {
+        
         public string city { get; set; }
         public string id { get; set; }
         public string name { get; set; }
         public string state { get; set; }
-
+        public string centroid { get; set; }
 
     }
 
@@ -26,9 +27,9 @@ namespace Travelopedia_API.Models
         public string currencyCode { get; set; }
         public string deeplink { get; set; }
         public string hotwirerefnumber { get; set; }
-        public string subtotal { get; set; }
-        public string taxesandfees { get; set; }
-        public string totalprice { get; set; }
+        public double subtotal { get; set; }
+        public double taxesandfees { get; set; }
+        public double totalprice { get; set; }
         public string checkindate { get; set; }
         public string checkoutdate { get; set; }
         public string rooms { get; set; }

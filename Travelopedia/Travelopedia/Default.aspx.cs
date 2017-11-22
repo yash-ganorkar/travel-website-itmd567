@@ -18,56 +18,56 @@ namespace Travelopedia
         public string flight_type;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["TimedCookie"] != null)
+            if (User.Identity.IsAuthenticated)
             {
-                hiddenFieldLogin.Value = "logout";
+                if (Request.Cookies["TimedCookie"] == null)
+                    {
+                      hiddenFieldLogin.Value = "login";
+                    }
+                else
+                    hiddenFieldLogin.Value = "logout";
             }
             else
             {
                 hiddenFieldLogin.Value = "login";
             }
+            //if (Request.Cookies["TimedCookie"] != null)
+            //{
+            //    hiddenFieldLogin.Value = "logout";
+            //}
+            //else
+            //{
+            //    if(Session["User"] == null)
+            //        hiddenFieldLogin.Value = "login";
+            //    else
+            //        hiddenFieldLogin.Value = "logout";
+            //}
         }
-
-        static void GetSomething()
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:63699/api/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/html"));
-                var response = client.GetAsync("UserLogin/Login/").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseString = response.Content.ReadAsStringAsync().Result;
-                }
-            }
-        }
-
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             if (IsPostBack)
             {
-                string[] source;
-                string[] destination;
+                string source;
+                string destination;
                 string startDate;
                 string endDate;
                 string numberOfPassengers;
                 if (flight_type == "oneway")
                 {
-                    source = txtFrom.Text.Split('-');
-                    destination = txtTo.Text.Split('-');
+                    source = txtFrom.Text;
+                    destination = txtTo.Text;
 
                     startDate = txtStartDate2.Text;
-                    endDate = txtEndDate2.Text;
+                    endDate = txtStartDate2.Text;
 
                     numberOfPassengers = dropdownNumberOfPassengers2.SelectedValue;
 
                 }
                 else
                 {
-                    source = txtSource.Text.Split('-');
-                    destination = txtDestination.Text.Split('-');
+                    source = txtSource.Text;
+                    destination = txtDestination.Text;
 
                     startDate = txtStartDate.Text;
                     endDate = txtEndDate.Text;
@@ -75,11 +75,18 @@ namespace Travelopedia
                     numberOfPassengers = dropdownNumberOfPassengers.SelectedValue;
 
                 }
-                Response.Redirect("Results.Aspx?" + "type=flight&source=" + Server.UrlEncode(source[1].Trim()) + "&destination=" + Server.UrlEncode(destination[1].Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
+                //Response.Redirect("Results.Aspx?" + "type=flight&source=" + Server.UrlEncode(source[1].Trim()) + "&destination=" + Server.UrlEncode(destination[1].Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
+                Response.Redirect("Results.Aspx?" + "type=flight&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
+
             }
         }
 
+        protected void btnSearchEvents_Click(object sender, EventArgs e)
+        {
+            string eventlocation = eventLocation.Text;
+            Response.Redirect("Results.Aspx?" + "type=event&location=" + Server.UrlEncode(eventlocation));
 
+        }
 
         protected void btnSearchHotel_Click(object sender, EventArgs e)
         {
@@ -90,6 +97,7 @@ namespace Travelopedia
             string guests = Dropdownlistguests.SelectedValue;
             string children = Dropdownlistchildren.SelectedValue;
 
+            //Response.Redirect("Results.Aspx?" + "type=hotel&dest=" + Server.UrlEncode(dest) + "&rooms=" + Server.UrlEncode(rooms) + "&adults=" + Server.UrlEncode(guests) + "&children=" + Server.UrlEncode(children) + "&startdate=" + Server.UrlEncode(checkin) + "&enddate=" + Server.UrlEncode(checkout));
             Response.Redirect("Results.Aspx?" + "type=hotel&dest=" + Server.UrlEncode(dest) + "&rooms=" + Server.UrlEncode(rooms) + "&adults=" + Server.UrlEncode(guests) + "&children=" + Server.UrlEncode(children) + "&startdate=" + Server.UrlEncode(checkin) + "&enddate=" + Server.UrlEncode(checkout));
         }
 
@@ -100,9 +108,9 @@ namespace Travelopedia
             string dropoffdate = carDropDate.Text;
             string pickuptime = carPickTime.Text;
             string dropofftime = carDropTime.Text;
+
+            //Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
             Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
-
-
         }
 
         protected void txtSource_TextChanged(object sender, EventArgs e)
