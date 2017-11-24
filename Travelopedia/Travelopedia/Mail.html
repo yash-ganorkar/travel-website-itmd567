@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Email</title>
+   
+    <style>
+        .ewrapper{
+            width:70%;
+            margin:auto;
+            height:700px;
+        }
+        .elogo {
+            display: block;
+            margin-left: auto;
+
+            margin-right: auto;
+        }
+        .emailimg {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        .edetail {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+           
+            width: 80%;
+            min-height: 300px;
+            background-color: #f1eeea;
+        }
+        .eheader {
+            width: 80%;
+            padding:20px;
+            margin:auto;
+        }
+        .center{
+            text-align:center;
+        }
+        h2 {
+            font-family: 'Roboto', arial, helvetica, sans-serif;
+            margin-top: 0;
+            color: #c96810;
+            line-height: 1.3em;
+        }
+        .econtent {
+            width: 80%;
+            margin: auto;
+            min-height: 300px;
+            
+        }
+        .pricehead {
+            color: #056ba8;
+            font-size: 14px;
+            font-weight: bold;
+            border-bottom: 1px dashed #dadadb;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="ewrapper">
+        
+        
+        <div class="edetail">
+            <img class="elogo" src="images/colorlogo.png" alt="Travelopedia" title="Travelopedia" />
+            <p class="center">For changes in itinerary, please call 24/7 at +1-312-450-9277 </p>
+
+            <img class="emailimg" src="images/email.png" alt="travel" />
+            <div class="eheader">
+                <h2 class="center">Booking Confirmation</h2>
+                <h4 class="center">Travelopedia Booking: xxxxxx | ssss@gmail.com | Booked on Tue, Oct 10 2018</h4>
+            </div>
+            <div class="econtent">
+                <h2>Booking Details</h2>
+                <h2>Hotel Name: {hotelname}</h2>
+                <p>Location: {city},{state}</p>
+                <p>CheckIn Date: {checkin}</p>
+                
+                <p>CheckOut Date: {checkout}</p>
+                
+                
+                <h2>Billing Details</h2>
+                <hr />
+                <p>Method: Credit Card</p>
+                <p>Phone: 3XX-XXX-XXXX</p>
+                <p>Email: sxxxxxxxxxx@gmail.com</p>
+                <hr />
+                <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" height="30" class="pricehead">Flight Price Details</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" height="24"  style="border-bottom:1px dashed #000000">Rooms</td>
+                            <td colspan="2" align="right"  style="border-bottom:1px dashed #000000"><span>{rooms}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" height="24" style="border-bottom:1px dashed #000000">Sub Total</td>
+                            <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>${subtotal}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" height="24" style="border-bottom:1px dashed #000000">Taxes and Agency Fees</td>
+                            <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>${tax}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" height="24" style="border-bottom:1px dashed #000000">Flight Total</td>
+                            <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>${total}</span></td>
+                        </tr>
+                        <tr>
+                            <td height="20"></td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:1px solid #d0d1d2;border-bottom:3px solid #d0d1d2">
+                                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="font-family:Arial;font-size:16px;font-weight:bold;color:#008dce">
+                                    <tbody>
+                                        <tr>
+                                           <td height="50"> Total Charge:  </td>
+                                           <td align="right"> <span>${total}</span></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                             </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

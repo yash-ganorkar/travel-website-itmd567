@@ -88,7 +88,7 @@
                         <p class="text-small">Arrive at your destination in style with this air-conditioned automatic. With room for 4 passengers and 2 pieces of luggage, it's ideal for small groups looking to get from A to B in comfort. Price can change at any moment so book now to avoid disappointment!</p>
 
                         <hr>
-                        <div class="row row-wrap">
+                        <div class="row row-wrap fadeInDown animated">
                             <div class="col-md-4">
                                 <h5>Car Features</h5>
                                 <ul class="booking-item-features booking-item-features-expand clearfix">
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 bounceIn animated">
                         <div class="booking-item-deails-date-location">
                             <ul>
                                 <li>
@@ -694,12 +694,12 @@
             </div>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&libraries=place‌s"></script>
              <script type="text/javascript">
-                                 
+
                  var map;
                  var infowindow;
 
                  alert(<%= this.amount %>);
-                 function initMap(latitude,longitude) {
+                 function initMap(latitude, longitude) {
                      var pyrmont = { lat: latitude, lng: longitude };
                      map = new google.maps.Map(document.getElementById('map'), {
                          center: pyrmont,

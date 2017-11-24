@@ -7,6 +7,9 @@ using Newtonsoft.Json.Linq;
 using Travelopedia_API.Models;
 using System.Net.Http;
 using Microsoft.AspNet.Identity;
+using System.Web;
+using System.Net.Mail;
+using System.IO;
 
 namespace Travelopedia
 {
@@ -24,11 +27,13 @@ namespace Travelopedia
                 paymentDetails = new PaymentDetails();
             if (User.Identity.IsAuthenticated)
             {
+
                 if (Session["Data"].ToString() != "")
                 {
                     hiddenFieldLogin.Value = "logout";
                     // string username = Request.Cookies["TimedCookie"]["User"].ToString();
                     Session.Timeout = 10;
+
 
                     int timeout = Session.Timeout * 1000 * 60;
 
@@ -154,6 +159,21 @@ namespace Travelopedia
                                         responseString = response.Content.ReadAsStringAsync().Result;
                                     }
 
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBodyRoundFlight();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+
                                     Session["Payment"] = charges2;
                                     Session["token"] = responseString;
                                     Response.Redirect("SuccessPayment.aspx");
@@ -257,6 +277,21 @@ namespace Travelopedia
                                         responseString = response.Content.ReadAsStringAsync().Result;
                                     }
 
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBodyOnewayFlight();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+
                                     Session["Payment"] = charges2;
                                     Session["token"] = responseString;
                                     Response.Redirect("SuccessPayment.aspx");
@@ -357,6 +392,21 @@ namespace Travelopedia
                                         responseString = response.Content.ReadAsStringAsync().Result;
                                     }
 
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBody();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+
                                     Session["Payment"] = charges2;
                                     Session["token"] = responseString;
                                     Response.Redirect("SuccessPayment.aspx");
@@ -449,7 +499,20 @@ namespace Travelopedia
                                     {
                                         responseString = response.Content.ReadAsStringAsync().Result;
                                     }
-
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBodyCar();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
                                     Session["Payment"] = charges2;
                                     Session["token"] = responseString;
                                     Response.Redirect("SuccessPayment.aspx");
@@ -466,6 +529,11 @@ namespace Travelopedia
                 }
                 else
                 {
+                    HttpCookie cookie = new HttpCookie("TimedCookie");
+                    cookie["User"] = Context.User.Identity.Name;
+                    cookie.Expires = DateTime.Now.AddMinutes(5);
+                    Response.Cookies.Add(cookie);
+
                     //data is empty
                     Response.Redirect("Default.Aspx");
                 }
@@ -473,8 +541,102 @@ namespace Travelopedia
             else
             {
                 //user is not authenticated
-                Response.Redirect("Default.Aspx");
+                Response.Redirect("~/Account/Login.aspx");
             }
+        }
+
+        private string CreateBodyRoundFlight()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/MailFlightRound.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{deptdate}", deptdate1.Text);
+            body = body.Replace("{depart}", dept1.Text);
+            body = body.Replace("{depttime}", depttime1.Text);
+            body = body.Replace("{arrivedate}", arrivedate1.Text);
+            body = body.Replace("{arrive}", arrive1.Text);
+            body = body.Replace("{arrivetime}", arrivetime1.Text);
+            body = body.Replace("{travelduration}", duration1.Text);
+
+            body = body.Replace("{deptdate2}", deptdate2.Text);
+            body = body.Replace("{depart2}", dept2.Text);
+            body = body.Replace("{depttime2}", depttime2.Text);
+            body = body.Replace("{arrivedate2}", arrivedate2.Text);
+            body = body.Replace("{arrive2}", arrive2.Text);
+            body = body.Replace("{arrivetime2}", arrivetime2.Text);
+            body = body.Replace("{travelduration2}", duration2.Text);
+            body = body.Replace("{total}", flightprice.Text);
+
+            return body;
+        }
+
+        private string CreateBodyOnewayFlight()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/MailFlightOneway.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{deptdate}", deptdateo.Text);
+            body = body.Replace("{depart}", depto.Text);
+            body = body.Replace("{depttime}", depttimeo.Text);
+            body = body.Replace("{arrivedate}", arrivedateo.Text);
+            body = body.Replace("{arrive}", arriveo.Text);
+            body = body.Replace("{arrivetime}", arrivetimeo.Text);
+            body = body.Replace("{travelduration}", durationo.Text);
+            body = body.Replace("{total}", flightpriceo.Text);
+            
+            return body;
+
+        }
+
+        private string CreateBodyCar()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/mailcar.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{possiblemodels}", name.Text);
+            body = body.Replace("{cartype}", type.Text);
+            body = body.Replace("{vendorlocation}", location.Text);
+            body = body.Replace("{pickup}", pickup.Text);
+            body = body.Replace("{pickuptime}", pickuptime.Text);
+            body = body.Replace("{dropoff}", dropoff.Text);
+            body = body.Replace("{dropofftime}", dropofftime.Text);
+            body = body.Replace("{days}", days.Text);
+            body = body.Replace("{dailyprice}", dailyprice.Text);
+            body = body.Replace("{subtotal}", Subtotal.Text);
+            body = body.Replace("{tax}", tax.Text);
+            body = body.Replace("{total}", total.Text);
+            return body;
+           
+        }
+
+        private string CreateBody()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Mail.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{hotelname}", hotelname.Text);
+            body = body.Replace("{city}", city.Text);
+            body = body.Replace("{state}", state.Text);
+            body = body.Replace("{checkin}", hotelcheckin.Text);
+            body = body.Replace("{checkout}", hotelcheckout.Text);
+            body = body.Replace("{rooms}", noofrooms.Text);
+            body = body.Replace("{subtotal}", subtotalhotel.Text);
+            body = body.Replace("{tax}", hoteltax.Text);
+            body = body.Replace("{total}", hoteltotal.Text);
+            return body;
+           
         }
     }
 }

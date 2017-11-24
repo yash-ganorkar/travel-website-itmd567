@@ -3,8 +3,8 @@
     <script src="Scripts/angular.min.js"></script>
     <style>
         #preloader 
-        { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; overflow: visible; background: #333 url('http://files.mimoymima.com/images/loading.gif') no-repeat center center; }
-        #feedLoading {
+        { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/earth.gif') no-repeat center center; }
+        /*#feedLoading {
         position: absolute;
         top: 200px;
         width: 100%;
@@ -23,7 +23,7 @@
         filter: alpha(opacity=60);
         opacity: 0.6;
         background: #000000;
-        }
+        }*/
     </style>
     <asp:UpdatePanel runat="server" EnableViewState="true" ID="Panel1">
         <ContentTemplate>
@@ -31,7 +31,7 @@
                 <div class="panel-body">
                     <div ng-controller="DataCtrl" ng-init="loadData()">
                         <div id="veil" ng-show="isLoading"></div>
-                        <div id="feedLoading" ng-show="isLoading">Loading...</div>
+                        <div id="preloader" ng-show="isLoading"></div>
                         <div class="row" id="cardata">
                             <div class="col-md-3" id="test">
                                 <div class="booking-item-dates-change mb30">

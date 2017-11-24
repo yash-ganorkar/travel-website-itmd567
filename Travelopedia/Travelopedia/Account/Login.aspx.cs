@@ -24,7 +24,7 @@ namespace Travelopedia.Account
                     RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 }
                 Session["Timer"] = DateTime.Now;
-                Response.Redirect("~/Home.aspx");
+                //Response.Redirect("~/Home.aspx");
             }
             else
             {

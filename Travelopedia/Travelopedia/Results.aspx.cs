@@ -23,14 +23,23 @@ namespace Travelopedia
             this.ClientScript.GetPostBackEventReference(this, "arg");
             if (!IsPostBack)
             {
-                if (Request.Cookies["TimedCookie"] == null)
+                if (User.Identity.IsAuthenticated)
                 {
-                    hiddenFieldLogin.Value = "login";
+                    if (Request.Cookies["TimedCookie"] == null)
+                    {
+                        hiddenFieldLogin.Value = "login";
+                    }
+                    else
+                    {
+                        hiddenFieldLogin.Value = "logout";
+                    }
+
                 }
                 else
                 {
-                    hiddenFieldLogin.Value = "logout";
+                    hiddenFieldLogin.Value = "login";
                 }
+
 
                 var queryParam = Request.QueryString["type"];
                 if (queryParam == "hotel")

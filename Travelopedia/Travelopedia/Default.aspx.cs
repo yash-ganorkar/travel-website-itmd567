@@ -20,7 +20,15 @@ namespace Travelopedia
         {
             if (User.Identity.IsAuthenticated)
             {
+                if (Request.Cookies["TimedCookie"] == null)
+                {
+                    hiddenFieldLogin.Value = "login";
+                }
+                else
+                {
                     hiddenFieldLogin.Value = "logout";
+                }
+                    
             }
             else
             {
