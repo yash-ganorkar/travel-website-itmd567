@@ -21,27 +21,19 @@ namespace Travelopedia
             if (User.Identity.IsAuthenticated)
             {
                 if (Request.Cookies["TimedCookie"] == null)
-                    {
-                      hiddenFieldLogin.Value = "login";
-                    }
+                {
+                    hiddenFieldLogin.Value = "login";
+                }
                 else
+                {
                     hiddenFieldLogin.Value = "logout";
+                }
+                    
             }
             else
             {
                 hiddenFieldLogin.Value = "login";
             }
-            //if (Request.Cookies["TimedCookie"] != null)
-            //{
-            //    hiddenFieldLogin.Value = "logout";
-            //}
-            //else
-            //{
-            //    if(Session["User"] == null)
-            //        hiddenFieldLogin.Value = "login";
-            //    else
-            //        hiddenFieldLogin.Value = "logout";
-            //}
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -52,6 +44,7 @@ namespace Travelopedia
                 string destination;
                 string startDate;
                 string endDate;
+                string type;
                 string numberOfPassengers;
                 if (flight_type == "oneway")
                 {
@@ -62,7 +55,9 @@ namespace Travelopedia
                     endDate = txtStartDate2.Text;
 
                     numberOfPassengers = dropdownNumberOfPassengers2.SelectedValue;
-
+                    type = "flightone";
+                    Session["flighttype"] = type;
+                    Response.Redirect("Results.Aspx?" + "type=" + Server.UrlEncode(type) + "&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(startDate) +  "&count=" + Server.UrlEncode(numberOfPassengers));
                 }
                 else
                 {
@@ -73,10 +68,12 @@ namespace Travelopedia
                     endDate = txtEndDate.Text;
 
                     numberOfPassengers = dropdownNumberOfPassengers.SelectedValue;
-
+                    type = "flightround";
+                    Session["flighttype"] = type;
+                    Response.Redirect("Results.Aspx?" + "type=" + Server.UrlEncode(type) + "&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
                 }
                 //Response.Redirect("Results.Aspx?" + "type=flight&source=" + Server.UrlEncode(source[1].Trim()) + "&destination=" + Server.UrlEncode(destination[1].Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
-                Response.Redirect("Results.Aspx?" + "type=flight&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
+                
 
             }
         }

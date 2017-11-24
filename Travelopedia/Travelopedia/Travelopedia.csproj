@@ -515,6 +515,7 @@
     <Content Include="fonts\icomoon.eot" />
     <Content Include="fonts\icomoon.ttf" />
     <Content Include="fonts\icomoon.woff" />
+    <Content Include="images\travelopedialogo.png" />
     <Content Include="images\yash.jpg" />
     <Content Include="img\100x100.png" />
     <Content Include="img\1024x487.png" />
@@ -2101,6 +2102,10 @@
     <Content Include="img\Volkswagen-Polo-BlueGT.png" />
     <Content Include="img\Volkswagen-Touareg-Edition-X.png" />
     <Content Include="img\Volvo-V40.png" />
+    <Content Include="Mail.html" />
+    <Content Include="mailcar.html" />
+    <Content Include="MailFlightOneway.html" />
+    <Content Include="MailFlightRound.html" />
     <Content Include="media\loop.webm" />
     <Content Include="img\.DS_Store" />
     <Content Include="img\backgrounds\Thumbs.db" />
@@ -3974,6 +3979,9 @@
       <DependentUpon>201709251648065_FirstName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CarBooking.cs" />
+    <Compile Include="Models\FlightDetails.cs" />
+    <Compile Include="Models\HotelPayment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

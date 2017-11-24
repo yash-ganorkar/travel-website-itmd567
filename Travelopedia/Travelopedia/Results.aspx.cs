@@ -23,14 +23,23 @@ namespace Travelopedia
             this.ClientScript.GetPostBackEventReference(this, "arg");
             if (!IsPostBack)
             {
-                if (Request.Cookies["TimedCookie"] == null)
+                if (User.Identity.IsAuthenticated)
                 {
-                    hiddenFieldLogin.Value = "login";
+                    if (Request.Cookies["TimedCookie"] == null)
+                    {
+                        hiddenFieldLogin.Value = "login";
+                    }
+                    else
+                    {
+                        hiddenFieldLogin.Value = "logout";
+                    }
+
                 }
                 else
                 {
-                    hiddenFieldLogin.Value = "logout";
+                    hiddenFieldLogin.Value = "login";
                 }
+
 
                 var queryParam = Request.QueryString["type"];
                 if (queryParam == "hotel")
@@ -38,25 +47,25 @@ namespace Travelopedia
                     hiddenField1.Value = "hotel";
                     Session["DataType"] = hiddenField1.Value;
                 }
-                else if (queryParam == "flight")
+                else if (queryParam == "flightone" || queryParam == "flightround")
                 {
-                    if (Convert.ToInt32(Request.QueryString[5]) == 0)
+                    if (Convert.ToInt32(Request.QueryString["count"]) == 0)
                     {
                         if (Session["flighttype"].ToString() == "roundtrip")
                         {
                             hiddenField2.Value = "Error~Number of Adults cannot be 0";
                             hiddenField1.Value = "flightround";
-                            
+
                         }
                         else
                         {
                             hiddenField2.Value = "Error~Number of Adults cannot be 0";
                             hiddenField1.Value = "flightone";
-                            
+
                         }
 
                     }
-                    else if (Request.QueryString[1] == "" || Request.QueryString[1] == null)
+                    else if (Request.QueryString["source"] == "" || Request.QueryString["source"] == null)
                     {
 
                         if (Session["flighttype"].ToString() == "roundtrip")
@@ -71,7 +80,7 @@ namespace Travelopedia
                         }
 
                     }
-                    else if (Request.QueryString[2] == "" || Request.QueryString[2] == null)
+                    else if (Request.QueryString["destination"] == "" || Request.QueryString["destination"] == null)
                     {
                         if (Session["flighttype"].ToString() == "roundtrip")
                         {
@@ -84,7 +93,7 @@ namespace Travelopedia
                             hiddenField1.Value = "flightone";
                         }
                     }
-                    else if (Request.QueryString[3] == "" || Request.QueryString[3] == null)
+                    else if (Request.QueryString["startdate"] == "" || Request.QueryString["startdate"] == null)
                     {
                         if (Session["flighttype"].ToString() == "roundtrip")
                         {
@@ -97,7 +106,7 @@ namespace Travelopedia
                             hiddenField1.Value = "flightone";
                         }
                     }
-                    else if (Request.QueryString[4] == "" || Request.QueryString[4] == null)
+                    else if (Request.QueryString["enddate"] == "" || Request.QueryString["enddate"] == null)
                     {
                         if (Session["flighttype"].ToString() == "roundtrip")
                         {
@@ -112,7 +121,7 @@ namespace Travelopedia
                     }
                     else
                     {
-                        if(Session["flighttype"].ToString() == "roundtrip")
+                        if (Session["flighttype"].ToString() == "flightround")
                         {
                             Session["DataType"] = "flightround";
                             Session["Location"] = sourcecity.Value.Split('-')[2] + " - " + destinationcity.Value.Split('-')[2];
@@ -134,15 +143,23 @@ namespace Travelopedia
             {
                 if (Session["User"] == null)
                 {
+                    var queryParam = Request.QueryString["type"];
                     Session["Data"] = hiddenField1.Value;
-                    
+                    if(queryParam == "hotel")
+                    {
+                        Session["NoOfGuests"] = Convert.ToInt32(guests.Value) + Convert.ToInt32(children.Value);
+                    }
                     Response.Redirect("~/Account/Login.aspx");
                 }
 
                 else
                 {
+                    var queryParam = Request.QueryString["type"];
                     Session["Data"] = hiddenField1.Value;
-                    
+                    if (queryParam == "hotel")
+                    {
+                        Session["NoOfGuests"] = Convert.ToInt32(guests.Value) + Convert.ToInt32(children.Value);
+                    }
                     Response.Redirect("~/Home.aspx");
                 }
             }
@@ -161,7 +178,7 @@ namespace Travelopedia
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

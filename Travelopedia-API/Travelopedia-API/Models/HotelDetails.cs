@@ -9,6 +9,7 @@ namespace Travelopedia_API.Models
     {
         public List<HotelRoomDetails> hotelRoomDetails { get; set; }
         public Exceptions ExceptionDetails { get; set; }
+
     }
 
     public class NeighborhoodDetails
@@ -40,6 +41,6 @@ namespace Travelopedia_API.Models
         public string state { get; set; }
         public string name { get; set; }
         public string centroid { get; set; }
-
+        public PaymentDetails paymentdetails { get; set; }
     }
 }

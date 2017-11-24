@@ -10,7 +10,7 @@ namespace Travelopedia.Account
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if(Request.Cookies["TimedCookie"] == null)
+            if(!User.Identity.IsAuthenticated)
             {
                 hiddenFieldLogin.Value = "login";
                 RegisterHyperLink.NavigateUrl = "Register";
@@ -23,19 +23,13 @@ namespace Travelopedia.Account
                 {
                     RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 }
+                Session["Timer"] = DateTime.Now;
+                //Response.Redirect("~/Home.aspx");
             }
             else
             {
-                if(Session["Timer"] == null)
-                {
-                    Session.Timeout = 10;
                     Session["Timer"] = DateTime.Now;
                     Response.Redirect("~/Home.aspx");
-                }
-                else
-                {
-                    Response.Redirect("~/Home.aspx");
-                }
             }
         }
 

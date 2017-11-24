@@ -4,6 +4,12 @@ using System.Web.Configuration;
 using Travelopedia.Models;
 using System.Web.UI;
 using Newtonsoft.Json.Linq;
+using Travelopedia_API.Models;
+using System.Net.Http;
+using Microsoft.AspNet.Identity;
+using System.Web;
+using System.Net.Mail;
+using System.IO;
 
 namespace Travelopedia
 {
@@ -19,82 +25,79 @@ namespace Travelopedia
         protected void Page_Load(object sender, EventArgs e)
         {
                 paymentDetails = new PaymentDetails();
-                if (Request.Cookies["TimedCookie"] != null)
+            if (User.Identity.IsAuthenticated)
+            {
+
+                if (Session["Data"].ToString() != "")
                 {
-                    if (Session["Data"].ToString() != "")
+                    hiddenFieldLogin.Value = "logout";
+                    // string username = Request.Cookies["TimedCookie"]["User"].ToString();
+                    Session.Timeout = 10;
+
+
+                    int timeout = Session.Timeout * 1000 * 60;
+
+                    DateTime sessionStart = (DateTime)Session["Timer"];
+
+                    DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                    TimeSpan diff = sessionStart.ToUniversalTime() - origin;
+
+                    int timerStarted = (int)Math.Floor(diff.TotalSeconds);
+
+                    origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                    diff = DateTime.Now.ToUniversalTime() - origin;
+                    int timerNow = (int)Math.Floor(diff.TotalSeconds);
+
+                    timeout = ((timeout / 1000) - (timerNow - timerStarted)) * 1000;
+
+                    JToken token = JObject.Parse(Session["Data"].ToString());
+                    DataType = Session["DataType"].ToString();
+
+                    ClientScript.RegisterStartupScript(this.GetType(), "SessionAlert", "SessionExpireAlert(" + timeout + ");", true);
+
+                    if (DataType == "flightround")
                     {
-                        hiddenFieldLogin.Value = "logout";
-                        string username = Request.Cookies["TimedCookie"]["User"].ToString();
+                        FlightDetailsRound.Visible = true;
+                        CarDetails.Visible = false;
 
-                        int timeout = Session.Timeout * 1000 * 60;
+                        FlightDetails fd = new FlightDetails();
+                        PaymentDetails pd = new PaymentDetails();
 
-                        DateTime sessionStart = (DateTime)Session["Timer"];
+                        DateTime sDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
 
-                        DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                        TimeSpan diff = sessionStart.ToUniversalTime() - origin;
+                        depttime1.Text = sDate.ToShortTimeString();
+                        deptdate1.Text = sDate.ToShortDateString();
+                        dept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
-                        int timerStarted = (int)Math.Floor(diff.TotalSeconds);
+                        DateTime rDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+                        
+                        arrivetime1.Text = rDate.ToShortTimeString();
+                        arrivedate1.Text = rDate.ToShortDateString();
+                        arrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                        duration1.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
 
-                        origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                        diff = DateTime.Now.ToUniversalTime() - origin;
-                        int timerNow = (int)Math.Floor(diff.TotalSeconds);
+                        DateTime sDate2 = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
 
-                        timeout = ((timeout/1000) - (timerNow - timerStarted)) * 1000;
+                        depttime2.Text = sDate2.ToShortTimeString();
+                        deptdate2.Text = sDate2.ToShortDateString();
+                        dept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
-                        JToken token = JObject.Parse(Session["Data"].ToString());
-                        DataType = Session["DataType"].ToString();
+                        DateTime rDate2 = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
 
-                        ClientScript.RegisterStartupScript(this.GetType(), "SessionAlert", "SessionExpireAlert(" + timeout + ");", true);
+                        returnflightlocation.InnerText = Session["Location"].ToString();
+                        returntotalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
+                        returntotaltax.InnerText = token.SelectToken("pricing")[0].SelectToken("saleTaxTotal").ToString();
 
-                        if (DataType == "flightround")
-                        {
-                        //amount = sessionValues[10];
-                        //FlightDetailsRound.Visible = true;
-                        //CarDetails.Visible = false;
-                        //depttime1.Text = sessionValues[3];
-                        //deptdate1.Text = sessionValues[12];
-                        //dept1.Text = sessionValues[1];
-                        //arrivetime1.Text = sessionValues[4];
-                        //arrivedate1.Text = sessionValues[12];
-                        //arrive1.Text = sessionValues[2];
-                        //duration1.Text = sessionValues[5];
+                        arrivetime2.Text = rDate2.ToShortTimeString();
+                        arrivedate2.Text = rDate2.ToShortDateString();
+                        arrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                        duration2.Text = token.SelectToken("slice")[1].SelectToken("duration").ToString();
 
-                        //depttime2.Text = sessionValues[8];
-                        //deptdate2.Text = sessionValues[13];
-                        //dept2.Text = sessionValues[6];
-                        //arrivetime2.Text = sessionValues[9];
-                        //arrivedate2.Text = sessionValues[13];
-                        //arrive2.Text = sessionValues[7];
-                        //duration2.Text = sessionValues[11];
-                        //amount = (Convert.ToDouble(token.SelectToken("saleTotal").ToString()) * 100).ToString();
-                        //flightprice.Text = sessionValues[10];
-                    }
-                    else if (DataType == "flightone")
-                        {
-                            FlightDetailsOne.Visible = true;
-                            CarDetails.Visible = false;
 
-                            DateTime oDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
+                        flightprice.Text = token.SelectToken("saleTotal").ToString();
 
-                            depttimeo.Text = oDate.ToShortTimeString();
-                            deptdateo.Text = oDate.ToShortDateString();
-                            depto.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
-
-                            oDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
-
-                            flightlocation.InnerText = Session["Location"].ToString();
-
-                            arrivetimeo.Text = oDate.ToShortTimeString();
-                            arrivedateo.Text = oDate.ToShortDateString();
-                            arriveo.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
-
-                            totalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
-                            totaltax.InnerText = token.SelectToken("pricing")[0].SelectToken("saleTaxTotal").ToString();
-
-                            durationo.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
-                            flightpriceo.Text = token.SelectToken("saleTotal").ToString();
-                            string amt = token.SelectToken("saleTotal").ToString().Substring(3, token.SelectToken("saleTotal").ToString().Length-3);
-                            amount = (Convert.ToDouble(amt) * 100).ToString();
+                        string amt = token.SelectToken("saleTotal").ToString().Substring(3, token.SelectToken("saleTotal").ToString().Length - 3);
+                        amount = (Convert.ToDouble(amt) * 100).ToString();
 
                         if (Request.Form["stripeToken"] != null)
                         {
@@ -124,8 +127,57 @@ namespace Travelopedia
 
                             if (charges2.Captured == true)
                             {
-                                Session["Payment"] = charges2;
-                                Response.Redirect("SuccessPayment.aspx");
+                                pd.UserID = User.Identity.GetUserId();
+                                pd.PaymentAmount = Convert.ToDouble(amount) * 100;
+                                pd.PaymentDate = DateTime.Now;
+                                pd.StripePaymentID = charge.Id;
+
+                                fd.UserID = User.Identity.GetUserId();
+                                fd.paymentdetails = pd;
+                                fd.FlightType = "Round";
+                                fd.Source = depto.Text;
+                                fd.Destination = arriveo.Text;
+                                fd.ArrivalDate1 = rDate.ToShortDateString();
+                                fd.ArrivalTime1 = rDate.ToShortTimeString();
+                                fd.DepartureDate1 = sDate.ToShortDateString();
+                                fd.DepartureTime1 = sDate.ToShortTimeString();
+                                fd.ArrivalDate2 = rDate2.ToShortDateString();
+                                fd.ArrivalTime2 = rDate2.ToShortTimeString();
+                                fd.DepartureDate2 = sDate2.ToShortDateString();
+                                fd.DepartureTime2 = sDate2.ToShortTimeString();
+
+                                using (var client = new HttpClient())
+                                {
+                                    string responseString = "";
+                                    client.BaseAddress = new Uri("http://localhost/Travelopedia-api/api/");
+                                    client.DefaultRequestHeaders.Accept.Clear();
+                                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                    var response = client.PostAsJsonAsync("flights/ConfirmFlight/", fd).Result;
+
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        responseString = response.Content.ReadAsStringAsync().Result;
+                                    }
+
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBodyRoundFlight();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+
+                                    Session["Payment"] = charges2;
+                                    Session["token"] = responseString;
+                                    Response.Redirect("SuccessPayment.aspx");
+                                }
                             }
                             else
                             {
@@ -136,14 +188,136 @@ namespace Travelopedia
 
                         }
                     }
-                        else if (DataType == "hotel")
+                    else if (DataType == "flightone")
+                    {
+                        FlightDetailsOne.Visible = true;
+                        CarDetails.Visible = false;
+
+                        FlightDetails fd = new FlightDetails();
+                        PaymentDetails pd = new PaymentDetails();
+
+
+
+                        DateTime oDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
+
+                        depttimeo.Text = oDate.ToShortTimeString();
+                        deptdateo.Text = oDate.ToShortDateString();
+                        depto.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                       DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+
+                        flightlocation.InnerText = Session["Location"].ToString();
+
+                        arrivetimeo.Text = dDate.ToShortTimeString();
+                        arrivedateo.Text = dDate.ToShortDateString();
+                        arriveo.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                        totalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
+                        totaltax.InnerText = token.SelectToken("pricing")[0].SelectToken("saleTaxTotal").ToString();
+
+                        durationo.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
+                        flightpriceo.Text = token.SelectToken("saleTotal").ToString();
+                        string amt = token.SelectToken("saleTotal").ToString().Substring(3, token.SelectToken("saleTotal").ToString().Length - 3);
+                        amount = (Convert.ToDouble(amt) * 100).ToString();
+
+
+                        if (Request.Form["stripeToken"] != null)
                         {
+                            var customers = new StripeCustomerService();
+                            var charges = new StripeChargeService();
+
+                            var customer = customers.Create(new StripeCustomerCreateOptions
+                            {
+                                Email = Request.Form["stripeEmail"],
+                                SourceToken = Request.Form["stripeToken"]
+                            });
+
+                            var charge = charges.Create(new StripeChargeCreateOptions
+                            {
+                                Amount = Convert.ToInt32(Convert.ToDouble(amount) * 100),
+                                Description = "Sample Charge",
+                                Currency = "usd",
+                                CustomerId = customer.Id,
+                                ReceiptEmail = customer.Email,
+                                SourceTokenOrExistingSourceId = customer.DefaultSourceId
+                            });
+
+                            StripeConfiguration.SetApiKey(WebConfigurationManager.AppSettings["StripeSecretKey"]);
+
+                            var chargeService = new StripeChargeService();
+                            StripeCharge charges2 = chargeService.Get(charge.Id);
+
+                            if (charges2.Captured == true)
+                            {
+                                pd.UserID = User.Identity.GetUserId();
+                                pd.PaymentAmount = Convert.ToDouble(amount) * 100;
+                                pd.PaymentDate = DateTime.Now;
+                                pd.StripePaymentID = charge.Id;
+
+                                fd.UserID = User.Identity.GetUserId();
+                                fd.paymentdetails = pd;
+                                fd.FlightType = "OneWay";
+                                fd.Source = depto.Text;
+                                fd.Destination = arriveo.Text;
+                                fd.ArrivalDate1 = dDate.ToShortDateString();
+                                fd.ArrivalTime1 = dDate.ToShortTimeString();
+                                fd.DepartureDate1 = oDate.ToShortDateString();
+                                fd.DepartureTime1 = oDate.ToShortTimeString();
+
+                                using (var client = new HttpClient())
+                                {
+                                    string responseString="";
+                                    client.BaseAddress = new Uri("http://localhost/Travelopedia-api/api/");
+                                    client.DefaultRequestHeaders.Accept.Clear();
+                                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                    var response = client.PostAsJsonAsync("flights/ConfirmFlight/", fd).Result;
+
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        responseString = response.Content.ReadAsStringAsync().Result;
+                                    }
+
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBodyOnewayFlight();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+
+                                    Session["Payment"] = charges2;
+                                    Session["token"] = responseString;
+                                    Response.Redirect("SuccessPayment.aspx");
+                                }
+                            }
+                            else
+                            {
+                                Session["Payment"] = charges2;
+                                Response.Redirect("ErrorPayment.aspx");
+                            }
+
+
+                        }
+                    }
+                    else if (DataType == "hotel")
+                    {
                         HotelDetails.Visible = true;
                         CarDetails.Visible = false;
                         hotelname.Text = token.SelectToken("name").ToString();
                         city.Text = token.SelectToken("city").ToString();
                         state.Text = token.SelectToken("state").ToString();
                         subtotalhotel.Text = token.SelectToken("subtotal").ToString();
+                        noofguests.Text = Session["NoOfGuests"].ToString();
+
+                        PaymentDetails pd = new PaymentDetails();
+                        HotelPayment hp = new HotelPayment();
 
                         noofrooms.Text = token.SelectToken("rooms").ToString();
                         hoteltax.Text = token.SelectToken("taxesandfees").ToString();
@@ -159,7 +333,7 @@ namespace Travelopedia
                         string longitude = token.SelectToken("centroid").ToString().Split('-')[1];
 
                         ScriptManager.RegisterStartupScript(Page, GetType(), "initMap", "<script>initMap(" + latitude + "," + longitude + ")</script>", false);
-                        
+
                         amount = (Convert.ToDouble(hoteltotal.Text) * 100).ToString();
 
                         if (Request.Form["stripeToken"] != null)
@@ -190,8 +364,53 @@ namespace Travelopedia
 
                             if (charges2.Captured == true)
                             {
-                                Session["Payment"] = charges2;
-                                Response.Redirect("SuccessPayment.aspx");
+
+                                pd.UserID = User.Identity.GetUserId();
+                                pd.PaymentAmount = Convert.ToDouble(amount) * 100;
+                                pd.PaymentDate = DateTime.Now;
+                                pd.StripePaymentID = charge.Id;
+
+                                hp.NumberOfRooms = Convert.ToInt32(noofrooms.Text);
+                                hp.HotelName = hotelnamefilter.Text;
+                                hp.NumberOfGuests = Convert.ToInt32(noofguests.Text);
+                                hp.Location = hotelcityfilter.Text + ", " + hotelstatefilter.Text;
+                                hp.CheckInDate = hotelcheckin.Text;
+                                hp.CheckOutDate = hotelcheckout.Text;
+                                hp.paymentDetails = pd;
+                                hp.UserID = User.Identity.GetUserId();
+
+                                using (var client = new HttpClient())
+                                {
+                                    string responseString = "";
+                                    client.BaseAddress = new Uri("http://localhost/Travelopedia-api/api/");
+                                    client.DefaultRequestHeaders.Accept.Clear();
+                                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                    var response = client.PostAsJsonAsync("hotels/ConfirmHotelBooking/", hp).Result;
+
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        responseString = response.Content.ReadAsStringAsync().Result;
+                                    }
+
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBody();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+
+                                    Session["Payment"] = charges2;
+                                    Session["token"] = responseString;
+                                    Response.Redirect("SuccessPayment.aspx");
+                                }
                             }
                             else
                             {
@@ -202,24 +421,26 @@ namespace Travelopedia
 
                         }
                     }
-                        else
-                        {
-                            name.Text = token.SelectToken("PossibleModels").ToString();
-                            type.Text = token.SelectToken("CarTypeName").ToString();
-                            location.Text = token.SelectToken("VendorLocation").ToString();
-                            location1.Text = token.SelectToken("VendorLocation").ToString();
-                            price.Text = token.SelectToken("DailyRate").ToString();
-                            dailyprice.Text = token.SelectToken("DailyRate").ToString();
-                            Subtotal.Text = token.SelectToken("SubTotal").ToString();
-                            tax.Text = token.SelectToken("TaxesAndFees").ToString();
-                            total.Text = token.SelectToken("TotalPrice").ToString();
-                            pickup.Text = token.SelectToken("PickupDay").ToString();
-                            dropoff.Text = token.SelectToken("DropoffDay").ToString();
-                            days.Text = token.SelectToken("RentalDays").ToString();
-                            pickuptime.Text = token.SelectToken("PickupTime").ToString();
-                            dropofftime.Text = token.SelectToken("DropoffTime").ToString();
+                    else
+                    {
+                        name.Text = token.SelectToken("PossibleModels").ToString();
+                        type.Text = token.SelectToken("CarTypeName").ToString();
+                        location.Text = token.SelectToken("VendorLocation").ToString();
+                        location1.Text = token.SelectToken("VendorLocation").ToString();
+                        price.Text = token.SelectToken("DailyRate").ToString();
+                        dailyprice.Text = token.SelectToken("DailyRate").ToString();
+                        Subtotal.Text = token.SelectToken("SubTotal").ToString();
+                        tax.Text = token.SelectToken("TaxesAndFees").ToString();
+                        total.Text = token.SelectToken("TotalPrice").ToString();
+                        pickup.Text = token.SelectToken("PickupDay").ToString();
+                        dropoff.Text = token.SelectToken("DropoffDay").ToString();
+                        days.Text = token.SelectToken("RentalDays").ToString();
+                        pickuptime.Text = token.SelectToken("PickupTime").ToString();
+                        dropofftime.Text = token.SelectToken("DropoffTime").ToString();
 
-                            amount = (Convert.ToDouble(total.Text) * 100).ToString();
+                        PaymentDetails pd = new PaymentDetails();
+                        CarBooking cb = new CarBooking();
+                        amount = (Convert.ToDouble(total.Text) * 100).ToString();
 
                         if (Request.Form["stripeToken"] != null)
                         {
@@ -249,42 +470,173 @@ namespace Travelopedia
 
                             if (charges2.Captured == true)
                             {
-                                Session["Payment"] = charges2;
-                                Response.Redirect("SuccessPayment.aspx");
+
+                                pd.UserID = User.Identity.GetUserId();
+                                pd.PaymentAmount = Convert.ToDouble(amount) * 100;
+                                pd.PaymentDate = DateTime.Now;
+                                pd.StripePaymentID = charge.Id;
+
+                                cb.UserID = User.Identity.GetUserId();
+                                cb.PossibleModels = name.Text;
+                                cb.CarType = type.Text;
+                                cb.paymentDetails = pd;
+                                cb.PickUpDate = pickup.Text;
+                                cb.PickUpLocation = location.Text;
+                                cb.PickUpTime = pickuptime.Text;
+                                cb.DropOffDate = dropoff.Text;
+                                cb.DropOffTime = dropofftime.Text;
+
+
+                                using (var client = new HttpClient())
+                                {
+                                    string responseString = "";
+                                    client.BaseAddress = new Uri("http://localhost/Travelopedia-api/api/");
+                                    client.DefaultRequestHeaders.Accept.Clear();
+                                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                    var response = client.PostAsJsonAsync("car/ConfirmCarBooking/", cb).Result;
+
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        responseString = response.Content.ReadAsStringAsync().Result;
+                                    }
+                                    MailMessage mail = new MailMessage();
+                                    mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                    mail.To.Add(charges2.ReceiptEmail);
+                                    mail.Subject = "This is an email";
+                                    mail.Body = CreateBodyCar();
+                                    mail.IsBodyHtml = true;
+                                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                    smtpClient.Credentials = new System.Net.NetworkCredential()
+                                    {
+                                        UserName = "shrutipuranik0710@gmail.com",
+                                        Password = "Shruti_07"
+                                    };
+                                    smtpClient.EnableSsl = true;
+                                    smtpClient.Send(mail);
+                                    Session["Payment"] = charges2;
+                                    Session["token"] = responseString;
+                                    Response.Redirect("SuccessPayment.aspx");
+                                }
                             }
                             else
                             {
                                 Session["Payment"] = charges2;
                                 Response.Redirect("ErrorPayment.aspx");
                             }
-                                
 
                         }
-
                     }
-
-                    }
-                    else
-                    {
-                    if (User.Identity.IsAuthenticated)
-                    {
-                        Response.Redirect("Default.Aspx");
-                    }
-                    else
-                    {
-                        Session.Clear();
-                        Session.Abandon();
-                        Session.Contents.Clear();
-                        Response.Redirect("Default.Aspx");
-                    }
-
-                }
-
                 }
                 else
                 {
+                    HttpCookie cookie = new HttpCookie("TimedCookie");
+                    cookie["User"] = Context.User.Identity.Name;
+                    cookie.Expires = DateTime.Now.AddMinutes(5);
+                    Response.Cookies.Add(cookie);
+
+                    //data is empty
                     Response.Redirect("Default.Aspx");
                 }
+            }
+            else
+            {
+                //user is not authenticated
+                Response.Redirect("~/Account/Login.aspx");
+            }
+        }
+
+        private string CreateBodyRoundFlight()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/MailFlightRound.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{deptdate}", deptdate1.Text);
+            body = body.Replace("{depart}", dept1.Text);
+            body = body.Replace("{depttime}", depttime1.Text);
+            body = body.Replace("{arrivedate}", arrivedate1.Text);
+            body = body.Replace("{arrive}", arrive1.Text);
+            body = body.Replace("{arrivetime}", arrivetime1.Text);
+            body = body.Replace("{travelduration}", duration1.Text);
+
+            body = body.Replace("{deptdate2}", deptdate2.Text);
+            body = body.Replace("{depart2}", dept2.Text);
+            body = body.Replace("{depttime2}", depttime2.Text);
+            body = body.Replace("{arrivedate2}", arrivedate2.Text);
+            body = body.Replace("{arrive2}", arrive2.Text);
+            body = body.Replace("{arrivetime2}", arrivetime2.Text);
+            body = body.Replace("{travelduration2}", duration2.Text);
+            body = body.Replace("{total}", flightprice.Text);
+
+            return body;
+        }
+
+        private string CreateBodyOnewayFlight()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/MailFlightOneway.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{deptdate}", deptdateo.Text);
+            body = body.Replace("{depart}", depto.Text);
+            body = body.Replace("{depttime}", depttimeo.Text);
+            body = body.Replace("{arrivedate}", arrivedateo.Text);
+            body = body.Replace("{arrive}", arriveo.Text);
+            body = body.Replace("{arrivetime}", arrivetimeo.Text);
+            body = body.Replace("{travelduration}", durationo.Text);
+            body = body.Replace("{total}", flightpriceo.Text);
+            
+            return body;
+
+        }
+
+        private string CreateBodyCar()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/mailcar.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{possiblemodels}", name.Text);
+            body = body.Replace("{cartype}", type.Text);
+            body = body.Replace("{vendorlocation}", location.Text);
+            body = body.Replace("{pickup}", pickup.Text);
+            body = body.Replace("{pickuptime}", pickuptime.Text);
+            body = body.Replace("{dropoff}", dropoff.Text);
+            body = body.Replace("{dropofftime}", dropofftime.Text);
+            body = body.Replace("{days}", days.Text);
+            body = body.Replace("{dailyprice}", dailyprice.Text);
+            body = body.Replace("{subtotal}", Subtotal.Text);
+            body = body.Replace("{tax}", tax.Text);
+            body = body.Replace("{total}", total.Text);
+            return body;
+           
+        }
+
+        private string CreateBody()
+        {
+            String body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Mail.html")))
+            {
+                body = reader.ReadToEnd();
+
+            }
+            body = body.Replace("{hotelname}", hotelname.Text);
+            body = body.Replace("{city}", city.Text);
+            body = body.Replace("{state}", state.Text);
+            body = body.Replace("{checkin}", hotelcheckin.Text);
+            body = body.Replace("{checkout}", hotelcheckout.Text);
+            body = body.Replace("{rooms}", noofrooms.Text);
+            body = body.Replace("{subtotal}", subtotalhotel.Text);
+            body = body.Replace("{tax}", hoteltax.Text);
+            body = body.Replace("{total}", hoteltotal.Text);
+            return body;
+           
         }
     }
 }

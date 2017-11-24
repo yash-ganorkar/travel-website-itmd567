@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
@@ -128,6 +131,8 @@ namespace Travelopedia_API.Controllers
                 hrd.state = state;
                 hrd.name = name;
                 hrd.centroid = centroid;
+                PaymentDetails pd = new PaymentDetails();
+                hrd.paymentdetails = pd;
                 hotelRoomDetails.Add(hrd);
             }
             if (hotelRoomDetails != null)
@@ -135,5 +140,51 @@ namespace Travelopedia_API.Controllers
             return hotelRoomDetails;
         }
 
+        [HttpPost]
+        [ActionName("ConfirmHotelBooking")]
+        public Object ConfirmHotelBooking(HotelPayment hotelPayment)
+        {
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Payment(PaymentAmount,PaymentDate,StripePaymentID, UserID) VALUES(@param1,@param2,@param3,@param4); SELECT TOP 1 (PaymentID) from Payment order by PaymentID desc";
+                    SqlCommand cmd = new SqlCommand(sql, connection);
+                    cmd.Parameters.Add("@param1", SqlDbType.Float).Value = hotelPayment.paymentDetails.PaymentAmount / 10000;
+                    cmd.Parameters.Add("@param2", SqlDbType.DateTime).Value = hotelPayment.paymentDetails.PaymentDate;
+                    cmd.Parameters.Add("@param3", SqlDbType.NVarChar).Value = hotelPayment.paymentDetails.StripePaymentID;
+                    cmd.Parameters.Add("@param4", SqlDbType.NVarChar).Value = hotelPayment.paymentDetails.UserID;
+                    cmd.CommandType = CommandType.Text;
+
+                    var newId = cmd.ExecuteScalar();
+
+                    sql = "INSERT INTO HotelBooking(UserID,PaymentID,HotelName,NumberOfGuests,NumberOfRooms,Location,CheckInDate,CheckOutDate) VALUES(@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8); SELECT TOP 1 (HotelID) from HotelBooking order by HotelID desc";
+                    cmd = new SqlCommand(sql, connection);
+                    cmd.Parameters.Add("@param1", SqlDbType.NVarChar).Value = hotelPayment.paymentDetails.UserID;
+                    cmd.Parameters.Add("@param2", SqlDbType.Int).Value = newId;
+                    cmd.Parameters.Add("@param3", SqlDbType.NVarChar).Value = hotelPayment.HotelName;
+                    cmd.Parameters.Add("@param4", SqlDbType.Int).Value = hotelPayment.NumberOfGuests;
+                    cmd.Parameters.Add("@param5", SqlDbType.NVarChar).Value = hotelPayment.NumberOfRooms;
+                    cmd.Parameters.Add("@param6", SqlDbType.NVarChar).Value = hotelPayment.Location;
+                    cmd.Parameters.Add("@param7", SqlDbType.NVarChar).Value = hotelPayment.CheckInDate;
+                    cmd.Parameters.Add("@param8", SqlDbType.NVarChar).Value = hotelPayment.CheckOutDate;
+
+                    cmd.CommandType = CommandType.Text;
+
+                    newId = cmd.ExecuteScalar();
+                    connection.Close();
+
+                    return newId;
+                }
+            }
+            catch (Exception ex)
+            {
+                Exceptions exceptions = new Exceptions();
+                exceptions.ExceptionMessage = "Error in BookFlight() :" + ex.InnerException;
+                return exceptions;
+            }
+        }
     }
 }

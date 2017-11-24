@@ -88,7 +88,7 @@
                         <p class="text-small">Arrive at your destination in style with this air-conditioned automatic. With room for 4 passengers and 2 pieces of luggage, it's ideal for small groups looking to get from A to B in comfort. Price can change at any moment so book now to avoid disappointment!</p>
 
                         <hr>
-                        <div class="row row-wrap">
+                        <div class="row row-wrap fadeInDown animated">
                             <div class="col-md-4">
                                 <h5>Car Features</h5>
                                 <ul class="booking-item-features booking-item-features-expand clearfix">
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 bounceIn animated">
                         <div class="booking-item-deails-date-location">
                             <ul>
                                 <li>
@@ -239,7 +239,7 @@
                         <div class="col-md-4">
                     <div class="booking-item-payment">
                         <header class="clearfix">
-                            <h5 class="mb0">London - New York</h5>
+                            <h5 runat="server" id="returnflightlocation" class="mb0"></h5>
                         </header>
                         <ul class="booking-item-payment-details">
                             <li>
@@ -293,16 +293,16 @@
                                 </div>
                             </li>
                             <li>
-                                <h5>Flight (2 Passengers)</h5>
+                                <h5>Flight Details</h5>
                                 <ul class="booking-item-payment-price">
                                     <li>
-                                        <p class="booking-item-payment-price-title">2 Passengers</p>
-                                        <p class="booking-item-payment-price-amount">$178<small>/per passnger</small>
+                                        <p class="booking-item-payment-price-title">Price</p>
+                                        <p runat="server" id="returntotalamounttext" class="booking-item-payment-price-amount">$178<small></small>
                                         </p>
                                     </li>
                                     <li>
                                         <p class="booking-item-payment-price-title">Taxes</p>
-                                        <p class="booking-item-payment-price-amount">$18<small>/per passnger</small>
+                                        <p runat="server" id="returntotaltax" class="booking-item-payment-price-amount">$18<small></small>
                                         </p>
                                     </li>
                                 </ul>
@@ -403,7 +403,7 @@
                         <div class="col-md-4">
                     <div class="booking-item-payment">
                         <header class="clearfix">
-                            <h5 runat="server" id="flightlocation" class="mb0">London - New York</h5>
+                            <h5 runat="server" id="flightlocation" class="mb0"></h5>
                         </header>
                         <ul class="booking-item-payment-details">
                             <li>
@@ -438,13 +438,13 @@
                                 <h5>Flight Details</h5>
                                 <ul class="booking-item-payment-price">
                                     <li>
-                                        <p runat="server" id="totalpassengers" class="booking-item-payment-price-title">2 Passengers</p>
-                                        <p runat="server" id="totalamounttext" class="booking-item-payment-price-amount">$178<small>/per passnger</small>
+                                        <p class="booking-item-payment-price-title">Price</p>
+                                        <p runat="server" id="totalamounttext" class="booking-item-payment-price-amount">$178<small></small>
                                         </p>
                                     </li>
                                     <li>
                                         <p class="booking-item-payment-price-title">Taxes</p>
-                                        <p runat="server" id="totaltax" class="booking-item-payment-price-amount">$18<small>/per passnger</small>
+                                        <p runat="server" id="totaltax" class="booking-item-payment-price-amount">$18<small></small>
                                         </p>
                                     </li>
                                 </ul>
@@ -498,6 +498,11 @@
                                                 </li>-->
                                                 <li>
                                                     <p>Number of Rooms<span><asp:Label ID="noofrooms" runat="server"></asp:Label></span>
+                                                    </p>
+                                                    
+                                                </li>
+                                                <li>
+                                                    <p>Number of Guests<span><asp:Label ID="noofguests" runat="server"></asp:Label></span>
                                                     </p>
                                                     
                                                 </li>
@@ -689,12 +694,12 @@
             </div>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&libraries=place‌s"></script>
              <script type="text/javascript">
-                                 
+
                  var map;
                  var infowindow;
 
                  alert(<%= this.amount %>);
-                 function initMap(latitude,longitude) {
+                 function initMap(latitude, longitude) {
                      var pyrmont = { lat: latitude, lng: longitude };
                      map = new google.maps.Map(document.getElementById('map'), {
                          center: pyrmont,
