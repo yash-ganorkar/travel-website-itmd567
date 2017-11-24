@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Travelopedia.Models
+namespace Travelopedia_API.Models
 {
     public class PaymentDetails
     {
-        public string Name { get; set; }
-
         public double PaymentAmount { get; set; }
-
-        public string Email { get; set; }
-
-        public string StripeTRNumber { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public string StripePaymentID { get; set; }
+        public string UserID { get; set; }
     }
 }

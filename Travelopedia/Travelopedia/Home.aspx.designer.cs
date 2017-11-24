@@ -175,6 +175,15 @@ namespace Travelopedia {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FlightDetailsRound;
         
         /// <summary>
+        /// returnflightlocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl returnflightlocation;
+        
+        /// <summary>
         /// depttime1 control.
         /// </summary>
         /// <remarks>
@@ -301,6 +310,24 @@ namespace Travelopedia {
         protected global::System.Web.UI.WebControls.Label duration2;
         
         /// <summary>
+        /// returntotalamounttext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl returntotalamounttext;
+        
+        /// <summary>
+        /// returntotaltax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl returntotaltax;
+        
+        /// <summary>
         /// flightprice control.
         /// </summary>
         /// <remarks>
@@ -391,15 +418,6 @@ namespace Travelopedia {
         protected global::System.Web.UI.WebControls.Label durationo;
         
         /// <summary>
-        /// totalpassengers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalpassengers;
-        
-        /// <summary>
         /// totalamounttext control.
         /// </summary>
         /// <remarks>
@@ -488,6 +506,15 @@ namespace Travelopedia {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label noofrooms;
+        
+        /// <summary>
+        /// noofguests control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label noofguests;
         
         /// <summary>
         /// subtotalhotel1 control.

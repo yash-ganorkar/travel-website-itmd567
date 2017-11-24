@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -125,5 +128,54 @@ namespace Travelopedia_API.Controllers
             }
             return carDetails;
         }
+
+        [HttpPost]
+        [ActionName("ConfirmCarBooking")]
+        public Object ConfirmCarBooking(CarBooking carPayment)
+        {
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Payment(PaymentAmount,PaymentDate,StripePaymentID, UserID) VALUES(@param1,@param2,@param3,@param4); SELECT TOP 1 (PaymentID) from Payment order by PaymentID desc";
+                    SqlCommand cmd = new SqlCommand(sql, connection);
+                    cmd.Parameters.Add("@param1", SqlDbType.Float).Value = carPayment.paymentDetails.PaymentAmount / 10000;
+                    cmd.Parameters.Add("@param2", SqlDbType.DateTime).Value = carPayment.paymentDetails.PaymentDate;
+                    cmd.Parameters.Add("@param3", SqlDbType.NVarChar).Value = carPayment.paymentDetails.StripePaymentID;
+                    cmd.Parameters.Add("@param4", SqlDbType.NVarChar).Value = carPayment.paymentDetails.UserID;
+                    cmd.CommandType = CommandType.Text;
+
+                    var newId = cmd.ExecuteScalar();
+
+                    sql = "INSERT INTO CarBooking(UserID,PaymentID,CarType,PossibleModels,PickUpLocation,PickUpDate,PickUpTime,DropOffDate,DropOffTime) VALUES(@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9); SELECT TOP 1 (CarID) from CarBooking order by CarID desc";
+                    cmd = new SqlCommand(sql, connection);
+                    cmd.Parameters.Add("@param1", SqlDbType.NVarChar).Value = carPayment.paymentDetails.UserID;
+                    cmd.Parameters.Add("@param2", SqlDbType.Int).Value = newId;
+                    cmd.Parameters.Add("@param3", SqlDbType.VarChar).Value = carPayment.CarType;
+                    cmd.Parameters.Add("@param4", SqlDbType.VarChar).Value = carPayment.PossibleModels;
+                    cmd.Parameters.Add("@param5", SqlDbType.VarChar).Value = carPayment.PickUpLocation;
+                    cmd.Parameters.Add("@param6", SqlDbType.NVarChar).Value = carPayment.PickUpDate;
+                    cmd.Parameters.Add("@param7", SqlDbType.NVarChar).Value = carPayment.PickUpTime;
+                    cmd.Parameters.Add("@param8", SqlDbType.NVarChar).Value = carPayment.DropOffDate;
+                    cmd.Parameters.Add("@param9", SqlDbType.NVarChar).Value = carPayment.DropOffTime;
+
+                    cmd.CommandType = CommandType.Text;
+
+                    newId = cmd.ExecuteScalar();
+                    connection.Close();
+
+                    return newId;
+                }
+            }
+            catch (Exception ex)
+            {
+                Exceptions exceptions = new Exceptions();
+                exceptions.ExceptionMessage = "Error in BookFlight() :" + ex.InnerException;
+                return exceptions;
+            }
+        }
+
     }
 }

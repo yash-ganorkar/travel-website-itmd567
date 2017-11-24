@@ -3974,6 +3974,9 @@
       <DependentUpon>201709251648065_FirstName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CarBooking.cs" />
+    <Compile Include="Models\FlightDetails.cs" />
+    <Compile Include="Models\HotelPayment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

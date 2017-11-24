@@ -61,6 +61,7 @@ namespace Travelopedia.Account
                 {
                     var nameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
                     var emailClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                    
                     email.Text = "";
                     userName = nameClaim.Value.ToString().ToLower();
                     lastName = nameClaim.Value.ToString().Split(' ')[1];
