@@ -1571,6 +1571,18 @@
 
                     return [year, month, day].join('-');
                 }
+
+                $(function () {
+                    $("#departdate").datepicker({ dateFormat: 'yy-mm-dd', autoclose: true });
+                    $("#returndepartdate").datepicker({ dateFormat: 'yy-mm-dd', autoclose: true });
+                    $("#returndate").datepicker({ dateFormat: 'yy-mm-dd', autoclose: true });
+
+                    $("#startdate").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                    $("#enddate").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                    $("#checkindate").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                    $("#checkoutdate").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                });
+
             </script>         
             <asp:HiddenField ID="hiddenField1" ClientIDMode="Static" runat="server"/>
             <asp:Button ID="Button2" runat="server" style="display:none;" OnClick="Button2_Click" />

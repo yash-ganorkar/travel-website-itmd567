@@ -18,28 +18,36 @@ namespace Travelopedia
         public string flight_type;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (User.Identity.IsAuthenticated)
+            if (!IsPostBack)
             {
-                if (Request.Cookies["TimedCookie"] == null)
+                if (User.Identity.IsAuthenticated)
                 {
-                    hiddenFieldLogin.Value = "login";
+                    if (Request.Cookies["TimedCookie"] == null)
+                    {
+                        hiddenFieldLogin.Value = "login";
+                    }
+                    else
+                    {
+                        hiddenFieldLogin.Value = "logout";
+                    }
+
                 }
                 else
                 {
-                    hiddenFieldLogin.Value = "logout";
+                    hiddenFieldLogin.Value = "login";
                 }
-                    
+
             }
-            else
-            {
-                hiddenFieldLogin.Value = "login";
-            }
+
+
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            if (IsValid)
             {
+
+
                 string source;
                 string destination;
                 string startDate;
@@ -57,7 +65,7 @@ namespace Travelopedia
                     numberOfPassengers = dropdownNumberOfPassengers2.SelectedValue;
                     type = "flightone";
                     Session["flighttype"] = type;
-                    Response.Redirect("Results.Aspx?" + "type=" + Server.UrlEncode(type) + "&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(startDate) +  "&count=" + Server.UrlEncode(numberOfPassengers));
+                    Response.Redirect("Results.Aspx?" + "type=" + Server.UrlEncode(type) + "&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(startDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
                 }
                 else
                 {
@@ -73,41 +81,53 @@ namespace Travelopedia
                     Response.Redirect("Results.Aspx?" + "type=" + Server.UrlEncode(type) + "&source=" + Server.UrlEncode(source.Trim()) + "&destination=" + Server.UrlEncode(destination.Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
                 }
                 //Response.Redirect("Results.Aspx?" + "type=flight&source=" + Server.UrlEncode(source[1].Trim()) + "&destination=" + Server.UrlEncode(destination[1].Trim()) + "&startdate=" + Server.UrlEncode(startDate) + "&enddate=" + Server.UrlEncode(endDate) + "&count=" + Server.UrlEncode(numberOfPassengers));
-                
+            }                
 
-            }
         }
 
         protected void btnSearchEvents_Click(object sender, EventArgs e)
         {
-            string eventlocation = eventLocation.Text;
-            Response.Redirect("Results.Aspx?" + "type=event&location=" + Server.UrlEncode(eventlocation));
+            if (IsValid)
+            {
+                string eventlocation = eventLocation.Text;
+                Response.Redirect("Results.Aspx?" + "type=event&location=" + Server.UrlEncode(eventlocation));
+
+            }
 
         }
 
         protected void btnSearchHotel_Click(object sender, EventArgs e)
         {
-            string dest = txtDest.Text;
-            string checkin = txtCheckin.Text;
-            string checkout = txtCheckout.Text;
-            string rooms = Dropdownlistrooms.SelectedValue;
-            string guests = Dropdownlistguests.SelectedValue;
-            string children = Dropdownlistchildren.SelectedValue;
+            if (IsValid)
+            {
+                string dest = txtDest.Text;
+                string checkin = txtCheckin.Text;
+                string checkout = txtCheckout.Text;
+                string rooms = Dropdownlistrooms.SelectedValue;
+                string guests = Dropdownlistguests.SelectedValue;
+                string children = Dropdownlistchildren.SelectedValue;
 
-            //Response.Redirect("Results.Aspx?" + "type=hotel&dest=" + Server.UrlEncode(dest) + "&rooms=" + Server.UrlEncode(rooms) + "&adults=" + Server.UrlEncode(guests) + "&children=" + Server.UrlEncode(children) + "&startdate=" + Server.UrlEncode(checkin) + "&enddate=" + Server.UrlEncode(checkout));
-            Response.Redirect("Results.Aspx?" + "type=hotel&dest=" + Server.UrlEncode(dest) + "&rooms=" + Server.UrlEncode(rooms) + "&adults=" + Server.UrlEncode(guests) + "&children=" + Server.UrlEncode(children) + "&startdate=" + Server.UrlEncode(checkin) + "&enddate=" + Server.UrlEncode(checkout));
+                //Response.Redirect("Results.Aspx?" + "type=hotel&dest=" + Server.UrlEncode(dest) + "&rooms=" + Server.UrlEncode(rooms) + "&adults=" + Server.UrlEncode(guests) + "&children=" + Server.UrlEncode(children) + "&startdate=" + Server.UrlEncode(checkin) + "&enddate=" + Server.UrlEncode(checkout));
+                Response.Redirect("Results.Aspx?" + "type=hotel&dest=" + Server.UrlEncode(dest) + "&rooms=" + Server.UrlEncode(rooms) + "&adults=" + Server.UrlEncode(guests) + "&children=" + Server.UrlEncode(children) + "&startdate=" + Server.UrlEncode(checkin) + "&enddate=" + Server.UrlEncode(checkout));
+
+            }
+
         }
 
         protected void btnSearchCars_Click(object sender, EventArgs e)
         {
-            string location = carDest.Text;
-            string pickupdate = carPickDate.Text;
-            string dropoffdate = carDropDate.Text;
-            string pickuptime = carPickTime.Text;
-            string dropofftime = carDropTime.Text;
+            if (IsValid)
+            {
 
-            //Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
-            Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
+                string location = carDest.Text;
+                string pickupdate = carPickDate.Text;
+                string dropoffdate = carDropDate.Text;
+                string pickuptime = carPickTime.Text;
+                string dropofftime = carDropTime.Text;
+
+                //Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
+                Response.Redirect("Results.Aspx?" + "type=car&dest=" + Server.UrlEncode(location) + "&startdate=" + Server.UrlEncode(pickupdate) + "&enddate=" + Server.UrlEncode(dropoffdate) + "&pickuptime=" + Server.UrlEncode(pickuptime) + "&dropofftime=" + Server.UrlEncode(dropofftime));
+            }
         }
 
         protected void txtSource_TextChanged(object sender, EventArgs e)
