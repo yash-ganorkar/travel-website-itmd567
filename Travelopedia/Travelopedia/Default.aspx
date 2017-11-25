@@ -37,13 +37,13 @@
                             <div class="search-tabs search-tabs-bg search-tabs-bottom mb50">
                                 <div class="tabbable">
                                     <ul class="nav nav-tabs" id="myTab">
-                                        <li class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Hotels</span></a>
+                                        <li id="1" class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Hotels</span></a>
                                         </li>
-                                        <li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Flights</span></a>
+                                        <li id="2"><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Flights</span></a>
                                         </li>
-                                        <li><a href="#tab-3" data-toggle="tab"><i class="fa fa-car"></i> <span >Cars</span></a>
+                                        <li id="3"><a href="#tab-3" data-toggle="tab"><i class="fa fa-car"></i> <span >Cars</span></a>
                                         </li>
-                                        <li><a href="#tab-4" data-toggle="tab"><i class="fa fa-bolt"></i> <span >Activities</span></a>
+                                        <li id="4"><a href="#tab-4" data-toggle="tab"><i class="fa fa-bolt"></i> <span >Activities</span></a>
                                     </li>
                                     </ul>
                                     <div class="tab-content">
@@ -55,7 +55,7 @@
                                                         <div id="Hotel" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                             <label>Where are you going?</label>
                                                            <!-- <input class="typeahead form-control" placeholder="City, Airport, Point of Interest or U.S. Zip Code" type="text" />-->
-                                                        <asp:TextBox ID="txtDest" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City Code" TextMode="SingleLine"></asp:TextBox>
+                                                        <asp:TextBox ID="txtDest" runat="server" CausesValidation="true" CssClass="typeahead form-control" placeholder="Enter Source City Code" TextMode="SingleLine"></asp:TextBox>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-8">
@@ -65,14 +65,14 @@
                                                                 <div class="col-md-3">
                                                                     <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                         <label>Check-in</label>
-                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtCheckin" />
+                                                                        <asp:TextBox runat="server" CausesValidation="true" CssClass="form-control" ID="txtCheckin" />
                                                                         
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                         <label>Check-out</label>
-                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtCheckout" />
+                                                                        <asp:TextBox runat="server" CausesValidation="true" CssClass="form-control" ID="txtCheckout" />
                                                                       
                                                                     </div>
                                                                 </div>
@@ -100,7 +100,7 @@
                                                                     <div class="form-group form-group-lg form-group-select-plus">
                                                                         <label>Guests</label>
                                                                         <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                                            <asp:DropDownList runat="server" ID="Dropdownlistguests">
+                                                                                            <asp:DropDownList runat="server" CausesValidation="true" ID="Dropdownlistguests">
                                                                                                 <asp:ListItem Enabled="true" Text="Number of Guests" Value="-1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="1" Value="1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="2" Value="2"></asp:ListItem>
@@ -120,7 +120,7 @@
                                                                     <div class="form-group form-group-lg form-group-select-plus">
                                                                         <label>Children</label>
                                                                         <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                                            <asp:DropDownList runat="server" ID="Dropdownlistchildren">
+                                                                                            <asp:DropDownList runat="server" CausesValidation="true" ID="Dropdownlistchildren">
                                                                                                 <asp:ListItem Enabled="true" Text="Number of Children" Value="-1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="1" Value="1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="2" Value="2"></asp:ListItem>
@@ -142,16 +142,16 @@
                                                 </div>
                                            <!--     <button class="btn btn-primary btn-lg" type="submit">Search for Hotels</button>
                                              -->
-                                            <asp:Button runat="server" CssClass="btn btn-primary btn-lg" ID="btnSearchHotel" OnClick="btnSearchHotel_Click" Text="Search for Hotels" CausesValidation="false"/>
+                                            <asp:Button runat="server" CssClass="btn btn-primary btn-lg" ID="btnSearchHotel" OnClick="btnSearchHotel_Click" Text="Search for Hotels" CausesValidation="true"/>
                                         </div>
                                         <div class="tab-pane fade" id="tab-2">
                                             <h2>Search for Cheap Flights</h2>
                                                 <div class="tabbable">
                                                     <ul class="nav nav-pills nav-sm nav-no-br mb10" id="flightChooseTab">
-                                                        <li class="active"><a href="#flight-search-1" data-toggle="tab">Round Trip</a>
+                                                        <li id="21" class="active"><a href="#flight-search-1" data-toggle="tab">Round Trip</a>
                                                         </li>
-                                                        <li><a href="#flight-search-2" data-toggle="tab">One Way</a>
-                                                        </li>
+                                                        <li id="22"><a href="#flight-search-2" data-toggle="tab">One Way</a>
+                                                        </l>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div class="tab-pane fade in active" id="flight-search-1">
@@ -162,13 +162,13 @@
                                                                             <div id="From" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>From</label>
 <%--                                                                                <input class="typeahead form-control" id="myText" placeholder="City, Airport, U.S. Zip" type="text" />--%>
-                                                                                <asp:TextBox ID="txtSource" OnTextChanged="txtSource_TextChanged" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                                <asp:TextBox ID="txtSource" CausesValidation="true" OnTextChanged="txtSource_TextChanged" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div id="To" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>To</label>
-                                                                                <asp:TextBox ID="txtDestination" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
+                                                                                <asp:TextBox ID="txtDestination" CausesValidation="true" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
                                                                         </div>
@@ -179,20 +179,20 @@
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Departing</label>
-                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtStartDate" />
+                                                                                    <asp:Textbox runat="server" CausesValidation="true" class="form-control" ID="txtStartDate" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Returning</label>
-                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtEndDate" />
+                                                                                    <asp:Textbox runat="server" CausesValidation="true" class="form-control" ID="txtEndDate" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
                                                                                     <label>Passengers</label>
                                                                                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                                            <asp:DropDownList runat="server" ID="dropdownNumberOfPassengers">
+                                                                                            <asp:DropDownList runat="server" CausesValidation="true" ID="dropdownNumberOfPassengers">
                                                                                                 <asp:ListItem Enabled="true" Text="Select Number of Passengers" Value="-1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="1" Value="1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="2" Value="2"></asp:ListItem>
@@ -221,13 +221,13 @@
                                                                         <div class="col-md-6">
                                                                             <div id="OneWayFrom" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>From</label>
-                                                                                <asp:TextBox ID="txtFrom" runat="server" OnTextChanged="txtFrom_TextChanged" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                                <asp:TextBox ID="txtFrom" CausesValidation="true" runat="server" OnTextChanged="txtFrom_TextChanged" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div id="OneWayTo" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                                 <label>To</label>
-                                                                                <asp:TextBox ID="txtTo" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
+                                                                                <asp:TextBox ID="txtTo" CausesValidation="true" runat="server" CssClass="typeahead form-control" placeholder="Enter Destination City" TextMode="SingleLine"></asp:TextBox>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -238,14 +238,14 @@
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                                     <label>Departing</label>
-                                                                                    <asp:Textbox runat="server" class="form-control" ID="txtStartDate2" />
+                                                                                    <asp:Textbox runat="server" CausesValidation="true" class="form-control" ID="txtStartDate2" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group form-group-lg form-group-select-plus">
                                                                                     <label>Passengers</label>
                                                                                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                                            <asp:DropDownList runat="server" ID="dropdownNumberOfPassengers2">
+                                                                                            <asp:DropDownList runat="server" ID="dropdownNumberOfPassengers2" CausesValidation="true">
                                                                                                 <asp:ListItem Enabled="true" Text="Select Number of Passengers" Value="-1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="1" Value="1"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="2" Value="2"></asp:ListItem>
@@ -268,7 +268,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click" Text="Search for Flights" CausesValidation="false" CssClass="btn btn-primary btn-lg"/>
+                                            <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click" Text="Search for Flights" CausesValidation="true" CssClass="btn btn-primary btn-lg"/>
                                         </div>
                                         <div class="tab-pane fade" id="tab-3">
                                             <h2>Search for Cheap Rental Cars</h2>
@@ -280,19 +280,19 @@
                                                                     <label>Pick-up Location</label>
                                                                   <!--  <input class="typeahead form-control" placeholder="City, Airport, U.S. Zip" type="text" />
                                                                 <asp:TextBox ID="TextBox1" runat="server" CssClass=" form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>-->
-                                                                    <asp:TextBox ID="carDest" ClientIDMode="Static" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                    <asp:TextBox ID="carDest" CausesValidation="true" ClientIDMode="Static" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group clockpicker form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                     <label>Pick-up Time</label>
-                                                                        <asp:TextBox ID="carPickTime" runat="server" CssClass="form-control" ClientIDMode="Static" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                        <asp:TextBox ID="carPickTime" CausesValidation="true" runat="server" CssClass="form-control" ClientIDMode="Static" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                     <label>Drop Off Time</label>
-                                                                         <asp:TextBox ID="carDropTime" runat="server" CssClass="form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                         <asp:TextBox ID="carDropTime" CausesValidation="true" runat="server" CssClass="form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                                 </div>
                                                             </div>
                                                             <!--<div class="col-md-6">
@@ -310,21 +310,21 @@
                                                                     <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                         <label>Pick-up Date</label>
                                                                        <!-- <input class="form-control" name="start" type="text" />-->
-                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="carPickDate" />
+                                                                        <asp:TextBox runat="server" CausesValidation="true" CssClass="form-control" ID="carPickDate" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                         <label>Drop-ff Date</label>
                                                                         <!-- <input class="form-control" name="end" type="text" /> -->
-                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="carDropDate" />
+                                                                        <asp:TextBox runat="server" CausesValidation="true" CssClass="form-control" ID="carDropDate" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                 <asp:Button runat="server" Text="Search for Cars" CssClass="btn btn-primary btn-lg" CausesValidation="false" ID="btnSearchCars" OnClick="btnSearchCars_Click"/> 
+                                                 <asp:Button runat="server" Text="Search for Cars" CssClass="btn btn-primary btn-lg" CausesValidation="true" ID="btnSearchCars" OnClick="btnSearchCars_Click"/> 
                                         </div>
                                         <div class="tab-pane fade" id="tab-4">
                                         <h2>Search for Activities</h2>
@@ -333,12 +333,12 @@
                                                 <div class="col-md-8">
                                                     <div id="Activities" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                         <label>Where are you going?</label>
-                                                         <asp:TextBox ID="eventLocation" ClientIDMode="Static" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                         <asp:TextBox ID="eventLocation" CausesValidation="true" ClientIDMode="Static" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 
                                             </div>
-                                            <asp:Button runat="server" Text="Search for Events" CssClass="btn btn-primary btn-lg" CausesValidation="false" ID="btnSearchEvents" OnClick="btnSearchEvents_Click"/> 
+                                            <asp:Button runat="server" Text="Search for Events" CssClass="btn btn-primary btn-lg" CausesValidation="true" ID="btnSearchEvents" OnClick="btnSearchEvents_Click"/> 
                                         </form>
                                     </div>
                                     </div>
@@ -494,6 +494,8 @@
             
             <asp:HiddenField runat="server" ID="hiddenFieldLogin" ClientIDMode="Static"/>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        
+
             <script type="text/javascript">
                 $(window).load(function () {
                     $(".loader").fadeOut("60000");
@@ -501,17 +503,105 @@
             </script>
             <script type="text/javascript">
                 $(function () {
-                    $("#<%= txtStartDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
-                    $("#<%= txtEndDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
-                $("#<%= txtStartDate2.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd' });
+                    $("#<%= txtStartDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd', autoclose: true });
+                    $("#<%= txtEndDate.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd', autoclose: true });
+                    $("#<%= txtStartDate2.ClientID %>").datepicker({ dateFormat: 'yy-mm-dd', autoclose: true });
                
-                $("#<%= txtCheckin.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
-                $("#<%= txtCheckout.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
-                $("#<%= carPickDate.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
-                $("#<%= carDropDate.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy' });
+                    $("#<%= txtCheckin.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                    $("#<%= txtCheckout.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                    $("#<%= carPickDate.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+                    $("#<%= carDropDate.ClientID %>").datepicker({ dateFormat: 'mm/dd/yy', autoclose: true });
+
                 });
 
+                function validate(oSrc, args) {
+                    if (document.getElementById('1').className == 'active') {
+                        var txtDest = document.getElementById('<%=txtDest.ClientID%>').value;
+                        var Dropdownlistchildren = document.getElementById('<%=Dropdownlistchildren.ClientID%>').value;
+                        var txtCheckin = document.getElementById('<%=txtCheckin.ClientID%>').value;
+                        var txtCheckout = document.getElementById('<%=txtCheckout.ClientID%>').value;
+                        var Dropdownlistguests = document.getElementById('<%=Dropdownlistguests.ClientID%>').value;
+                        var Dropdownlistrooms = document.getElementById('<%=Dropdownlistrooms.ClientID%>').value;
+
+
+                        if (txtDest == '' || Dropdownlistchildren == -1 || txtCheckin == '' || txtCheckout == '' || Dropdownlistguests == -1 || Dropdownlistrooms == -1) {
+                            args.IsValid = false;
+                             alert("All are required fields!!!");
+                        }
+                        else {
+                            args.IsValid = true;
+                        }
+
+                    }
+                    else if (document.getElementById('21').className == 'active') {
+
+                        var txtSource = document.getElementById('<%=txtSource.ClientID%>').value;
+                        var txtDestination = document.getElementById('<%=txtDestination.ClientID%>').value;
+                        var txtStartDate = document.getElementById('<%=txtStartDate.ClientID%>').value;
+                        var txtEndDate = document.getElementById('<%=txtEndDate.ClientID%>').value;
+                        var dropdownNumberOfPassengers = document.getElementById('<%=dropdownNumberOfPassengers.ClientID%>').value;
+
+
+                        if (txtSource == '' || txtDestination == '' || txtStartDate == '' || txtEndDate == '' || dropdownNumberOfPassengers == -1) {
+                            args.IsValid = false;
+                            alert("All are required fields!!!");
+                        }
+                        else {
+                            args.IsValid = true;
+                        }
+
+                    }
+                    else if (document.getElementById('22').className == 'active') {
+
+                        var txtFrom = document.getElementById('<%=txtFrom.ClientID%>').value;
+                        var txtTo = document.getElementById('<%=txtTo.ClientID%>').value;
+                        var txtStartDate2 = document.getElementById('<%=txtStartDate2.ClientID%>').value;
+                        var dropdownNumberOfPassengers2 = document.getElementById('<%=dropdownNumberOfPassengers2.ClientID%>').value;
+
+
+                        if (txtFrom == '' || txtTo == '' || dropdownNumberOfPassengers2 == '' || txtStartDate2 == '') {
+                            args.IsValid = false;
+                            alert("All are required fields!!!");
+                        }
+                        else {
+                            args.IsValid = true;
+                        }
+
+                    }
+
+                    else if (document.getElementById('3').className == 'active') {
+                        var carDest = document.getElementById('<%=carDest.ClientID%>').value;
+                        var carPickTime = document.getElementById('<%=carPickTime.ClientID%>').value;
+                        var carDropTime = document.getElementById('<%=carDropTime.ClientID%>').value;
+                        var carPickDate = document.getElementById('<%=carPickDate.ClientID%>').value;
+                        var carDropDate = document.getElementById('<%=carDropDate.ClientID%>').value;
+
+
+                        if (carDest == '' || carPickTime == -1 || carDropTime == '' || carPickDate == '' || carDropDate == -1) {
+                            args.IsValid = false;
+                            alert("All are required fields!!!");
+                        }
+                        else {
+                            args.IsValid = true;
+                        }
+
+                    }
+                    else if (document.getElementById('4').className == 'active') {
+                        var eventLocation = document.getElementById('<%=eventLocation.ClientID%>').value;
+
+
+                        if (eventLocation == '') {
+                            args.IsValid = false;
+                            alert("All are required fields!!!");
+                        }
+                        else {
+                            args.IsValid = true;
+                        }
+
+                    }
+                }
             </script>
+<asp:CustomValidator runat="server" Text="Both the fields are blank!!" ID="customValidator1" ClientValidationFunction="validate"></asp:CustomValidator>
             </ContentTemplate>
         </asp:UpdatePanel>
     <asp:UpdateProgress runat="server" ID="prog" AssociatedUpdatePanelID="Panel1">
