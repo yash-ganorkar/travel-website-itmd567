@@ -576,7 +576,6 @@
                         var carPickDate = document.getElementById('<%=carPickDate.ClientID%>').value;
                         var carDropDate = document.getElementById('<%=carDropDate.ClientID%>').value;
 
-
                         if (carDest == '' || carPickTime == -1 || carDropTime == '' || carPickDate == '' || carDropDate == -1) {
                             args.IsValid = false;
                             alert("All are required fields!!!");
