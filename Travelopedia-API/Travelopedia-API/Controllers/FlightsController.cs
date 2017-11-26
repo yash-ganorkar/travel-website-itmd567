@@ -18,6 +18,7 @@ namespace Travelopedia_API.Controllers
 {
     public class FlightsController : ApiController
     {
+        
         [HttpPost]
         [ActionName("AllFlights")]
         public TripsSearchResponse FetchAllFlights(TripsSearchRequest tripSearchRequest)

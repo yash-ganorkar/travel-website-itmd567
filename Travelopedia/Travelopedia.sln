@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travelopedia", "Travelopedia\Travelopedia.csproj", "{D1B2D3FA-4E91-41A9-9A81-B9323165D885}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelopediaTest", "TravelopediaTest\TravelopediaTest.csproj", "{C5FC890C-EFFB-4194-9B8D-321EBCABA1D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{D1B2D3FA-4E91-41A9-9A81-B9323165D885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1B2D3FA-4E91-41A9-9A81-B9323165D885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1B2D3FA-4E91-41A9-9A81-B9323165D885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FC890C-EFFB-4194-9B8D-321EBCABA1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FC890C-EFFB-4194-9B8D-321EBCABA1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FC890C-EFFB-4194-9B8D-321EBCABA1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FC890C-EFFB-4194-9B8D-321EBCABA1D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {851CBADB-5CA5-4C88-950A-50C2E431C079}
 	EndGlobalSection
 EndGlobal

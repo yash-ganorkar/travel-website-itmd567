@@ -69,8 +69,26 @@ namespace Travelopedia
                         deptdate1.Text = sDate.ToShortDateString();
                         dept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
+                        xdepttime1.Text = sDate.ToShortTimeString();
+                        xdeptdate1.Text = sDate.ToShortDateString();
+                        xdept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                        xarrivetime1.Text = sDate.ToShortTimeString();
+                        xarrivedate1.Text = sDate.ToShortDateString();
+                        xarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                        xduration1.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
+
                         DateTime rDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
-                        
+
+                        xdepttime2.Text = sDate.ToShortTimeString();
+                        xdeptdate2.Text = sDate.ToShortDateString();
+                        xdept2.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                        xarrivetime2.Text = sDate.ToShortTimeString();
+                        xarrivedate2.Text = sDate.ToShortDateString();
+                        xarrive2.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                        xduration2.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
+
                         arrivetime1.Text = rDate.ToShortTimeString();
                         arrivedate1.Text = rDate.ToShortDateString();
                         arrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
@@ -82,7 +100,25 @@ namespace Travelopedia
                         deptdate2.Text = sDate2.ToShortDateString();
                         dept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
+                        ydepttime1.Text = sDate2.ToShortTimeString();
+                        ydeptdate1.Text = sDate2.ToShortDateString();
+                        ydept1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                        yarrivetime1.Text = sDate2.ToShortTimeString();
+                        yarrivedate1.Text = sDate2.ToShortDateString();
+                        yarrive1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                        yduration1.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
+
                         DateTime rDate2 = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+
+                        ydepttime2.Text = sDate2.ToShortTimeString();
+                        ydeptdate2.Text = sDate2.ToShortDateString();
+                        ydept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                        yarrivetime2.Text = sDate2.ToShortTimeString();
+                        yarrivedate2.Text = sDate2.ToShortDateString();
+                        yarrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                        yduration2.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
 
                         returnflightlocation.InnerText = Session["Location"].ToString();
                         returntotalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
@@ -204,13 +240,33 @@ namespace Travelopedia
                         deptdateo.Text = oDate.ToShortDateString();
                         depto.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
-                       DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+                        zdepttime1.Text= oDate.ToShortTimeString();
+                        zdeptdate1.Text = oDate.ToShortDateString();
+                        zdept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                        zarrivetime1.Text = oDate.ToShortTimeString();
+                        zarrivedate1.Text = oDate.ToShortDateString();
+                        zarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                        zduration1.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
+
+                        DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
 
                         flightlocation.InnerText = Session["Location"].ToString();
 
                         arrivetimeo.Text = dDate.ToShortTimeString();
                         arrivedateo.Text = dDate.ToShortDateString();
                         arriveo.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                        zdepttime2.Text = dDate.ToShortTimeString();
+                        zdeptdate2.Text = dDate.ToShortDateString();
+                        zdept2.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                        zarrivetime2.Text = dDate.ToShortTimeString();
+                        zarrivedate2.Text = dDate.ToShortDateString();
+                        zarrive2.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                        zduration2.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
 
                         totalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
                         totaltax.InnerText = token.SelectToken("pricing")[0].SelectToken("saleTaxTotal").ToString();
@@ -329,8 +385,8 @@ namespace Travelopedia
                         hotelcheckin.Text = token.SelectToken("checkindate").ToString();
                         hotelcheckout.Text = token.SelectToken("checkoutdate").ToString();
 
-                        string latitude = token.SelectToken("centroid").ToString().Split('-')[0];
-                        string longitude = token.SelectToken("centroid").ToString().Split('-')[1];
+                        string latitude = token.SelectToken("centroid").ToString().Split(',')[0];
+                        string longitude = token.SelectToken("centroid").ToString().Split(',')[1];
 
                         ScriptManager.RegisterStartupScript(Page, GetType(), "initMap", "<script>initMap(" + latitude + "," + longitude + ")</script>", false);
 

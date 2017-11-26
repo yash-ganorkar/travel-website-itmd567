@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         #preloader 
-{ position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/earth.gif') no-repeat center center; }
+{ position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/giphy.gif') no-repeat center center; }
     </style>
     <asp:UpdatePanel runat="server" EnableViewState="true" ID="Panel1">
         <ContentTemplate>
@@ -55,7 +55,8 @@
                                                         <div id="Hotel" class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                             <label>Where are you going?</label>
                                                            <!-- <input class="typeahead form-control" placeholder="City, Airport, Point of Interest or U.S. Zip Code" type="text" />-->
-                                                        <asp:TextBox ID="txtDest" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City Code" TextMode="SingleLine"></asp:TextBox>
+                                                        <asp:TextBox ID="txtDest" runat="server" CssClass="typeahead form-control" placeholder="Enter Source City Code" TextMode="SingleLine" req></asp:TextBox>
+                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Value Required!" ControlToValidate="txtDest" Text="Value Required!"></asp:RequiredFieldValidator>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-8">
@@ -66,14 +67,14 @@
                                                                     <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                         <label>Check-in</label>
                                                                         <asp:TextBox runat="server" CssClass="form-control" ID="txtCheckin" />
-                                                                        
+                                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Value Required!" ControlToValidate="txtCheckin" Text="Value Required!"></asp:RequiredFieldValidator>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                                                                         <label>Check-out</label>
                                                                         <asp:TextBox runat="server" CssClass="form-control" ID="txtCheckout" />
-                                                                      
+                                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Value Required!" ControlToValidate="txtCheckout" Text="Value Required!"></asp:RequiredFieldValidator>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
@@ -93,7 +94,8 @@
                                                                                                 <asp:ListItem  Text="9" Value="9"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="10" Value="10"></asp:ListItem>
                                                                                             </asp:DropDownList>
-                                                                                    </div>
+                                                                         </div>
+                                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Value Required!" ControlToValidate="Dropdownlistrooms" Text="Value Required!"></asp:RequiredFieldValidator>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
@@ -113,7 +115,8 @@
                                                                                                 <asp:ListItem  Text="9" Value="9"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="10" Value="10"></asp:ListItem>
                                                                                             </asp:DropDownList>
-                                                                                    </div>
+                                                                         </div>
+                                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Value Required!" ControlToValidate="Dropdownlistguests" Text="Value Required!"></asp:RequiredFieldValidator>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
@@ -133,7 +136,8 @@
                                                                                                 <asp:ListItem  Text="9" Value="9"></asp:ListItem>
                                                                                                 <asp:ListItem  Text="10" Value="10"></asp:ListItem>
                                                                                             </asp:DropDownList>
-                                                                                    </div>
+                                                                        </div>
+                                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Value Required!" ControlToValidate="Dropdownlistchildren" Text="Value Required!"></asp:RequiredFieldValidator>
                                                                     </div>
                                                                 </div>
                                                             </div>

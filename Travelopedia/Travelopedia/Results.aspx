@@ -3,7 +3,7 @@
     <script src="Scripts/angular.min.js"></script>
     <style>
         #preloader 
-        { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/earth.gif') no-repeat center center; }
+        { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/giphy.gif') no-repeat center center; }
         /*#feedLoading {
         position: absolute;
         top: 200px;
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-md-9" id="webservicedata">
                                 <div ng-if=" items != undefined">
-                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list bounceIn animated">
                                     <li>
                                         <a class="booking-item" href="#">
                                             <div class="row">
@@ -264,32 +264,37 @@
                             </div>
                             <div class="col-md-9" id="webservicedata4">
                                 <div ng-if="items != undefined">
-                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list bounceIn animated">
                                     <li>
                                         <a class="booking-item" href="#">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <div ng-if="item.subtotal <= '200'">
+                                                    <div ng-if="item.subtotal <= '50'">
                                                         <div class="booking-item-img-wrap">
                                                             <img src="img/hotel4.jpg" alt="Hotel" title="Hotel" />
                                                         </div>
                                                     </div>
-                                                    <div ng-if="item.subtotal <= '300' && item.subtotal > '200'">
-                                                        <div class="booking-item-img-wrap">
-                                                            <img src="img/hotel5.jpg" alt="Hotel" title="Hotel" />
-                                                        </div>
-                                                    </div>
-                                                    <div ng-if="item.subtotal <= '400' && item.subtotal > '300'">
+                                                    <div ng-if="item.subtotal <= '100' && item.subtotal > '50'">
                                                         <div class="booking-item-img-wrap">
                                                             <img src="img/hotel1.jpg" alt="Hotel" title="Hotel" />
                                                         </div>
                                                     </div>
-                                                    <div ng-if="item.subtotal <= '500' && item.subtotal > '400'">
+                                                    <div ng-if="item.subtotal <= '200' && item.subtotal > '100'">
                                                         <div class="booking-item-img-wrap">
-                                                            <img src="img/image_not_available" alt="Hotel" title="Hotel" />
+                                                            <img src="img/hotel5.jpg" alt="Hotel" title="Hotel" />
                                                         </div>
                                                     </div>
-                                                    <div ng-if="item.subtotal <= '600' && item.subtotal > '500'">
+                                                    <div ng-if="item.subtotal <= '300' && item.subtotal > '200'">
+                                                        <div class="booking-item-img-wrap">
+                                                            <img src="img/hotel6" alt="Hotel" title="Hotel" />
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="item.subtotal <= '400' && item.subtotal > '300'">
+                                                        <div class="booking-item-img-wrap">
+                                                            <img src="img/hotel3.jpg" alt="Hotel" title="Hotel" />
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="item.subtotal <= '600' && item.subtotal > '400'">
                                                         <div class="booking-item-img-wrap">
                                                             <img src="img/hotel2.jpg" alt="Hotel" title="Hotel" />
                                                         </div>
@@ -340,7 +345,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9" id="webservicedata2">
-                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list bounceIn animated">
                                     <li>
                                         <div class="row">
                                             <div class="col-md-4">
@@ -415,7 +420,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9" id="webservicedata3">
-                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list bounceIn animated">
                                     <li>
                                         <div class="booking-item-container">
                                             <div class="booking-item">
@@ -516,7 +521,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9" id="webservicedata5">
-                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
+                                <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list bounceIn animated">
                                     <li>
                                         <div class="booking-item-container">
 

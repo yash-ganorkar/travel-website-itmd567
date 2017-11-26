@@ -9,7 +9,7 @@
             width: 70%;
             margin: auto;
             height: 700px;
-            overflow: scroll;
+            overflow-y: scroll;
         }
 
         .elogo {
@@ -93,10 +93,10 @@
 
 
         <div class="edetail">
-            <img class="elogo" src="images/colorlogo.png" alt="Travelopedia" title="Travelopedia" />
+            <img class="elogo" src="https://raw.githubusercontent.com/yash-ganorkar/travelopedia/master/colorlogo.png" alt="Travelopedia" title="Travelopedia" />
             <p class="center">For changes in itinerary, please call 24/7 at +1-312-450-9277 </p>
 
-            <img class="emailimg" src="images/email.png" alt="travel" />
+            <img class="emailimg" src="https://raw.githubusercontent.com/yash-ganorkar/travelopedia/master/email.PNG" alt="travel" />
             <div class="eheader">
                 <h2 class="center">Booking Confirmation</h2>
                 <h4 class="center">Travelopedia Booking: xxxxxx | ssss@gmail.com | Booked on Tue, Oct 10 2018</h4>
@@ -108,8 +108,8 @@
 
                 <div class="flightdetails">
                     <div class="div1">
-                        <h5>Airlines</h5>
-                        <br />
+                        <h4>Airlines</h4>
+                        
                         <p>Baggage Fees | Visa & Passport</p>
                     </div>
                     <div class="div2">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="div3">
                         <p>TravelTime:</p>
-                        <h3>{travelduration}</h3>
+                        <h3 class="center">{travelduration} mins</h3>
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                             </tr>-->
                             <tr>
                                 <td colspan="2" height="24" style="border-bottom:1px dashed #000000">Total Price</td>
-                                <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>${total}</span></td>
+                                <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>{total}</span></td>
                             </tr>
                             <tr>
                                 <td height="20"></td>
@@ -165,7 +165,7 @@
                                         <tbody>
                                             <tr>
                                                 <td height="50"> Total Charge:  </td>
-                                                <td align="right"> <span>${total}</span></td>
+                                                <td align="right"> <span>{total}</span></td>
                                             </tr>
 
                                         </tbody>
