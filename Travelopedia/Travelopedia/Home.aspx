@@ -382,13 +382,13 @@
                                                     <h5><asp:Label runat="server" ID="zdepttime1"></asp:Label></h5>
                                                     <p class="booking-item-date"><asp:Label ID="zdeptdate1" runat="server"></asp:Label></p>
                                                     <p class="booking-item-destination"><asp:Label runat="server" ID="zdept1"></asp:Label></p>
-                                                    <p>Terminal:<asp:Label runat="server" ID="zterminal1"></asp:Label></p>
+                                                    <p>Terminal: <asp:Label runat="server" ID="zterminal1"></asp:Label></p>
                                                 </div>
                                                 <div class="booking-item-arrival"><i class="fa fa-plane fa-flip-vertical"></i>
                                                     <h5><asp:Label runat="server" ID="zarrivetime1"></asp:Label></h5>
                                                     <p class="booking-item-date"><asp:Label runat="server" ID="zarrivedate1"></asp:Label></p>
                                                     <p class="booking-item-destination"><asp:Label runat="server" ID="zarrive1"></asp:Label></p>
-                                                    <p>Terminal:<asp:Label runat="server" ID="zterminal2"></asp:Label></p>
+                                                    <p>Terminal: <asp:Label runat="server" ID="zterminal2"></asp:Label></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -398,7 +398,33 @@
                                                 <h5><asp:Label ID="zduration1" runat="server"></asp:Label></h5>
                                             </div>
                                         </div>
-                            </div>                            
+                            </div>  
+                            <p runat="server" id="stops3"></p>
+                            <div id="leg2" runat="server" class="row">
+                                <div class="col-md-9">
+                                            <div class="booking-item-flight-details">
+                                                <div class="booking-item-departure"><i class="fa fa-plane"></i>
+                                                    <h5><asp:Label runat="server" ID="zdepttime2"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label ID="zdeptdate2" runat="server"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="zdept2"></asp:Label></p>
+                                                    <p>Terminal: <asp:Label runat="server" ID="zterminal3"></asp:Label></p>
+                                                </div>
+                                                <div class="booking-item-arrival"><i class="fa fa-plane fa-flip-vertical"></i>
+                                                    <h5><asp:Label runat="server" ID="zarrivetime2"></asp:Label></h5>
+                                                    <p class="booking-item-date"><asp:Label runat="server" ID="zarrivedate2"></asp:Label></p>
+                                                    <p class="booking-item-destination"><asp:Label runat="server" ID="zarrive2"></asp:Label></p>
+                                                    <p>Terminal: <asp:Label runat="server" ID="zterminal4"></asp:Label></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="booking-item-flight-duration">
+                                                <p>Duration</p>
+                                                <h5><asp:Label ID="zduration2" runat="server"></asp:Label></h5>
+                                            </div>
+                                        </div>
+                                
+                            </div>
                         </li>
                         
                     </ul>

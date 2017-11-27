@@ -39,7 +39,8 @@ namespace Travelopedia_API.Controllers
                     {
                         
                         responseString = response.Content.ReadAsStringAsync().Result;
-                       //result = JsonConvert.DeserializeObject<Object>(responseString);
+                        //var json = JsonConvert.DeserializeObject<Object>(responseString);
+                        //result = JsonConvert.DeserializeObject<Object>(responseString);
                         //    doc.LoadXml(responseString);
 
                         //    if (doc.DocumentElement.ChildNodes[0].ChildNodes.Count == 0)

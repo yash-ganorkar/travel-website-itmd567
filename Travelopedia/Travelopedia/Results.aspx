@@ -340,6 +340,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9" id="webservicedata2">
+                                <div ng-if=" items != undefined">
                                 <div ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize" class="card-columns booking-list">
                                     <li>
                                         <div class="row">
@@ -373,6 +374,11 @@
                                     Next
                                     </button>
                                 </div>
+                                    </div>
+                                    <div ng-if="exceptions != undefined">
+                                        
+                                        <p>{{ exceptions }}</p>
+                                    </div>
                             </div>
                         </div>
                         <div class="row" id="flightonewaydata">
@@ -448,9 +454,12 @@
                                                                         <h5>{{ slices.duration | time:'mm':'hhh mmm':false }}</h5>
                                                                     </div>
                                                                    
-                                                        <div ng-repeat="slices in item.slice">
-                                                             {{ slices.segment.length }} stops
+                                                        <div ng-if="item.slice[0].segment.length-1 <= 0">
+                                                                Non-stop
                                                         </div>
+                                                        <div ng-if="item.slice[0].segment.length-1 > 0">
+                                                             {{ item.slice[0].segment.length-1 }} stops
+                                                            </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <span class="booking-item-price">${{ item.saleTotal.replace("USD", "") }}</span>
@@ -650,6 +659,7 @@
                     }
 
                     $scope.selectFlight = function (flight) {
+                        console.log(flight);
                         document.getElementById('hiddenField3').value = flight.slice[0].segment.length - 1;
                         flight = JSON.stringify(flight);
                         document.getElementById('hiddenField1').value = flight;
@@ -657,6 +667,7 @@
                     }
 
                     $scope.selectFlightReturn = function (flight) {
+                        console.log(flight);
                         document.getElementById('hiddenField3').value = flight.slice[0].segment.length - 1;
                         flight = JSON.stringify(flight);
                         document.getElementById('hiddenField1').value = flight;
@@ -987,7 +998,6 @@
                                     document.getElementById('endtime').disabled = false;
                                 }
                                 else {
-                                    alert(response.data.ExceptionDetails.ExceptionMessage);
                                     $scope.exceptions = response.data.ExceptionDetails.ExceptionMessage;
                                     $scope.currentPage = 0;
                                     $scope.pageSize = 4;
@@ -1041,20 +1051,36 @@
 
                             }).then(function (response) {
                                 response = JSON.parse(response.data);
+                                if (response.data.ExceptionDetails == null) {
+                                    console.log(response.events);
+                                    $scope.items = response.events;
+                                    $scope.currentPage = 0;
+                                    $scope.pageSize = 4;
 
-                                console.log(response.events);
-                                $scope.items = response.events;
-                                $scope.currentPage = 0;
-                                $scope.pageSize = 4;
+                                    $scope.numberOfPages = function () {
+                                        return Math.ceil($scope.items.length / $scope.pageSize);
+                                    }
+                                    $scope.setLoading(false);
 
-                                $scope.numberOfPages = function () {
-                                    return Math.ceil($scope.items.length / $scope.pageSize);
+                                    document.getElementById('webservicedata2').style.display = "block";
+
+                                    document.getElementById('eventlocation').disabled = false;
+
                                 }
-                                $scope.setLoading(false);
+                                else {
+                                    $scope.exceptions = response.data.ExceptionDetails.ExceptionMessage;
+                                    $scope.currentPage = 0;
+                                    $scope.pageSize = 4;
 
-                                document.getElementById('webservicedata2').style.display = "block";
+                                    $scope.numberOfPages = function () {
+                                        return 0;
+                                    }
+                                    $scope.setLoading(false);
 
-                                document.getElementById('eventlocation').disabled = false;
+                                    document.getElementById('webservicedata2').style.display = "block";
+
+                                    document.getElementById('eventlocation').disabled = false;
+                                }
 
 
                             }, function (error) {
@@ -1085,23 +1111,39 @@
                                 }
                                 //data: mockData
 
-                            }).success(function (data, status) {
-                                data = JSON.parse(data)
-                                $scope.items = data.events;
-                                $scope.currentPage = 0;
-                                $scope.pageSize = 4;
+                            }).then(function (response, status) {
+                                data = JSON.parse(response.data)
+                                if (response.data.ExceptionDetails == null) {
+                                    $scope.items = data.events;
+                                    $scope.currentPage = 0;
+                                    $scope.pageSize = 4;
 
-                                console.log(data.events);
-                                $scope.numberOfPages = function () {
-                                    return Math.ceil($scope.items.length / $scope.pageSize);
+                                    console.log(data.events);
+                                    $scope.numberOfPages = function () {
+                                        return Math.ceil($scope.items.length / $scope.pageSize);
+                                    }
+                                    $scope.setLoading(false);
+
+                                    document.getElementById('webservicedata2').style.display = "block";
+
+                                    document.getElementById('eventlocation').disabled = false;
+
                                 }
-                                $scope.setLoading(false);
+                                else {
+                                    $scope.exceptions = response.data.ExceptionDetails.ExceptionMessage;
+                                    $scope.currentPage = 0;
+                                    $scope.pageSize = 4;
 
-                                document.getElementById('webservicedata2').style.display = "block";
+                                    $scope.numberOfPages = function () {
+                                        return 0;
+                                    }
+                                    $scope.setLoading(false);
 
-                                document.getElementById('eventlocation').disabled = false;
+                                    document.getElementById('webservicedata2').style.display = "block";
 
-                            }).error(function (error) {
+                                    document.getElementById('eventlocation').disabled = false;
+                                }
+                            }, function (error) {
                                 alert(error);
                                 //    $scope.setLoading(false);
                             });
@@ -1125,7 +1167,8 @@
                                         {
                                             "origin": getParameterByName("source").split('-')[1],
                                             "destination": getParameterByName("destination").split('-')[1],
-                                            "date": formatDate(getParameterByName("startdate"))
+                                            "date": formatDate(getParameterByName("startdate")),
+                                            "maxStops":1
                                         }
                                     ]
                                 }
@@ -1154,7 +1197,7 @@
                                 var httpRequest = $http({
                                     method: 'POST',
                                     dataType: 'json',
-                                    url: 'http://localhost/travelopedia-api/api/flights/allflights',
+                                    url: 'http://api.traveltoexplore.biz/api/flights/allflights',
                                     data: FlightRequest
                                     //data: mockData
 
@@ -1323,12 +1366,14 @@
                                         {
                                             "origin": getParameterByName("source").split('-')[1],
                                             "destination": getParameterByName("destination").split('-')[1],
-                                            "date": formatDate(getParameterByName("startdate"))
+                                            "date": formatDate(getParameterByName("startdate")),
+                                            "maxStops": 1
                                         },
                                         {
                                             "origin": getParameterByName("destination").split('-')[1],
                                             "destination": getParameterByName("source").split('-')[1],
-                                            "date": formatDate(getParameterByName("enddate"))
+                                            "date": formatDate(getParameterByName("enddate")),
+                                            "maxStops": 1
                                         }
                                     ]
                                 }
@@ -1357,7 +1402,7 @@
                                 var httpRequest = $http({
                                     method: 'POST',
                                     dataType: 'json',
-                                    url: 'http://localhost/travelopedia-api/api/flights/allflights',
+                                    url: 'http://api.traveltoexplore.biz/api/flights/allflights',
                                     data: FlightRequest
                                     //data: mockData
 
