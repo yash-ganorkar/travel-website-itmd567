@@ -437,6 +437,7 @@
     <Content Include="Content\styles.css" />
     <Content Include="Content\updates.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -501,6 +502,8 @@
     <Content Include="Content\_variables.scss" />
     <Content Include="Home.aspx" />
     <Content Include="images\backgrounds\Thumbs.db" />
+    <Content Include="images\colorlogo.png" />
+    <Content Include="images\email.PNG" />
     <Content Include="images\facebook.png" />
     <Content Include="images\flags\.DS_Store" />
     <Content Include="images\google.png" />
@@ -3960,6 +3963,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3980,6 +3990,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarBooking.cs" />
+    <Compile Include="Models\Exceptions.cs" />
     <Compile Include="Models\FlightDetails.cs" />
     <Compile Include="Models\HotelPayment.cs" />
     <Compile Include="Models\IdentityModels.cs" />

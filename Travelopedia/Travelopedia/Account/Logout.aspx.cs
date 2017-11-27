@@ -21,7 +21,7 @@ namespace Travelopedia.Account
                 Session.RemoveAll();
 
                 HttpCookie cookie = new HttpCookie("TimedCookie");
-                cookie.Expires = DateTime.Now.AddMinutes(-5);
+                cookie.Expires = DateTime.Now.AddMinutes(-30);
                 Response.Cookies.Add(cookie);
 
                 Response.Redirect("~/Default.aspx");
