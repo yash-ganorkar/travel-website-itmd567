@@ -541,52 +541,52 @@
 
                     }
                     else if (document.getElementById('2').className == 'active') {
+                        if (document.getElementById('21').className == 'active') {
+                            var txtSource = document.getElementById('<%=txtSource.ClientID%>').value;
+                            var txtDestination = document.getElementById('<%=txtDestination.ClientID%>').value;
+                            var txtStartDate = document.getElementById('<%=txtStartDate.ClientID%>').value;
+                            var txtEndDate = document.getElementById('<%=txtEndDate.ClientID%>').value;
+                            var dropdownNumberOfPassengers = document.getElementById('<%=dropdownNumberOfPassengers.ClientID%>').value;
 
-                        var txtSource = document.getElementById('<%=txtSource.ClientID%>').value;
-                        var txtDestination = document.getElementById('<%=txtDestination.ClientID%>').value;
-                        var txtStartDate = document.getElementById('<%=txtStartDate.ClientID%>').value;
-                        var txtEndDate = document.getElementById('<%=txtEndDate.ClientID%>').value;
-                        var dropdownNumberOfPassengers = document.getElementById('<%=dropdownNumberOfPassengers.ClientID%>').value;
+                            var checkinDate = new Date(txtStartDate);
+                            var checkoutDate = new Date(txtEndDate);
 
-                        var checkinDate = new Date(txtStartDate);
-                        var checkoutDate = new Date(txtEndDate);
+                            if (txtSource == '' || txtDestination == '' || txtStartDate == '' || txtEndDate == '' || dropdownNumberOfPassengers == -1) {
+                                args.IsValid = false;
+                                alert("All are required fields!!!");
+                            }
+                            else if (checkinDate > checkoutDate || checkoutDate < checkinDate) {
+                                args.IsValid = false;
+                                alert("Invalid dates!!!");
+                            }
+                            else {
+                                args.IsValid = true;
+                            }
 
-                        if (txtSource == '' || txtDestination == '' || txtStartDate == '' || txtEndDate == '' || dropdownNumberOfPassengers == -1) {
-                            args.IsValid = false;
-                            alert("All are required fields!!!");
                         }
-                        else if (checkinDate > checkoutDate || checkoutDate < checkinDate) {
-                            args.IsValid = false;
-                            alert("Invalid dates!!!");
-                        }
-                        else {
-                            args.IsValid = true;
-                        }
+                        else if (document.getElementById('22').className == 'active') {
 
+                            var txtFrom = document.getElementById('<%=txtFrom.ClientID%>').value;
+                            var txtTo = document.getElementById('<%=txtTo.ClientID%>').value;
+                            var txtStartDate2 = document.getElementById('<%=txtStartDate2.ClientID%>').value;
+                            var dropdownNumberOfPassengers2 = document.getElementById('<%=dropdownNumberOfPassengers2.ClientID%>').value;
+
+                            var checkinDate = new Date(txtStartDate2);
+                            var date = new Date();
+                            if (txtFrom == '' || txtTo == '' || dropdownNumberOfPassengers2 == '' || txtStartDate2 == '') {
+                                args.IsValid = false;
+                                alert("All are required fields!!!");
+                            }
+                            else if (checkinDate < date) {
+                                args.IsValid = false;
+                                alert("Invalid dates!!!");
+                            }
+                            else {
+                                args.IsValid = true;
+                            }
+
+                        }
                     }
-                    else if (document.getElementById('22').className == 'active') {
-
-                        var txtFrom = document.getElementById('<%=txtFrom.ClientID%>').value;
-                        var txtTo = document.getElementById('<%=txtTo.ClientID%>').value;
-                        var txtStartDate2 = document.getElementById('<%=txtStartDate2.ClientID%>').value;
-                        var dropdownNumberOfPassengers2 = document.getElementById('<%=dropdownNumberOfPassengers2.ClientID%>').value;
-
-                        var checkinDate = new Date(txtStartDate2);
-                        var date = new Date();
-                        if (txtFrom == '' || txtTo == '' || dropdownNumberOfPassengers2 == '' || txtStartDate2 == '') {
-                            args.IsValid = false;
-                            alert("All are required fields!!!");
-                        }
-                        else if (checkinDate < date) {
-                            args.IsValid = false;
-                            alert("Invalid dates!!!");
-                        }
-                        else {
-                            args.IsValid = true;
-                        }
-
-                    }
-
                     else if (document.getElementById('3').className == 'active') {
                         var carDest = document.getElementById('<%=carDest.ClientID%>').value;
                         var carPickTime = document.getElementById('<%=carPickTime.ClientID%>').value;
