@@ -149,6 +149,12 @@ namespace Travelopedia
                     {
                         Session["NoOfGuests"] = Convert.ToInt32(guests.Value) + Convert.ToInt32(children.Value);
                     }
+                    else if (queryParam == "flightone" || queryParam == "flightround")
+                    {
+                        Session["NoOfStops"] = hiddenField3.Value;
+                        Session["SourceDestination"] = Request.QueryString["source"].ToString().Split('-')[2] + " - " + Request.QueryString["destination"].ToString().Split('-')[2];
+                    }
+
                     Response.Redirect("~/Account/Login.aspx");
                 }
 
@@ -159,6 +165,12 @@ namespace Travelopedia
                     if (queryParam == "hotel")
                     {
                         Session["NoOfGuests"] = Convert.ToInt32(guests.Value) + Convert.ToInt32(children.Value);
+                       
+                    }
+                    else if(queryParam == "flightone" || queryParam == "flightround")
+                    {
+                        Session["NoOfStops"] = hiddenField3.Value;
+                        Session["SourceDestination"] = Request.QueryString["source"].ToString().Split('-')[2]+"-"+ Request.QueryString["destination"].ToString().Split('-')[2];
                     }
                     Response.Redirect("~/Home.aspx");
                 }

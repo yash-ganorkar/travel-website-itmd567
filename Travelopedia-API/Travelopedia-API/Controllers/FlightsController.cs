@@ -20,7 +20,7 @@ namespace Travelopedia_API.Controllers
     {
         [HttpPost]
         [ActionName("AllFlights")]
-        public TripsSearchResponse FetchAllFlights(TripsSearchRequest tripSearchRequest)
+        public Object FetchAllFlights(TripsSearchRequest tripSearchRequest)
         {
             try
             {
@@ -29,16 +29,19 @@ namespace Travelopedia_API.Controllers
                     ApiKey = "AIzaSyAJ1NjLJLHj2IyiQa1SYfiRiYiDSw_RBhg",
                     ApplicationName = "API key 1",
                 });
-                var result = new TripsSearchResponse();
-//                var result = service.Trips.Search(tripSearchRequest).Execute();
-//                var json = JsonConvert.SerializeObject(result);
+                //var result = new TripsSearchResponse();
+                var result = service.Trips.Search(tripSearchRequest).Execute();
+                var json = JsonConvert.SerializeObject(result);
                 return result;
             }
             catch(Exception ex)
             {
-                throw ex;
+                Exceptions exceptions = new Exceptions();
+                exceptions.ExceptionMessage = "Error in BookFlight() :" + ex.InnerException;
+                return exceptions;
+
             }
-            
+
         }
 
         [HttpPost]

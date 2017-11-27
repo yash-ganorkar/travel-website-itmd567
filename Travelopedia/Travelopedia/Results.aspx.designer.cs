@@ -121,6 +121,15 @@ namespace Travelopedia {
         protected global::System.Web.UI.WebControls.HiddenField hiddenField1;
         
         /// <summary>
+        /// hiddenField3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenField3;
+        
+        /// <summary>
         /// Button2 control.
         /// </summary>
         /// <remarks>

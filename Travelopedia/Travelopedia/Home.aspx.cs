@@ -50,6 +50,7 @@ namespace Travelopedia
 
                     timeout = ((timeout / 1000) - (timerNow - timerStarted)) * 1000;
 
+
                     JToken token = JObject.Parse(Session["Data"].ToString());
                     DataType = Session["DataType"].ToString();
 
@@ -64,35 +65,212 @@ namespace Travelopedia
                         PaymentDetails pd = new PaymentDetails();
 
                         DateTime sDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
-
-                        depttime1.Text = sDate.ToShortTimeString();
-                        deptdate1.Text = sDate.ToShortDateString();
-                        dept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
-
                         DateTime rDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
-                        
-                        arrivetime1.Text = rDate.ToShortTimeString();
-                        arrivedate1.Text = rDate.ToShortDateString();
-                        arrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
-                        duration1.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
-
                         DateTime sDate2 = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
-
-                        depttime2.Text = sDate2.ToShortTimeString();
-                        deptdate2.Text = sDate2.ToShortDateString();
-                        dept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
-
                         DateTime rDate2 = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
 
-                        returnflightlocation.InnerText = Session["Location"].ToString();
+                        if(Convert.ToInt32(Session["NoOfStops"].ToString()) > 0)
+                        {
+                            var result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("duration").ToString()));
+                            var hours = (int)result.TotalHours;
+                            var minutes = result.Minutes;
+
+                            depttime1.Text = sDate.ToShortTimeString();
+                            deptdate1.Text = sDate.ToShortDateString();
+                            dept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            arrivetime1.Text = rDate.ToShortTimeString();
+                            arrivedate1.Text = rDate.ToShortDateString();
+                            if (token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination") == null)
+                                arrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            else
+                                arrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            duration1.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            depttime2.Text = sDate2.ToShortTimeString();
+                            deptdate2.Text = sDate2.ToShortDateString();
+                            dept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            arrivetime2.Text = rDate2.ToShortTimeString();
+                            arrivedate2.Text = rDate2.ToShortDateString();
+                            if (token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination") == null)
+                                arrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            else
+                                arrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[1].SelectToken("duration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            duration2.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            xdepttime1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortTimeString();
+                            xdeptdate1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortDateString();
+                            xdept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            xarrivetime1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortTimeString();
+                            xarrivedate1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortDateString();
+                            if (token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin") == null)
+                                xarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                            else
+                                xarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin").ToString();
+                            //		token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin").ToString()	"AMS"	string
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("duration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            xduration1.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            xdepttime2.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortTimeString();
+                            xdeptdate2.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortDateString();
+
+                            if (token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin") == null)
+                                xdept2.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                            else
+                                xdept2.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            //xdept2.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            xarrivetime2.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortTimeString();
+                            xarrivedate2.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortDateString();
+                            if (token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination") == null)
+                                xarrive2.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            else
+                                xarrive2.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("duration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            xduration2.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("connectionDuration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            stops1.InnerText = "Layover time: " +hours.ToString()+"H " +minutes.ToString()+"M ";
+
+
+                            ydepttime1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortTimeString();
+                            ydeptdate1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortDateString();
+                            ydept1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            yarrivetime1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortTimeString();
+                            yarrivedate1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortDateString();
+                            if (token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin") == null)
+                                yarrive1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            else
+                                yarrive1.Text = token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            //                        yarrive1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("duration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            yduration1.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            ydepttime2.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortTimeString();
+                            ydeptdate2.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortDateString();
+                            if (token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin") == null)
+                                ydept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+                            else
+                                ydept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            //                        ydept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            yarrivetime2.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortTimeString();
+                            yarrivedate2.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortDateString();
+                            if (token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("origin") == null)
+                                yarrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            else
+                                yarrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                            //                        yarrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[1].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("duration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            yduration2.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("connectionDuration").ToString()));
+                            hours = (int)result.TotalHours;
+                            minutes = result.Minutes;
+
+                            stops2.InnerText = "Layover time: " + hours.ToString() + "H " + minutes.ToString() + "M ";
+
+                        }
+                        else
+                        {
+
+                            return2.Visible = false;
+                            return1.Visible = false;
+
+                            var result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("duration").ToString()));
+                            var hours = (int)result.TotalHours;
+                            var minutes = result.Minutes;
+
+                            depttime1.Text = sDate.ToShortTimeString();
+                            deptdate1.Text = sDate.ToShortDateString();
+                            dept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            arrivetime1.Text = rDate.ToShortTimeString();
+                            arrivedate1.Text = rDate.ToShortDateString();
+                            arrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            duration1.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            depttime2.Text = sDate2.ToShortTimeString();
+                            deptdate2.Text = sDate2.ToShortDateString();
+                            dept2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            arrivetime2.Text = rDate2.ToShortTimeString();
+                            arrivedate2.Text = rDate2.ToShortDateString();
+                            arrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                             result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[1].SelectToken("duration").ToString()));
+                             hours = (int)result.TotalHours;
+                             minutes = result.Minutes;
+
+                            duration2.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            xdepttime1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortTimeString();
+                            xdeptdate1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortDateString();
+                            xdept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            xarrivetime1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortTimeString();
+                            xarrivedate1.Text = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortDateString();
+                            xarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                             result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("duration").ToString()));
+                             hours = (int)result.TotalHours;
+                             minutes = result.Minutes;
+
+                            xduration1.Text = hours.ToString() + "H" + " " + minutes.ToString() + "M";
+
+                            ydepttime1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortTimeString();
+                            ydeptdate1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString()).ToShortDateString();
+                            ydept1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
+
+                            yarrivetime1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortTimeString();
+                            yarrivedate1.Text = DateTime.Parse(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString()).ToShortDateString();
+                            yarrive1.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                             result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("duration").ToString()));
+                             hours = (int)result.TotalHours;
+                             minutes = result.Minutes;
+
+                            yduration1.Text = hours.ToString()+"H" + " "+minutes.ToString()+"M";
+
+
+                        }
+
+                        returnflightlocation.InnerText = Session["SourceDestination"].ToString();
                         returntotalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
                         returntotaltax.InnerText = token.SelectToken("pricing")[0].SelectToken("saleTaxTotal").ToString();
-
-                        arrivetime2.Text = rDate2.ToShortTimeString();
-                        arrivedate2.Text = rDate2.ToShortDateString();
-                        arrive2.Text = token.SelectToken("slice")[1].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
-                        duration2.Text = token.SelectToken("slice")[1].SelectToken("duration").ToString();
-
 
                         flightprice.Text = token.SelectToken("saleTotal").ToString();
 
@@ -196,17 +374,35 @@ namespace Travelopedia
                         FlightDetails fd = new FlightDetails();
                         PaymentDetails pd = new PaymentDetails();
 
-
-
                         DateTime oDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
+
+                        var result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("duration").ToString()));
+                        var hours = (int)result.TotalHours;
+                        var minutes = result.Minutes;
+
+                        durationo.Text = hours.ToString()+"h " +minutes.ToString()+"m";
 
                         depttimeo.Text = oDate.ToShortTimeString();
                         deptdateo.Text = oDate.ToShortDateString();
                         depto.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
-                       DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+                        zdepttime1.Text= oDate.ToShortTimeString();
+                        zdeptdate1.Text = oDate.ToShortDateString();
+                        zdept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
 
-                        flightlocation.InnerText = Session["Location"].ToString();
+                        zarrivetime1.Text = oDate.ToShortTimeString();
+                        zarrivedate1.Text = oDate.ToShortDateString();
+                        zarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+
+                        result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("duration").ToString()));
+                        hours = (int)result.TotalHours;
+                        minutes = result.Minutes;
+
+                        zduration1.Text = hours.ToString() + "h " + minutes.ToString() + "m";
+
+                        DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+
+                        flightlocation.InnerText = Session["SourceDestination"].ToString();
 
                         arrivetimeo.Text = dDate.ToShortTimeString();
                         arrivedateo.Text = dDate.ToShortDateString();
@@ -215,7 +411,7 @@ namespace Travelopedia
                         totalamounttext.InnerText = token.SelectToken("pricing")[0].SelectToken("saleFareTotal").ToString();
                         totaltax.InnerText = token.SelectToken("pricing")[0].SelectToken("saleTaxTotal").ToString();
 
-                        durationo.Text = token.SelectToken("slice")[0].SelectToken("duration").ToString();
+                        
                         flightpriceo.Text = token.SelectToken("saleTotal").ToString();
                         string amt = token.SelectToken("saleTotal").ToString().Substring(3, token.SelectToken("saleTotal").ToString().Length - 3);
                         amount = (Convert.ToDouble(amt) * 100).ToString();
@@ -329,8 +525,8 @@ namespace Travelopedia
                         hotelcheckin.Text = token.SelectToken("checkindate").ToString();
                         hotelcheckout.Text = token.SelectToken("checkoutdate").ToString();
 
-                        string latitude = token.SelectToken("centroid").ToString().Split('-')[0];
-                        string longitude = token.SelectToken("centroid").ToString().Split('-')[1];
+                        string latitude = token.SelectToken("centroid").ToString().Split(',')[0];
+                        string longitude = token.SelectToken("centroid").ToString().Split(',')[1];
 
                         ScriptManager.RegisterStartupScript(Page, GetType(), "initMap", "<script>initMap(" + latitude + "," + longitude + ")</script>", false);
 
