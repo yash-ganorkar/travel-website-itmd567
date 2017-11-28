@@ -343,58 +343,45 @@ namespace Travelopedia
                                         SmtpClient sc = new SmtpClient();
                                         m.From = new MailAddress("postmaster@traveltoexplore.biz");
                                         m.To.Add(charges2.ReceiptEmail);
-                                        m.Subject = "Booking Confirmation";
+                                        m.Subject = "Booking Confirmation of Flight on Travelopedia. It's Time to Explore!!!";
                                         m.IsBodyHtml = true;
-                                        m.Body = CreateBodyOnewayFlight();
-                                        sc.Host = "mail5008.site4now.net";
+                                        string email = charges2.ReceiptEmail;
+                                        string id = responseString;
+                                        m.Body = CreateBodyRoundFlight(email, id);
                                         string str1 = "gmail.com";
                                         string str2 = charges2.ReceiptEmail.ToLower();
                                         if (str2.Contains(str1))
                                         {
-                                            try
-                                            {
                                                 sc.Port = 587;
+                                                sc.Host = "mail5008.site4now.net";
                                                 sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
                                                 sc.EnableSsl = false;
                                                 sc.Send(m);
 
                                                 Session["Payment"] = charges2;
                                                 Session["token"] = responseString;
-                                                Response.Redirect("SuccessPayment.aspx");
+                                                Response.Redirect("SuccessPayment.aspx", false);
 
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Response.Write("<BR><BR>* Please double check the From Address and Password to confirm that both of them are correct. <br>");
-                                                Response.Write("<BR><BR>If you are using gmail smtp to send email for the first time, please refer to this KB to setup your gmail account: http://www.smarterasp.net/support/kb/a1546/send-email-from-gmail-with-smtp-authentication-but-got-5_5_1-authentication-required-error.aspx?KBSearchID=137388");
-                                                Response.End();
-                                            }
                                         }
                                         else
                                         {
-                                            try
-                                            {
                                                 sc.Port = 587;
+                                                sc.Host = "mail5008.site4now.net";
                                                 sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
                                                 sc.EnableSsl = false;
                                                 sc.Send(m);
 
                                                 Session["Payment"] = charges2;
                                                 Session["token"] = responseString;
-                                                Response.Redirect("SuccessPayment.aspx");
+                                                Response.Redirect("SuccessPayment.aspx", false);
 
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Response.Redirect("ErrorPayment.aspx");
-                                            }
                                         }
                                     }
                                 }
                                 else
                                 {
                                     Session["Payment"] = charges2;
-                                    Response.Redirect("ErrorPayment.aspx");
+                                    Response.Redirect("ErrorPayment.aspx", false);
                                 }
 
 
@@ -409,9 +396,7 @@ namespace Travelopedia
                             PaymentDetails pd = new PaymentDetails();
 
                             DateTime oDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("departureTime").ToString());
-                            DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
-                            DateTime o2Date = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("departureTime").ToString());
-                            DateTime d2Date = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+                            DateTime dDate = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
 
                             var result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("duration").ToString()));
                             var hours = (int)result.TotalHours;
@@ -427,9 +412,13 @@ namespace Travelopedia
 
                             arrivetimeo.Text = dDate.ToShortTimeString();
                             arrivedateo.Text = dDate.ToShortDateString();
-                            arriveo.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
+                            arriveo.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
                             if (Convert.ToInt32(Session["NoOfStops"].ToString()) > 0)
                             {
+
+                                DateTime o2Date = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("departureTime").ToString());
+                                DateTime d2Date = DateTime.Parse(token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("arrivalTime").ToString());
+                                arriveo.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
                                 zdepttime1.Text = oDate.ToShortTimeString();
                                 zdeptdate1.Text = oDate.ToShortDateString();
                                 zdept1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("origin").ToString();
@@ -478,8 +467,8 @@ namespace Travelopedia
 
                                 zarrivetime1.Text = dDate.ToShortTimeString();
                                 zarrivedate1.Text = dDate.ToShortDateString();
-                                zarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destination").ToString();
-                                zterminal2.Text = token.SelectToken("slice")[0].SelectToken("segment")[1].SelectToken("leg")[0].SelectToken("destinationTerminal").ToString();
+                                zarrive1.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destination").ToString();
+                                zterminal2.Text = token.SelectToken("slice")[0].SelectToken("segment")[0].SelectToken("leg")[0].SelectToken("destinationTerminal").ToString();
 
                                 result = TimeSpan.FromMinutes(Convert.ToDouble(token.SelectToken("slice")[0].SelectToken("duration").ToString()));
                                 hours = (int)result.TotalHours;
@@ -572,52 +561,39 @@ namespace Travelopedia
                                         SmtpClient sc = new SmtpClient();
                                         m.From = new MailAddress("postmaster@traveltoexplore.biz");
                                         m.To.Add(charges2.ReceiptEmail);
-                                        m.Subject = "Booking Confirmation";
+                                        m.Subject = "Booking Confirmation of Flight on Travelopedia. It's Time to Explore!!!";
                                         m.IsBodyHtml = true;
-                                        m.Body = CreateBodyOnewayFlight();
-                                        sc.Host = "mail5008.site4now.net";
+                                        string email = charges2.ReceiptEmail;
+                                        string id = responseString;
+                                        m.Body = CreateBodyOnewayFlight(email, id);
+                                        sc.Host = "ghs.googlehosted.com";
                                         string str1 = "gmail.com";
                                         string str2 = charges2.ReceiptEmail.ToLower();
                                         if (str2.Contains(str1))
                                         {
-                                            try
-                                            {
-                                                sc.Port = 587;
-                                                sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
-                                                sc.EnableSsl = false;
-                                                sc.Send(m);
+                                            sc.Port = 587;
+                                            sc.Host = "mail5008.site4now.net";
+                                            sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
+                                            sc.EnableSsl = false;
+                                            sc.Send(m);
 
-                                                Session["Payment"] = charges2;
-                                                Session["token"] = responseString;
-                                                Response.Redirect("SuccessPayment.aspx");
+                                            Session["Payment"] = charges2;
+                                            Session["token"] = responseString;
+                                            Response.Redirect("SuccessPayment.aspx", false);
 
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Response.Write("<BR><BR>* Please double check the From Address and Password to confirm that both of them are correct. <br>");
-                                                Response.Write("<BR><BR>If you are using gmail smtp to send email for the first time, please refer to this KB to setup your gmail account: http://www.smarterasp.net/support/kb/a1546/send-email-from-gmail-with-smtp-authentication-but-got-5_5_1-authentication-required-error.aspx?KBSearchID=137388");
-                                                Response.End();
-                                            }
                                         }
                                         else
                                         {
-                                            try
-                                            {
-                                                sc.Port = 587;
-                                                sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
-                                                sc.EnableSsl = false;
-                                                sc.Send(m);
+                                            sc.Port = 587;
+                                            sc.Host = "mail5008.site4now.net";
+                                            sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
+                                            sc.EnableSsl = false;
+                                            sc.Send(m);
 
-                                                Session["Payment"] = charges2;
-                                                Session["token"] = responseString;
-                                                Response.Redirect("SuccessPayment.aspx");
+                                            Session["Payment"] = charges2;
+                                            Session["token"] = responseString;
+                                            Response.Redirect("SuccessPayment.aspx", false);
 
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Response.Write("<BR><BR>* Please double check the From Address and Password to confirm that both of them are correct. <br>");
-                                                Response.End();
-                                            }
                                         }
 
                                     }
@@ -717,30 +693,70 @@ namespace Travelopedia
                                             responseString = response.Content.ReadAsStringAsync().Result;
                                         }
 
-                                        MailMessage mail = new MailMessage();
-                                        mail.From = new MailAddress("shrutipuranik0710@gmail.com");
-                                        mail.To.Add(charges2.ReceiptEmail);
-                                        mail.Subject = "This is an email";
-                                        mail.Body = CreateBody();
-                                        mail.IsBodyHtml = true;
-                                        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                                        smtpClient.Credentials = new System.Net.NetworkCredential()
+                                        //MailMessage mail = new MailMessage();
+                                        //mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                        //mail.To.Add(charges2.ReceiptEmail);
+                                        //mail.Subject = "This is an email";
+                                        //mail.Body = CreateBody();
+                                        //mail.IsBodyHtml = true;
+                                        //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                        //smtpClient.Credentials = new System.Net.NetworkCredential()
+                                        //{
+                                        //    UserName = "shrutipuranik0710@gmail.com",
+                                        //    Password = "Shruti_07"
+                                        //};
+                                        //smtpClient.EnableSsl = true;
+                                        //smtpClient.Send(mail);
+
+                                        MailMessage m = new MailMessage();
+                                        SmtpClient sc = new SmtpClient();
+                                        m.From = new MailAddress("postmaster@traveltoexplore.biz");
+                                        m.To.Add(charges2.ReceiptEmail);
+                                        m.Subject = "Booking Confirmation of Hotel on Travelopedia. It's Time to Explore!!!";
+                                        m.IsBodyHtml = true;
+                                        string email = charges2.ReceiptEmail;
+                                        string id = responseString;
+                                        m.Body = CreateBody(email, id);
+                                        string str1 = "gmail.com";
+                                        string str2 = charges2.ReceiptEmail.ToLower();
+                                        if (str2.Contains(str1))
                                         {
-                                            UserName = "shrutipuranik0710@gmail.com",
-                                            Password = "Shruti_07"
-                                        };
-                                        smtpClient.EnableSsl = true;
-                                        smtpClient.Send(mail);
+                                            sc.Port = 587;
+                                            sc.Host = "mail5008.site4now.net";
+                                            sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
+                                            sc.EnableSsl = false;
+                                            sc.Send(m);
+
+                                            Session["Payment"] = charges2;
+                                            Session["token"] = responseString;
+                                            Response.Redirect("SuccessPayment.aspx",false);
+
+                                        }
+                                        else
+                                        {
+                                            sc.Port = 587;
+                                            sc.Host = "mail5008.site4now.net";
+                                            sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
+                                            sc.EnableSsl = false;
+                                            sc.Send(m);
+
+                                            Session["Payment"] = charges2;
+                                            Session["token"] = responseString;
+                                            Response.Redirect("SuccessPayment.aspx", false);
+
+                                        }
+
+
 
                                         Session["Payment"] = charges2;
                                         Session["token"] = responseString;
-                                        Response.Redirect("SuccessPayment.aspx");
+                                        Response.Redirect("SuccessPayment.aspx", false);
                                     }
                                 }
                                 else
                                 {
                                     Session["Payment"] = charges2;
-                                    Response.Redirect("ErrorPayment.aspx");
+                                    Response.Redirect("ErrorPayment.aspx", false);
                                 }
 
 
@@ -824,29 +840,68 @@ namespace Travelopedia
                                         {
                                             responseString = response.Content.ReadAsStringAsync().Result;
                                         }
-                                        MailMessage mail = new MailMessage();
-                                        mail.From = new MailAddress("shrutipuranik0710@gmail.com");
-                                        mail.To.Add(charges2.ReceiptEmail);
-                                        mail.Subject = "This is an email";
-                                        mail.Body = CreateBodyCar();
-                                        mail.IsBodyHtml = true;
-                                        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                                        smtpClient.Credentials = new System.Net.NetworkCredential()
+                                        //MailMessage mail = new MailMessage();
+                                        //mail.From = new MailAddress("shrutipuranik0710@gmail.com");
+                                        //mail.To.Add(charges2.ReceiptEmail);
+                                        //mail.Subject = "This is an email";
+                                        //mail.Body = CreateBodyCar();
+                                        //mail.IsBodyHtml = true;
+                                        //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                                        //smtpClient.Credentials = new System.Net.NetworkCredential()
+                                        //{
+                                        //    UserName = "shrutipuranik0710@gmail.com",
+                                        //    Password = "Shruti_07"
+                                        //};
+                                        //smtpClient.EnableSsl = true;
+                                        //smtpClient.Send(mail);
+
+                                        MailMessage m = new MailMessage();
+                                        SmtpClient sc = new SmtpClient();
+                                        m.From = new MailAddress("postmaster@traveltoexplore.biz");
+                                        m.To.Add(charges2.ReceiptEmail);
+                                        m.Subject = "Booking Confirmation of Car on Travelopedia. It's Time to Explore!!!";
+                                        m.IsBodyHtml = true;
+                                        string email = charges2.ReceiptEmail;
+                                        string id = responseString;
+                                        m.Body = CreateBodyCar(email, id);
+                                        string str1 = "gmail.com";
+                                        string str2 = charges2.ReceiptEmail.ToLower();
+                                        if (str2.Contains(str1))
                                         {
-                                            UserName = "shrutipuranik0710@gmail.com",
-                                            Password = "Shruti_07"
-                                        };
-                                        smtpClient.EnableSsl = true;
-                                        smtpClient.Send(mail);
+                                            sc.Port = 587;
+                                            sc.Host = "mail5008.site4now.net";
+                                            sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
+                                            sc.EnableSsl = false;
+                                            sc.Send(m);
+
+                                            Session["Payment"] = charges2;
+                                            Session["token"] = responseString;
+                                            Response.Redirect("SuccessPayment.aspx", false);
+
+                                        }
+                                        else
+                                        {
+                                            sc.Port = 587;
+                                            sc.Host = "mail5008.site4now.net";
+                                            sc.Credentials = new System.Net.NetworkCredential("postmaster@traveltoexplore.biz", "#Aishd2311");
+                                            sc.EnableSsl = false;
+                                            sc.Send(m);
+
+                                            Session["Payment"] = charges2;
+                                            Session["token"] = responseString;
+                                            Response.Redirect("SuccessPayment.aspx", false);
+
+                                        }
+
                                         Session["Payment"] = charges2;
                                         Session["token"] = responseString;
-                                        Response.Redirect("SuccessPayment.aspx");
+                                        Response.Redirect("SuccessPayment.aspx", false);
                                     }
                                 }
                                 else
                                 {
                                     Session["Payment"] = charges2;
-                                    Response.Redirect("ErrorPayment.aspx");
+                                    Response.Redirect("ErrorPayment.aspx", false);
                                 }
 
                             }
@@ -860,7 +915,7 @@ namespace Travelopedia
                         Response.Cookies.Add(cookie);
 
                         //data is empty
-                        Response.Redirect("Default.Aspx");
+                        Response.Redirect("Default.Aspx", false);
                     }
                 }
                 else
@@ -875,11 +930,11 @@ namespace Travelopedia
                 Exceptions exception = new Exceptions();
                 exception.ExceptionMessage = ex.Message.ToString();
                 Session["Exception"] = exception;
-                Response.Redirect("~/Error.aspx");
+                Response.Redirect("~/Error.aspx", false);
             }
         }
 
-        private string CreateBodyRoundFlight()
+        private string CreateBodyRoundFlight(string email, string id)
         {
             String body = string.Empty;
             try
@@ -889,6 +944,8 @@ namespace Travelopedia
                     body = reader.ReadToEnd();
 
                 }
+                DateTime dt = DateTime.Now;
+                String d = dt.ToString(format: "F");
                 body = body.Replace("{deptdate}", deptdate1.Text);
                 body = body.Replace("{depart}", dept1.Text);
                 body = body.Replace("{depttime}", depttime1.Text);
@@ -905,20 +962,23 @@ namespace Travelopedia
                 body = body.Replace("{arrivetime2}", arrivetime2.Text);
                 body = body.Replace("{travelduration2}", duration2.Text);
                 body = body.Replace("{total}", flightprice.Text);
+                body = body.Replace("{email}", email);
+                body = body.Replace("{id}", id);
+                body = body.Replace("{date}", d);
 
-                
+
             }
             catch (Exception ex)
             {
                 Exceptions exception = new Exceptions();
                 exception.ExceptionMessage = ex.Message.ToString();
                 Session["Exception"] = exception;
-                Response.Redirect("~/Error.aspx");
+                Response.Redirect("~/Error.aspx", false);
             }
             return body;
         }
 
-        private string CreateBodyOnewayFlight()
+        private string CreateBodyOnewayFlight(string email, string id)
         {
             String body = string.Empty;
 
@@ -929,6 +989,8 @@ namespace Travelopedia
                     body = reader.ReadToEnd();
 
                 }
+                DateTime dt = DateTime.Now;
+                String d = dt.ToString(format: "F");
                 body = body.Replace("{deptdate}", deptdateo.Text);
                 body = body.Replace("{depart}", depto.Text);
                 body = body.Replace("{depttime}", depttimeo.Text);
@@ -937,20 +999,23 @@ namespace Travelopedia
                 body = body.Replace("{arrivetime}", arrivetimeo.Text);
                 body = body.Replace("{travelduration}", durationo.Text);
                 body = body.Replace("{total}", flightpriceo.Text);
+                body = body.Replace("{email}", email);
+                body = body.Replace("{id}", id);
+                body = body.Replace("{date}", d);
 
-                
+
             }
             catch (Exception ex)
             {
                 Exceptions exception = new Exceptions();
                 exception.ExceptionMessage = ex.Message.ToString();
                 Session["Exception"] = exception;
-                Response.Redirect("~/Error.aspx");
+                Response.Redirect("~/Error.aspx", false);
             }
             return body;
         }
 
-        private string CreateBodyCar()
+        private string CreateBodyCar(string email, string id)
         {
             String body = string.Empty;
 
@@ -961,6 +1026,8 @@ namespace Travelopedia
                     body = reader.ReadToEnd();
 
                 }
+                DateTime dt = DateTime.Now;
+                String d = dt.ToString(format: "F");
                 body = body.Replace("{possiblemodels}", name.Text);
                 body = body.Replace("{cartype}", type.Text);
                 body = body.Replace("{vendorlocation}", location.Text);
@@ -973,19 +1040,22 @@ namespace Travelopedia
                 body = body.Replace("{subtotal}", Subtotal.Text);
                 body = body.Replace("{tax}", tax.Text);
                 body = body.Replace("{total}", total.Text);
-                
+                body = body.Replace("{email}", email);
+                body = body.Replace("{id}", id);
+                body = body.Replace("{date}", d);
+
             }
             catch (Exception ex)
             {
                 Exceptions exception = new Exceptions();
                 exception.ExceptionMessage = ex.Message.ToString();
                 Session["Exception"] = exception;
-                Response.Redirect("~/Error.aspx");
+                Response.Redirect("~/Error.aspx", false);
             }
             return body;
         }
 
-        private string CreateBody()
+        private string CreateBody(string email, string id)
         {
             String body = string.Empty;
 
@@ -996,6 +1066,8 @@ namespace Travelopedia
                     body = reader.ReadToEnd();
 
                 }
+                DateTime dt = DateTime.Now;
+                String d = dt.ToString(format: "F");
                 body = body.Replace("{hotelname}", hotelname.Text);
                 body = body.Replace("{city}", city.Text);
                 body = body.Replace("{state}", state.Text);
@@ -1005,14 +1077,16 @@ namespace Travelopedia
                 body = body.Replace("{subtotal}", subtotalhotel.Text);
                 body = body.Replace("{tax}", hoteltax.Text);
                 body = body.Replace("{total}", hoteltotal.Text);
-                
+                body = body.Replace("{email}", email);
+                body = body.Replace("{id}", id);
+                body = body.Replace("{date}", d);
             }
             catch (Exception ex)
             {
                 Exceptions exception = new Exceptions();
                 exception.ExceptionMessage = ex.Message.ToString();
                 Session["Exception"] = exception;
-                Response.Redirect("~/Error.aspx");
+                Response.Redirect("~/Error.aspx", false);
             }
             return body;
         }

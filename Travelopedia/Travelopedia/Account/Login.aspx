@@ -13,9 +13,9 @@
             <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h3>Welcome to Traveler</h3>
-                        <p>Euismod nunc porta magna elementum penatibus amet gravida sit ligula odio id nunc proin sem augue quis posuere interdum in sapien congue rutrum scelerisque sociosqu cubilia ridiculus et luctus mollis</p>
-                        <p>Praesent est semper massa lobortis quisque lectus ridiculus hac eget</p>
+                <h3>Welcome to Travelopedia</h3>
+                        <p>Search over a <strong>million flight,hotels, cars, events, </strong>and many more.</p>
+                        <p>Travelopedia provides the fastest way to book your trip</p>
              </div>
             <div class="col-md-4">
                 <section id="loginForm">

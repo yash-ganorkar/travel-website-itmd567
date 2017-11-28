@@ -354,9 +354,9 @@ if ($('#map-canvas').length) {
 
     jQuery(function($) {
         $(document).ready(function() {
-            var latlng = new google.maps.LatLng(40.7564971, -73.9743277);
+            var latlng = new google.maps.LatLng(41.8403892, -87.61638970000001);
             var myOptions = {
-                zoom: 16,
+                zoom: 12,
                 center: latlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 scrollwheel: false

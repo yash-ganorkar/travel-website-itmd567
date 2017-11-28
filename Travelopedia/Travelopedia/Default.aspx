@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         #preloader 
-{ position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/earth.gif') no-repeat center center; }
+{ position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%;  overflow: visible; background: #333 url('images/giphy.gif') no-repeat center center; }
     </style>
     <asp:UpdatePanel runat="server" EnableViewState="true" ID="Panel1">
         <ContentTemplate>

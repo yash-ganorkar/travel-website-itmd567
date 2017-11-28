@@ -12,14 +12,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <p class="text-bigger">Felis turpis nostra arcu tempus rutrum hac ullamcorper torquent volutpat pellentesque adipiscing ut elementum sollicitudin sodales congue quam rutrum habitant accumsan elit scelerisque accumsan proin varius purus scelerisque taciti nam</p>
-                    <p class="text-bigger">Venenatis diam malesuada faucibus euismod congue eleifend ultricies bibendum augue dapibus nostra diam amet tincidunt commodo ullamcorper lorem maecenas nibh</p>
+                    <p class="text-bigger">Travelopedia is an application that allows user to book, explore and view on flights, hotels, cars and events around the world. Travelopedia provides a user friendly and coloreful user interface. Travelopedia is mainly about providing a centralized application where user can plan the trip and enjoy booking.</p>
+                    <p class="text-bigger">Search, select and save - Travelopedia provides the fastest way to book your trip</p>
                 </div>
             </div>
             <div class="gap"></div>
         </div>
         <div class="bg-holder">
-            <div class="bg-parallax" style="background-image:url(img/1280x852.png);"></div>
+            <div class="bg-parallax" style="background-image:url(images/backgrounds/beach.jpg);"></div>
             <div class="bg-mask"></div>
             <div class="bg-holder-content">
                 <div class="container">
@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <h2>Work hard. Play hard.</h2>
-                                <p class="text-bigger">Scelerisque ornare ante pellentesque id ad eget volutpat consequat aptent lacus penatibus consectetur vivamus magnis ornare venenatis mattis rhoncus interdum quam tempor commodo ultrices augue risus senectus ornare aliquam leo rutrum nam duis nisi fringilla convallis praesent libero faucibus fermentum convallis pretium aptent nisl morbi odio justo vel nascetur tristique pulvinar senectus etiam quam taciti dignissim etiam tincidunt cras molestie</p>
+                                <p class="text-bigger">It's always fun to come up with new ideas and work on it.  Travelopedia is one such venture where we came up with an idea to provide a single solution to book flights, hotels, cars and events. We spent months to develop this application and make it better everyday. Finally here is our application. Hope you like it!</p>
                             </div>
                         </div>
                     </div>
@@ -43,38 +43,50 @@
                 </div>
             </div>
             <div class="gap"></div>
-            <h2>Rockstar Team</h2>
-            <div class="row">
-                <div class="col-md-10">
-                    <p class="text-bigger mb30">Shruti and Yash started to think on a idea which would not be repetitive and be unique on it’s own. A centralized or single application which helps to personalize your trip by picking your favorite place, booking flight tickets, hotels, cars and events and book them all from our application.</p></div>
-            </div>
-            <div class="row row-wrap" data-gutter="60">
-                <div class="col-md-4">
-                    <div class="thumb text-center">
-                        <header class="thumb-header">
-                            <img class="round" src="images/yash.jpg" alt="Yash" title="Yash" />
-                        </header>
-                        <div class="thumb-caption">
-                            <h5 class="thumb-title">Yash Ganorkar</h5>
-                            <p class="thumb-meta text-small">Student</p>
+        </div>
+        <div class="bg-holder">
+            <div class="bg-parallax" style="background-image:url(images/backgrounds/road.jpg);"></div>
+            <div class="bg-mask"></div>
+            <div class="bg-holder-content">
+                <div class="container">
+                    <div class="gap gap-big text-white">
+                        <h2>Rockstar Team</h2>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p class="text-bigger mb30">Shruti and Yash started to think on a idea which would not be repetitive and be unique on it’s own. A centralized or single application which helps to personalize your trip by picking your favorite place, booking flight tickets, hotels, cars and events and book them all from our application.</p></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="thumb text-center">
-                        <header class="thumb-header">
-                            <img class="round" src="images/shruti.jpg" alt="Shruti" title="Shruti" />
-                        </header>
-                        <div class="thumb-caption">
-                            <h5 class="thumb-title">Shruti Puranik</h5>
-                            <p class="thumb-meta text-small">Student</p>
-                        </div>
-                    </div>
-                </div>
+                        <div class="row row-wrap" data-gutter="60">
+                             <div class="bg-parallax" style="background-image:url(images/backgrounds/beach.jpg);"></div>
+                            <div class="col-md-4">
+                                <div class="thumb text-center">
+                                    <header class="thumb-header">
+                                        <img class="round" src="images/yash.jpg" alt="Yash" title="Yash" />
+                                    </header>
+                                    <div class="thumb-caption">
+                                        <h5 class="thumb-title">Yash Ganorkar</h5>
+                                        <p class="thumb-meta text-small">Student</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumb text-center">
+                                    <header class="thumb-header">
+                                        <img class="round" src="images/shruti.jpg" alt="Shruti" title="Shruti" />
+                                    </header>
+                                    <div class="thumb-caption">
+                                        <h5 class="thumb-title">Shruti Puranik</h5>
+                                        <p class="thumb-meta text-small">Student</p>
+                                    </div>
+                                </div>
+                            </div>
               
                 
+                        </div>
+                    </div>
+                </div>
             </div>
-            
+        </div>
+              <div class="container">
             <div class="gap"></div>
             
             <h2 class="mb20">Special Thanks To</h2>

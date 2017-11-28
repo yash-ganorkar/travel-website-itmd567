@@ -147,7 +147,7 @@
                 <div class="row row-wrap">
                     <div class="col-md-3">
                         <a class="logo" href="Default.aspx">
-                            <img src="images/logo-invert.png" alt="Image Alternative text" title="Image Title" />
+                            <img src="images/travelopedialogo.png" alt="Travelopedia" title="Travelopedia" style="height:40px;"/>
                         </a>
                         <p class="mb20">Booking, reviews and explore on hotels, cars, flights, events, and lots more!</p>
                         <ul class="list list-horizontal list-space">

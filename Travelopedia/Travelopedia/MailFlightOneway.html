@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <title>Email</title>
-    
+
     <style>
         .ewrapper {
-            width: 70%;
+            width: 100%;
             margin: auto;
             height: 700px;
-            overflow: scroll;
+            overflow-y: scroll;
         }
 
         .elogo {
@@ -19,6 +19,7 @@
         }
 
         .emailimg {
+            width: 80%;
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -62,29 +63,36 @@
             font-weight: bold;
             border-bottom: 1px dashed #dadadb;
         }
+
         .flightdetails div {
             min-height: 200px;
             display: block;
             float: left;
         }
-        .div1{
-            width:20%;
+
+        .div1 {
+            width: 20%;
         }
+
         .div2 {
             width: 60%;
-            text-align:center;
+            text-align: center;
         }
-        .div2 h4, p{
-            margin:10px;
-        }
-        .div2 hr{
-            width:60%;
-        }
+
+            .div2 h4, p {
+                margin: 10px;
+            }
+
+            .div2 hr {
+                width: 60%;
+            }
+
         .div3 {
             width: 20%;
         }
-        .billdetails{
-            clear:left;
+
+        .billdetails {
+            clear: left;
         }
     </style>
 </head>
@@ -93,13 +101,14 @@
 
 
         <div class="edetail">
-            <img class="elogo" src="images/colorlogo.png" alt="Travelopedia" title="Travelopedia" />
+            <img class="elogo" src="https://raw.githubusercontent.com/yash-ganorkar/travelopedia/master/colorlogo.png" alt="Travelopedia" title="Travelopedia" />
             <p class="center">For changes in itinerary, please call 24/7 at +1-312-450-9277 </p>
 
-            <img class="emailimg" src="images/email.png" alt="travel" />
+            <img class="emailimg" src="https://github.com/yash-ganorkar/travelopedia/blob/master/email.PNG?raw=true" alt="travel" />
             <div class="eheader">
                 <h2 class="center">Booking Confirmation</h2>
-                <h4 class="center">Travelopedia Booking: xxxxxx | ssss@gmail.com | Booked on Tue, Oct 10 2018</h4>
+                <h4 class="center">Travelopedia Booking: {id} | {email} </h4>
+                <h4 class="center"> Booked on {date}</h4>
             </div>
             <div class="econtent">
                 <h2>Flight Details</h2>
@@ -108,8 +117,8 @@
 
                 <div class="flightdetails">
                     <div class="div1">
-                        <h5>Airlines</h5>
-                        <br />
+                        <h4>Airlines</h4>
+
                         <p>Baggage Fees | Visa & Passport</p>
                     </div>
                     <div class="div2">
@@ -124,7 +133,7 @@
                     </div>
                     <div class="div3">
                         <p>TravelTime:</p>
-                        <h3>{travelduration}</h3>
+                        <h3 class="center">{travelduration} mins</h3>
                     </div>
                 </div>
 
@@ -142,12 +151,12 @@
                             <tr>
                                 <td colspan="2" height="30" class="pricehead">Flight Price Details</td>
                             </tr>
-                            
+
                             <!--<tr>
                                 <td colspan="2" height="24" style="border-bottom:1px dashed #000000">Flight Price</td>
                                 <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>${flightprice}</span></td>
                             </tr>
-                            
+
                             <tr>
                                 <td colspan="2" height="24" style="border-bottom:1px dashed #000000">Taxes and Agency Fees</td>
                                 <td colspan="2" align="right" style="border-bottom:1px dashed #000000"><span>${tax}</span></td>
@@ -176,7 +185,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
             </div>
         </div>
     </div>
