@@ -198,8 +198,10 @@ namespace Travelopedia
                                     MailMessage mail = new MailMessage();
                                     mail.From = new MailAddress("shrutipuranik0710@gmail.com");
                                     mail.To.Add(charges2.ReceiptEmail);
-                                    mail.Subject = "This is an email";
-                                    mail.Body = CreateBodyRoundFlight();
+                                    mail.Subject = "Booking Confirmation on Travelopedia. It's Time to Explore!!!";
+                                    string email = charges2.ReceiptEmail;
+                                    string id = pd.StripePaymentID;
+                                    mail.Body = CreateBodyRoundFlight(email,id);
                                     mail.IsBodyHtml = true;
                                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                                     smtpClient.Credentials = new System.Net.NetworkCredential()
@@ -336,8 +338,10 @@ namespace Travelopedia
                                     MailMessage mail = new MailMessage();
                                     mail.From = new MailAddress("shrutipuranik0710@gmail.com");
                                     mail.To.Add(charges2.ReceiptEmail);
-                                    mail.Subject = "This is an email";
-                                    mail.Body = CreateBodyOnewayFlight();
+                                    mail.Subject = "Booking Confirmation on Travelopedia. It's Time to Explore!!!";
+                                    string email = charges2.ReceiptEmail;
+                                    string id = pd.StripePaymentID;
+                                    mail.Body = CreateBodyOnewayFlight(email,id);
                                     mail.IsBodyHtml = true;
                                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                                     smtpClient.Credentials = new System.Net.NetworkCredential()
@@ -451,8 +455,10 @@ namespace Travelopedia
                                     MailMessage mail = new MailMessage();
                                     mail.From = new MailAddress("shrutipuranik0710@gmail.com");
                                     mail.To.Add(charges2.ReceiptEmail);
-                                    mail.Subject = "This is an email";
-                                    mail.Body = CreateBody();
+                                    mail.Subject = "Booking Confirmation on Travelopedia. It's Time to Explore!!!";
+                                    string email = charges2.ReceiptEmail;
+                                    string id = pd.StripePaymentID;
+                                    mail.Body = CreateBody(email,id);
                                     mail.IsBodyHtml = true;
                                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                                     smtpClient.Credentials = new System.Net.NetworkCredential()
@@ -558,8 +564,10 @@ namespace Travelopedia
                                     MailMessage mail = new MailMessage();
                                     mail.From = new MailAddress("shrutipuranik0710@gmail.com");
                                     mail.To.Add(charges2.ReceiptEmail);
-                                    mail.Subject = "This is an email";
-                                    mail.Body = CreateBodyCar();
+                                    mail.Subject = "Booking Confirmation on Travelopedia. It's Time to Explore!!!";
+                                    string email = charges2.ReceiptEmail;
+                                    string id = pd.StripePaymentID;
+                                    mail.Body = CreateBodyCar(email,id);
                                     mail.IsBodyHtml = true;
                                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                                     smtpClient.Credentials = new System.Net.NetworkCredential()
@@ -601,7 +609,7 @@ namespace Travelopedia
             }
         }
 
-        private string CreateBodyRoundFlight()
+        private string CreateBodyRoundFlight(string email, string id)
         {
             String body = string.Empty;
             using (StreamReader reader = new StreamReader(Server.MapPath("~/MailFlightRound.html")))
@@ -609,6 +617,8 @@ namespace Travelopedia
                 body = reader.ReadToEnd();
 
             }
+            DateTime dt = DateTime.Now;
+            String d = dt.ToString(format: "F");
             body = body.Replace("{deptdate}", deptdate1.Text);
             body = body.Replace("{depart}", dept1.Text);
             body = body.Replace("{depttime}", depttime1.Text);
@@ -625,11 +635,13 @@ namespace Travelopedia
             body = body.Replace("{arrivetime2}", arrivetime2.Text);
             body = body.Replace("{travelduration2}", duration2.Text);
             body = body.Replace("{total}", flightprice.Text);
-
+            body = body.Replace("{email}", email);
+            body = body.Replace("{id}", id);
+            body = body.Replace("{date}", d);
             return body;
         }
 
-        private string CreateBodyOnewayFlight()
+        private string CreateBodyOnewayFlight(string email, string id)
         {
             String body = string.Empty;
             using (StreamReader reader = new StreamReader(Server.MapPath("~/MailFlightOneway.html")))
@@ -637,6 +649,8 @@ namespace Travelopedia
                 body = reader.ReadToEnd();
 
             }
+            DateTime dt = DateTime.Now;
+            String d = dt.ToString(format: "F");
             body = body.Replace("{deptdate}", deptdateo.Text);
             body = body.Replace("{depart}", depto.Text);
             body = body.Replace("{depttime}", depttimeo.Text);
@@ -645,12 +659,15 @@ namespace Travelopedia
             body = body.Replace("{arrivetime}", arrivetimeo.Text);
             body = body.Replace("{travelduration}", durationo.Text);
             body = body.Replace("{total}", flightpriceo.Text);
-            
+            body = body.Replace("{email}", email);
+            body = body.Replace("{id}", id);
+            body = body.Replace("{date}", d);
+
             return body;
 
         }
 
-        private string CreateBodyCar()
+        private string CreateBodyCar(string email, string id)
         {
             String body = string.Empty;
             using (StreamReader reader = new StreamReader(Server.MapPath("~/mailcar.html")))
@@ -658,6 +675,8 @@ namespace Travelopedia
                 body = reader.ReadToEnd();
 
             }
+            DateTime dt = DateTime.Now;
+            String d=dt.ToString(format: "F");
             body = body.Replace("{possiblemodels}", name.Text);
             body = body.Replace("{cartype}", type.Text);
             body = body.Replace("{vendorlocation}", location.Text);
@@ -670,11 +689,14 @@ namespace Travelopedia
             body = body.Replace("{subtotal}", Subtotal.Text);
             body = body.Replace("{tax}", tax.Text);
             body = body.Replace("{total}", total.Text);
+            body = body.Replace("{email}", email);
+            body = body.Replace("{id}", id);
+            body = body.Replace("{date}", d);
             return body;
            
         }
 
-        private string CreateBody()
+        private string CreateBody(string email, string id)
         {
             String body = string.Empty;
             using (StreamReader reader = new StreamReader(Server.MapPath("~/Mail.html")))
@@ -682,6 +704,8 @@ namespace Travelopedia
                 body = reader.ReadToEnd();
 
             }
+            DateTime dt = DateTime.Now;
+            String d = dt.ToString(format: "F");
             body = body.Replace("{hotelname}", hotelname.Text);
             body = body.Replace("{city}", city.Text);
             body = body.Replace("{state}", state.Text);
@@ -691,6 +715,11 @@ namespace Travelopedia
             body = body.Replace("{subtotal}", subtotalhotel.Text);
             body = body.Replace("{tax}", hoteltax.Text);
             body = body.Replace("{total}", hoteltotal.Text);
+            body = body.Replace("{email}", email);
+            body = body.Replace("{id}", id);
+            body = body.Replace("{date}", d);
+
+
             return body;
            
         }
