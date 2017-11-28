@@ -158,7 +158,7 @@ namespace Travelopedia
                             Session["SourceDestination"] = Request.QueryString["source"].ToString().Split('-')[2] + " - " + Request.QueryString["destination"].ToString().Split('-')[2];
                         }
 
-                        Response.Redirect("~/Account/Login.aspx");
+                        Response.Redirect("~/Account/Login.aspx",false);
                     }
 
                     else
@@ -175,7 +175,7 @@ namespace Travelopedia
                             Session["NoOfStops"] = hiddenField3.Value;
                             Session["SourceDestination"] = Request.QueryString["source"].ToString().Split('-')[2] + "-" + Request.QueryString["destination"].ToString().Split('-')[2];
                         }
-                        Response.Redirect("~/Home.aspx");
+                        Response.Redirect("~/Home.aspx",false);
                     }
                 }
 
@@ -185,7 +185,7 @@ namespace Travelopedia
                 Exceptions exception = new Exceptions();
                 exception.ExceptionMessage = ex.Message.ToString();
                 Session["Exception"] = exception;
-                Response.Redirect("~/Error.aspx");
+                Response.Redirect("~/Error.aspx", false);
             }
         }
 
