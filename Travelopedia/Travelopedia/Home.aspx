@@ -5,8 +5,12 @@
 
     <asp:UpdatePanel runat="server" EnableViewState="true">
         <ContentTemplate>
-            <h3>Session Idle:&nbsp;<span id="secondsIdle"></span>&nbsp;seconds.</h3>
-            <asp:LoginName ID="LoginName1" FormatString="Welcome {0}!" runat="server"/>
+            <div class="gap-small"></div>
+            <div class="container">
+                 <h3><asp:LoginName ID="LoginName1" FormatString="Welcome {0}!" runat="server"/></h3>
+            <h5>Session Idle:&nbsp;<span id="secondsIdle"></span>&nbsp;seconds.</h5>
+            </div>
+           
             <asp:Label ID="Label1" runat="server"></asp:Label>
             <form action="/Charge" method="POST">
             <div class="container">
@@ -752,7 +756,7 @@
                  var map;
                  var infowindow;
 
-                 alert(<%= this.amount %>);
+                 //alert(<%= this.amount %>);
                  function initMap(latitude, longitude) {
                      var pyrmont = { lat: latitude, lng: longitude };
                      map = new google.maps.Map(document.getElementById('map'), {
@@ -789,7 +793,7 @@
                  </script>  
             <script type="text/javascript">
                  function SessionExpireAlert(timeout) {
-                     alert(timeout);
+                     //alert(timeout);
                      var seconds = timeout / 1000;
                      document.getElementsByName("secondsIdle").innerHTML = seconds;
 
