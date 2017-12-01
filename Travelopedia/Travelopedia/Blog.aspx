@@ -19,13 +19,13 @@
                     </div>
                 </header>
                 <div class="post-inner">
-                    <h4 class="post-title text-darken"><a href="https://travelopediablogspot.wordpress.com/" target="_blank">Travel to Explore</a></h4>
+                    <h4 class="post-title text-darken"><a href="https://travelopediablogspot.wordpress.com/">Travel to Explore</a></h4>
                     <ul class="post-meta">
                         <li><i class="fa fa-calendar"></i><a href="#">30 November, 2017</a>
                         </li>
                         <li><i class="fa fa-user"></i><a href="#">Shruti and Yash</a>
                         </li>
-                        <li><i class="fa fa-tags"></i><a href="#">Lifestyle</a>, <a href="https://travelopediablogspot.wordpress.com/" target="_blank">Design</a>
+                        <li><i class="fa fa-tags"></i><a href="#">Lifestyle</a>, <a href="https://travelopediablogspot.wordpress.com/">Design</a>
                         </li>
                         
                     </ul>
@@ -35,7 +35,7 @@
                      We hope to come up with a better solution and make travel easy.
                         Thank you.</p>
 
-                    <h5><a href="https://travelopediablogspot.wordpress.com/" target="_blank">Travel Blog </a></h5> 
+                    <h5><a href="https://travelopediablogspot.wordpress.com/">Travel Blog </a></h5> 
                 </div>
             </article>
            

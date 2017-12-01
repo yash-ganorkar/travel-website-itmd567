@@ -286,13 +286,13 @@
                                                             <div class="col-md-4">
                                                                 <div class="form-group clockpicker form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                     <label>Pick-up Time</label>
-                                                                        <asp:TextBox ID="carPickTime" CausesValidation="true" runat="server" CssClass="form-control" ClientIDMode="Static" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                        <asp:TextBox ID="carPickTime" CausesValidation="true" runat="server" CssClass="form-control" ClientIDMode="Static" placeholder="10:00" TextMode="SingleLine"></asp:TextBox>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                                                                     <label>Drop Off Time</label>
-                                                                         <asp:TextBox ID="carDropTime" CausesValidation="true" runat="server" CssClass="form-control" placeholder="Enter Source City" TextMode="SingleLine"></asp:TextBox>
+                                                                         <asp:TextBox ID="carDropTime" CausesValidation="true" runat="server" CssClass="form-control" placeholder="11:00" TextMode="SingleLine"></asp:TextBox>
                                                                 </div>
                                                             </div>
                                                             <!--<div class="col-md-6">
