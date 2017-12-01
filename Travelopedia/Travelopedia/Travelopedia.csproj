@@ -506,6 +506,7 @@
     <Content Include="images\email.PNG" />
     <Content Include="images\facebook.png" />
     <Content Include="images\flags\.DS_Store" />
+    <Content Include="images\giphy.gif" />
     <Content Include="images\google.png" />
     <Content Include="images\key.png" />
     <Content Include="images\page-loader.gif" />
@@ -514,6 +515,7 @@
     <Content Include="images\payment\Thumbs.db" />
     <Content Include="images\Prof.jpg" />
     <Content Include="images\shruti.jpg" />
+    <Content Include="images\stripe.png" />
     <Content Include="images\Thumbs.db" />
     <Content Include="fonts\icomoon.eot" />
     <Content Include="fonts\icomoon.ttf" />
