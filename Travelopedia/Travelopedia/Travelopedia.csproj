@@ -2120,6 +2120,7 @@
     <Content Include="ErrorPayment.aspx" />
     <Content Include="PrivacyPolicy.aspx" />
     <Content Include="SuccessPayment.aspx" />
+    <Content Include="Error.aspx" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
@@ -3983,6 +3984,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarBooking.cs" />
+    <Compile Include="Models\Exceptions.cs" />
     <Compile Include="Models\FlightDetails.cs" />
     <Compile Include="Models\HotelPayment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -4058,6 +4060,13 @@
     </Compile>
     <Compile Include="SuccessPayment.aspx.designer.cs">
       <DependentUpon>SuccessPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -31,7 +31,7 @@ namespace Travelopedia_API.Controllers
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://api.hotwire.com/v1/search/hotel");
-                    string urlParams = "?apikey=8mgjwdbgs6pxuupdwmje72uu&dest=" + destination + "&rooms=" + rooms + "&adults=" + adults + "&children=" + children + "&startdate=" + startdate + "&enddate=" + enddate;
+                    string urlParams = "?apikey=&dest=" + destination + "&rooms=" + rooms + "&adults=" + adults + "&children=" + children + "&startdate=" + startdate + "&enddate=" + enddate;
                     // client.DefaultRequestHeaders.Accept.Clear();
                     // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 

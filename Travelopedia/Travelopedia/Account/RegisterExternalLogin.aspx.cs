@@ -62,7 +62,7 @@ namespace Travelopedia.Account
                     var nameClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
                     var emailClaim = verifiedloginInfox.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
                     
-                    email.Text = "";
+                    email.Text = emailClaim.Value;
                     userName = nameClaim.Value.ToString().ToLower();
                     lastName = nameClaim.Value.ToString().Split(' ')[1];
                     firstName = nameClaim.Value.ToString().Split(' ')[0];
@@ -129,6 +129,7 @@ namespace Travelopedia.Account
             var signInManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
             var user = new ApplicationUser() { UserName = userName, Email = email.Text, FirstName = firstName, LastName = lastName };
             IdentityResult result = manager.Create(user);
+            
             if (result.Succeeded)
             {
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
@@ -150,15 +151,17 @@ namespace Travelopedia.Account
                     return;
                 }
             }
+          
             AddErrors(result);
+
         }
 
         private void AddErrors(IdentityResult result) 
         {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }   
+            Exceptions exception = new Exceptions();
+            exception.ExceptionMessage = "Email ID already exisit";
+            Session["Exception"] = exception;
+            Response.Redirect("~/Error.aspx", false);
         }
     }
 }
